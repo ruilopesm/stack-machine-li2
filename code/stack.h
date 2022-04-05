@@ -1,11 +1,10 @@
-#define MAX 100
-
 typedef struct {
     int sp;
-    int arr[MAX];
+    int size;
+    int *stc;
 } STACK;
 
 STACK *create_stack();
 
-void push(STACK *s, int elem);
-int pop(STACK *s);
+int push(STACK *s, int elem);
+int pop(STACK *s, int *elem);
