@@ -6,10 +6,12 @@
 int main() {
     STACK *s = create_stack();
 
-    push(s, 3);
-    push(s, 2);
-
-    int soma = pop(s) + pop(s);
+    if (push(s, 3)){}
+    if (push(s, 2)){}
+    int x,y;
+    if(pop(s,&x)){}
+    if(pop(s,&y)){}
+    int soma = x + y;
 
     printf("%d\n", soma);
     return 0;
