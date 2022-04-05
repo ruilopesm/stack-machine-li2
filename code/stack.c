@@ -34,7 +34,9 @@ int push(STACK *s, int elem) {
 }
 
 int pop(STACK *s, int *elem) {
-    if (s->sp == 0) return 1;
+    if (s->sp == 0) {
+        return 1;
+    }
     s->sp--;
     *elem = s->stc[s->sp];
 
