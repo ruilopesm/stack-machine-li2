@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -6,13 +7,14 @@
 int main() {
     STACK *s = create_stack();
 
-    if (push(s, 3)){}
-    if (push(s, 2)){}
-    int x,y;
-    if(pop(s,&x)){}
-    if(pop(s,&y)){}
-    int soma = x + y;
+    assert(push(s, 3) == 0);
+    assert(push(s, 2) == 0);
 
-    printf("%d\n", soma);
+    int x, y;
+    assert(pop(s, &x) == 0);
+    assert(pop(s, &y) == 0);
+
+    printf("%d\n", x + y);
+
     return 0;
 }
