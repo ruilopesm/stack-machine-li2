@@ -21,6 +21,11 @@ int increase_stack(STACK *s) {
     return 0;
 }
 
+void free_stack(STACK *s) {
+    free(s->stc);
+    free(s);
+}
+
 int push(STACK *s, int elem) {
     if (s->sp == s->size) {
         if (increase_stack(s)) {

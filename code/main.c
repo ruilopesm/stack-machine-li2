@@ -16,5 +16,7 @@ int main() {
 
     printf("%d\n", x + y);
 
+    free_stack(s);
+
     return 0;
 }
