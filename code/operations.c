@@ -22,7 +22,7 @@ int get_index(char operator) {
 
 void dispatch_table(STACK *s, char operator) {
     table functions[] = {
-        soma, 
+        sum, 
         sub
     };
 
@@ -31,7 +31,7 @@ void dispatch_table(STACK *s, char operator) {
     functions[index](s);
 }
 
-void soma(STACK *s) {
+void sum(STACK *s) {
     int x, y;
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
