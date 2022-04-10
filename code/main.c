@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "stack.h"
 #include "operations.h"
@@ -7,8 +8,8 @@
 int main() {
     STACK *s = create_stack();
 
-    push(s, 2);
-    push(s, 3); 
+    assert(push(s, 2) == 0);
+    assert(push(s, 3) == 0); 
 
     dispatch_table(s, '+'); 
 
