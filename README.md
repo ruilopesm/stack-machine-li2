@@ -14,3 +14,8 @@ $ make run
 ```sh
 $ make clean
 ```
+
+### Software metrics test
+```sh
+$ make test
+```
