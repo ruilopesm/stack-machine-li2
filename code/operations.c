@@ -1,17 +1,23 @@
 #include "stack.h"
 #include "operations.h"
 
-#include <math.h>
 #include <assert.h>
+#include <math.h>
+
+int is_operator(char *token) {
+    for (int i = 0; i < len; i++) {
+        if (token[0] == operators[i]) {
+            return 1;
+        }
+    }
+    
+    return 0;
+}
 
 int get_index(char operator) {
     int index;
-    char operators[2] = {
-        '+',
-        '-'
-    };
 
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < len; i++) {
         if (operator == operators[i]) {
             index = i;
         }
@@ -21,9 +27,9 @@ int get_index(char operator) {
 }
 
 void dispatch_table(STACK *s, char operator) {
-    table functions[] = {
+    binary functions[] = {
         sum, 
-        sub
+        sub,
     };
 
     int index = get_index(operator);
@@ -33,14 +39,16 @@ void dispatch_table(STACK *s, char operator) {
 
 void sum(STACK *s) {
     int x, y;
+    
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
 
     push(s, x + y);
 }
 
-void sub(STACK *s) { 
+void sub(STACK *s) {
     int x, y;
+    
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
 
