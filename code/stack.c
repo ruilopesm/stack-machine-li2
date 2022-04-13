@@ -41,7 +41,7 @@ int push(STACK *s, int elem) {
     }
     s->stc[s->sp] = elem;
     s->sp++;
-    
+
     return 0;
 }
 
@@ -50,6 +50,15 @@ int pop(STACK *s, int *elem) {
         return 1;
     }
     s->sp--;
+    *elem = s->stc[s->sp];
+
+    return 0;
+}
+
+int peek(STACK *s, int *elem) {
+    if (s->sp == 0) {
+        return 1;
+    }
     *elem = s->stc[s->sp];
 
     return 0;
