@@ -3,20 +3,14 @@
 #include <assert.h>
 
 #include "stack.h"
-#include "operations.h"
+#include "parser.h"
 
 int main() {
     STACK *s = create_stack();
 
-    assert(push(s, 2) == 0);
-    assert(push(s, 3) == 0); 
+    parse_line(s);
 
-    dispatch_table(s, '+'); 
-
-    // Print stack content
-    for (int i = 0; i < s->sp; i++) {
-        printf("%d\n", s->stc[i]);
-    }
+    print_stack(s);
     
     free_stack(s);
 
