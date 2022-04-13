@@ -4,9 +4,18 @@
 #include <assert.h>
 #include <math.h>
 
+char get_operator(int i) {
+    static char const operators[N_OPERATORS] = {
+        '+',
+        '-'
+    };
+
+    return operators[i];
+}
+
 int is_operator(char *token) {
-    for (int i = 0; i < len; i++) {
-        if (token[0] == operators[i]) {
+    for (int i = 0; i < N_OPERATORS; i++) {
+        if (token[0] == get_operator(i)) {
             return 1;
         }
     }
@@ -17,8 +26,8 @@ int is_operator(char *token) {
 int get_index(char operator) {
     int index;
 
-    for (int i = 0; i < len; i++) {
-        if (operator == operators[i]) {
+    for (int i = 0; i < N_OPERATORS; i++) {
+        if (operator == get_operator(i)) {
             index = i;
         }
     }

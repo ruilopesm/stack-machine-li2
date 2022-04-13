@@ -1,8 +1,6 @@
-static char const operators[] = {
-    '+',
-    '-'
-};
-static int const len = sizeof(operators);
+#define N_OPERATORS 2
+
+char get_operator(int i);
 
 int is_operator(char *token);
 int get_index(char operator);
