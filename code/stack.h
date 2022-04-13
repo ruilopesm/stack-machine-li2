@@ -11,3 +11,4 @@ void free_stack(STACK *s);
 
 int push(STACK *s, int elem);
 int pop(STACK *s, int *elem);
+int peek(STACK *s, int *elem);
