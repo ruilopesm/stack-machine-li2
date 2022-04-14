@@ -14,12 +14,14 @@ char get_operator(int i) {
         '#',
         '^',
         '&',
-        '|'
+        '|',
+        ')',
+        '(',
+        '~'
     };
 
     return operators[i];
 }
-
 int is_operator(char *token) {
     for (int i = 0; i < N_OPERATORS; i++) {
         if (token[0] == get_operator(i)) {
@@ -43,7 +45,7 @@ int get_index(char operator) {
 }
 
 void dispatch_table(STACK *s, char operator) {
-    binary functions[] = {
+    function table[] = {
         sum, 
         sub,
         mult,
@@ -52,12 +54,15 @@ void dispatch_table(STACK *s, char operator) {
         power,
         bw_xor,
         bw_and,
-        bw_or
+        bw_or,
+        increment,
+        decrement,
+        bw_not
     };
 
     int index = get_index(operator);
 
-    functions[index](s);
+    table[index](s);
 }
 
 void sum(STACK *s) {
@@ -133,4 +138,25 @@ void bw_or(STACK *s) {
     assert(pop(s, &y) == 0);
 
     push(s, x | y);
+}
+
+void increment(STACK *s) {
+    int x;
+    assert(pop(s, &x) == 0);
+
+    push(s, ++x);
+}
+
+void decrement(STACK *s) {
+    int x;
+    assert(pop(s, &x) == 0);
+
+    push(s, --x);
+}
+
+void bw_not(STACK *s) {
+    int x;
+    assert(pop(s, &x) == 0);
+
+    push(s, ~x);
 }
