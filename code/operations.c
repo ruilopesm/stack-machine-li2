@@ -7,7 +7,10 @@
 char get_operator(int i) {
     static char const operators[N_OPERATORS] = {
         '+',
-        '-'
+        '-',
+        '*',
+        '/',
+        '%'
     };
 
     return operators[i];
@@ -39,6 +42,9 @@ void dispatch_table(STACK *s, char operator) {
     binary functions[] = {
         sum, 
         sub,
+        mult,
+        divi,
+        rem
     };
 
     int index = get_index(operator);
@@ -62,4 +68,29 @@ void sub(STACK *s) {
     assert(pop(s, &x) == 0);
 
     push(s, x - y);
+}
+
+void mult(STACK *s) {
+    int x, y;
+    assert(pop(s, &x) == 0);
+    assert(pop(s, &y) == 0);
+
+    push(s, x * y);
+}
+
+void divi(STACK *s) {
+    int x, y;
+    assert(pop(s, &y) == 0);
+    assert(pop(s, &x) == 0);                              
+
+    push(s, x / y);
+}
+
+
+void rem(STACK *s) {
+    int x, y;
+    assert(pop(s, &y) == 0);
+    assert(pop(s, &x) == 0);                              
+
+    push(s, x % y);
 }

@@ -10,3 +10,6 @@ typedef void (*binary)(STACK *s);
 
 void sum(STACK *s);
 void sub(STACK *s);
+void mult(STACK *s);
+void divi(STACK *s);
+void rem(STACK *s);
