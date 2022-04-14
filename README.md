@@ -19,3 +19,8 @@ $ make clean
 ```sh
 $ make test
 ```
+
+### Zip project in order to submit it
+```sh
+$ make submit
+```
