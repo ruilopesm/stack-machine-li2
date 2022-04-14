@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.3"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Stack-Machine-LI2: Código-Fonte de operations.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Stack-Machine-LI2<span id="projectnumber">&#160;0.1</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.9.3 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Localizar','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Localizar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">operations.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="operations_8h.html">Ir para a documentação deste ficheiro.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="operations_8h.html#ab80c84c45bedd30f360e9cffb763c563">    1</a></span><span class="preprocessor">#define N_OPERATORS 12</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keywordtype">char</span> <a class="code hl_function" href="operations_8h.html#a2b21279929babdaa6ae2c154d03b2b34">get_operator</a>(<span class="keywordtype">int</span> i);</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keywordtype">int</span> <a class="code hl_function" href="operations_8h.html#a2ed3e19c7ee228d940f902f81280ccba">is_operator</a>(<span class="keywordtype">char</span> *token);</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keywordtype">int</span> <a class="code hl_function" href="operations_8h.html#ab9d682d6ffcc0608d184da487ea89f68">get_index</a>(<span class="keywordtype">char</span> <span class="keyword">operator</span>);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keywordtype">void</span> <a class="code hl_function" href="operations_8h.html#a2352339cb3063f267fc391dfa14c6ff4">dispatch_table</a>(<a class="code hl_struct" href="structSTACK.html">STACK</a> *s, <span class="keywordtype">char</span> <span class="keyword">operator</span>);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="operations_8h.html#aaba375d425cf8f4cdbb1b1b9c1caf2e0">   39</a></span><span class="keyword">typedef</span> void (*<a class="code hl_typedef" href="operations_8h.html#aaba375d425cf8f4cdbb1b1b9c1caf2e0">function</a>)(<a class="code hl_struct" href="structSTACK.html">STACK</a> *s);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="keywordtype">void</span> <a class="code hl_function" href="operations_8h.html#a4f093c329035a9002e6bb3e9b347c8c0">sum</a>(<a class="code hl_struct" href="structSTACK.html">STACK</a> *s);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="keywordtype">void</span> <a class="code hl_function" href="operations_8h.html#a0be10fa2e7b410007fa5f636331ab467">sub</a>(<a class="code hl_struct" href="structSTACK.html">STACK</a> *s);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keywordtype">void</span> <a class="code hl_function" href="operations_8h.html#a677f43a17e3ec86964dcedfdcf7ff731">mult</a>(<a class="code hl_struct" href="structSTACK.html">STACK</a> *s);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="keywordtype">void</span> <a class="code hl_function" href="operations_8h.html#a71ed2dcaa6269ca36d9fe95a31b47de4">divi</a>(<a class="code hl_struct" href="structSTACK.html">STACK</a> *s);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="keywordtype">void</span> <a class="code hl_function" href="operations_8h.html#a91b32fcc1cd83172719d552f01fa81d7">rem</a>(<a class="code hl_struct" href="structSTACK.html">STACK</a> *s);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="keywordtype">void</span> <a class="code hl_function" href="operations_8h.html#a3cfa559a2ed1203d1563ffd75f944e7a">power</a>(<a class="code hl_struct" href="structSTACK.html">STACK</a> *s);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="keywordtype">void</span> <a class="code hl_function" href="operations_8h.html#a1d207f7dff5e9ec8ef6c46c712a02f54">bw_xor</a>(<a class="code hl_struct" href="structSTACK.html">STACK</a> *s);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="keywordtype">void</span> <a class="code hl_function" href="operations_8h.html#a404f99b692493c72a7ed04916a2e896e">bw_and</a>(<a class="code hl_struct" href="structSTACK.html">STACK</a> *s);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="keywordtype">void</span> <a class="code hl_function" href="operations_8h.html#a2a0d2fc7985d743ed5296dcde192f58d">bw_or</a>(<a class="code hl_struct" href="structSTACK.html">STACK</a> *s);</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="keywordtype">void</span> <a class="code hl_function" href="operations_8h.html#a764302a501a724ac69b681c0928303de">increment</a>(<a class="code hl_struct" href="structSTACK.html">STACK</a> *s);</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="keywordtype">void</span> <a class="code hl_function" href="operations_8h.html#a3c5bdba500f413c422fb2deb781be8d2">decrement</a>(<a class="code hl_struct" href="structSTACK.html">STACK</a> *s);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="keywordtype">void</span> <a class="code hl_function" href="operations_8h.html#a47a97e16d8344db980f51604c44d996a">bw_not</a>(<a class="code hl_struct" href="structSTACK.html">STACK</a> *s);</div>
+<div class="ttc" id="aoperations_8h_html_a0be10fa2e7b410007fa5f636331ab467"><div class="ttname"><a href="operations_8h.html#a0be10fa2e7b410007fa5f636331ab467">sub</a></div><div class="ttdeci">void sub(STACK *s)</div><div class="ttdoc">Função que subtrai dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00078">operations.c:78</a></div></div>
+<div class="ttc" id="aoperations_8h_html_a1d207f7dff5e9ec8ef6c46c712a02f54"><div class="ttname"><a href="operations_8h.html#a1d207f7dff5e9ec8ef6c46c712a02f54">bw_xor</a></div><div class="ttdeci">void bw_xor(STACK *s)</div><div class="ttdoc">Função que calcula, ao nível dos bits, o &quot;ou exclusivo&quot; entre dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00119">operations.c:119</a></div></div>
+<div class="ttc" id="aoperations_8h_html_a2352339cb3063f267fc391dfa14c6ff4"><div class="ttname"><a href="operations_8h.html#a2352339cb3063f267fc391dfa14c6ff4">dispatch_table</a></div><div class="ttdeci">void dispatch_table(STACK *s, char operator)</div><div class="ttdoc">Uma tabela de despacho responsável por invocar a função correspondente ao operador dado.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00048">operations.c:48</a></div></div>
+<div class="ttc" id="aoperations_8h_html_a2a0d2fc7985d743ed5296dcde192f58d"><div class="ttname"><a href="operations_8h.html#a2a0d2fc7985d743ed5296dcde192f58d">bw_or</a></div><div class="ttdeci">void bw_or(STACK *s)</div><div class="ttdoc">Função que calcula, ao nível dos bits, o &quot;ou&quot; entre dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00135">operations.c:135</a></div></div>
+<div class="ttc" id="aoperations_8h_html_a2b21279929babdaa6ae2c154d03b2b34"><div class="ttname"><a href="operations_8h.html#a2b21279929babdaa6ae2c154d03b2b34">get_operator</a></div><div class="ttdeci">char get_operator(int i)</div><div class="ttdoc">Função que retorna o operador associado ao índice dado.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00007">operations.c:7</a></div></div>
+<div class="ttc" id="aoperations_8h_html_a2ed3e19c7ee228d940f902f81280ccba"><div class="ttname"><a href="operations_8h.html#a2ed3e19c7ee228d940f902f81280ccba">is_operator</a></div><div class="ttdeci">int is_operator(char *token)</div><div class="ttdoc">Função que verifica se um dado char é um operador.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00026">operations.c:26</a></div></div>
+<div class="ttc" id="aoperations_8h_html_a3c5bdba500f413c422fb2deb781be8d2"><div class="ttname"><a href="operations_8h.html#a3c5bdba500f413c422fb2deb781be8d2">decrement</a></div><div class="ttdeci">void decrement(STACK *s)</div><div class="ttdoc">Função que decrementa um elemento da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00150">operations.c:150</a></div></div>
+<div class="ttc" id="aoperations_8h_html_a3cfa559a2ed1203d1563ffd75f944e7a"><div class="ttname"><a href="operations_8h.html#a3cfa559a2ed1203d1563ffd75f944e7a">power</a></div><div class="ttdeci">void power(STACK *s)</div><div class="ttdoc">Função que calcula a exponenciação de dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00111">operations.c:111</a></div></div>
+<div class="ttc" id="aoperations_8h_html_a404f99b692493c72a7ed04916a2e896e"><div class="ttname"><a href="operations_8h.html#a404f99b692493c72a7ed04916a2e896e">bw_and</a></div><div class="ttdeci">void bw_and(STACK *s)</div><div class="ttdoc">Função que calcula, ao nível dos bits, o &quot;e&quot; entre dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00127">operations.c:127</a></div></div>
+<div class="ttc" id="aoperations_8h_html_a47a97e16d8344db980f51604c44d996a"><div class="ttname"><a href="operations_8h.html#a47a97e16d8344db980f51604c44d996a">bw_not</a></div><div class="ttdeci">void bw_not(STACK *s)</div><div class="ttdoc">Função que calcula, ao nível dos bits, o &quot;not&quot; de um elemento da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00157">operations.c:157</a></div></div>
+<div class="ttc" id="aoperations_8h_html_a4f093c329035a9002e6bb3e9b347c8c0"><div class="ttname"><a href="operations_8h.html#a4f093c329035a9002e6bb3e9b347c8c0">sum</a></div><div class="ttdeci">void sum(STACK *s)</div><div class="ttdoc">Função que soma dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00069">operations.c:69</a></div></div>
+<div class="ttc" id="aoperations_8h_html_a677f43a17e3ec86964dcedfdcf7ff731"><div class="ttname"><a href="operations_8h.html#a677f43a17e3ec86964dcedfdcf7ff731">mult</a></div><div class="ttdeci">void mult(STACK *s)</div><div class="ttdoc">Função que multiplica dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00087">operations.c:87</a></div></div>
+<div class="ttc" id="aoperations_8h_html_a71ed2dcaa6269ca36d9fe95a31b47de4"><div class="ttname"><a href="operations_8h.html#a71ed2dcaa6269ca36d9fe95a31b47de4">divi</a></div><div class="ttdeci">void divi(STACK *s)</div><div class="ttdoc">Função que divide dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00095">operations.c:95</a></div></div>
+<div class="ttc" id="aoperations_8h_html_a764302a501a724ac69b681c0928303de"><div class="ttname"><a href="operations_8h.html#a764302a501a724ac69b681c0928303de">increment</a></div><div class="ttdeci">void increment(STACK *s)</div><div class="ttdoc">Função que incrementa um elemento da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00143">operations.c:143</a></div></div>
+<div class="ttc" id="aoperations_8h_html_a91b32fcc1cd83172719d552f01fa81d7"><div class="ttname"><a href="operations_8h.html#a91b32fcc1cd83172719d552f01fa81d7">rem</a></div><div class="ttdeci">void rem(STACK *s)</div><div class="ttdoc">Função que calcula o resto da divisão inteiros de dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00103">operations.c:103</a></div></div>
+<div class="ttc" id="aoperations_8h_html_aaba375d425cf8f4cdbb1b1b9c1caf2e0"><div class="ttname"><a href="operations_8h.html#aaba375d425cf8f4cdbb1b1b9c1caf2e0">function</a></div><div class="ttdeci">void(* function)(STACK *s)</div><div class="ttdoc">Definição do tipo de cada elemento da tabela de despacho.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8h_source.html#l00039">operations.h:39</a></div></div>
+<div class="ttc" id="aoperations_8h_html_ab9d682d6ffcc0608d184da487ea89f68"><div class="ttname"><a href="operations_8h.html#ab9d682d6ffcc0608d184da487ea89f68">get_index</a></div><div class="ttdeci">int get_index(char operator)</div><div class="ttdoc">Função que retorna o índice associado a um operador.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00036">operations.c:36</a></div></div>
+<div class="ttc" id="astructSTACK_html"><div class="ttname"><a href="structSTACK.html">STACK</a></div><div class="ttdef"><b>Definition:</b> <a href="stack_8h_source.html#l00001">stack.h:1</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+</small></address>
+</body>
+</html>

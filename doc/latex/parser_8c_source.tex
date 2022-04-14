@@ -1,0 +1,38 @@
+\hypertarget{parser_8c_source}{}\doxysection{parser.\+c}
+\mbox{\hyperlink{parser_8c}{Ir para a documentação deste ficheiro.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{stack_8h}{stack.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00002}00002 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{operations_8h}{operations.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{parser_8h}{parser.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00005}00005 \textcolor{preprocessor}{\#include <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00006}00006 \textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00007}00007 \textcolor{preprocessor}{\#include <string.h>}}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00008}00008 \textcolor{preprocessor}{\#include <assert.h>}}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00010}\mbox{\hyperlink{parser_8c_a115341c48dd2f1501bcb968755185b20}{00010}} \textcolor{keywordtype}{void} \mbox{\hyperlink{parser_8c_a115341c48dd2f1501bcb968755185b20}{handle\_token}}(\mbox{\hyperlink{structSTACK}{STACK}} *s, \textcolor{keywordtype}{char} *token) \{}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00011}00011     \textcolor{keywordflow}{if} (\mbox{\hyperlink{operations_8c_a2ed3e19c7ee228d940f902f81280ccba}{is\_operator}}(token)) \{}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00012}00012         \mbox{\hyperlink{operations_8c_a2352339cb3063f267fc391dfa14c6ff4}{dispatch\_table}}(s, token[0]);}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00013}00013     \}}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00014}00014     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00015}00015         \textcolor{keywordtype}{int} value;}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00016}00016         sscanf(token, \textcolor{stringliteral}{"{}\%d"{}}, \&value);}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00017}00017         assert(\mbox{\hyperlink{stack_8c_a1434f9b9bed78e32bcb538d626db20ab}{push}}(s, value) == 0);}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00018}00018     \}}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00019}00019 \}}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00021}\mbox{\hyperlink{parser_8c_a4f314e5cb4e10b4bf2371aebb7d34edb}{00021}} \textcolor{keywordtype}{int} \mbox{\hyperlink{parser_8c_a4f314e5cb4e10b4bf2371aebb7d34edb}{parse\_line}}(\mbox{\hyperlink{structSTACK}{STACK}} *s) \{ }
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00022}00022     \textcolor{keywordtype}{char} line[BUFSIZ];}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00023}00023     \textcolor{keywordtype}{char} token[BUFSIZ];}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00025}00025     \textcolor{keywordflow}{if} (fgets(line, BUFSIZ, stdin) != NULL) \{}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00026}00026         \textcolor{keywordflow}{while} (sscanf(line, \textcolor{stringliteral}{"{}\%s\%[\string^\(\backslash\)n]"{}}, token, line) == 2) \{}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00027}00027             \mbox{\hyperlink{parser_8c_a115341c48dd2f1501bcb968755185b20}{handle\_token}}(s, token);}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00028}00028         \}}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00029}00029         \mbox{\hyperlink{parser_8c_a115341c48dd2f1501bcb968755185b20}{handle\_token}}(s, token);}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00030}00030     \}}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00032}00032     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{parser_8c_source_l00033}00033 \}}
+
+\end{DoxyCode}
