@@ -7,7 +7,7 @@ STACK *create_stack() {
     STACK *s = malloc(sizeof(STACK));
     s->sp = 0;
     s->size = 100;
-    s->stc = malloc(sizeof(int) * s->size);
+    s->stc = calloc(sizeof(int), s->size);
 
     return s;
 }
@@ -19,6 +19,13 @@ int increase_stack(STACK *s) {
     s->size *= 2;
 
     return 0;
+}
+
+void print_stack(STACK *s) {
+    for (int i = 0; i < s->sp; i++) {
+        printf("%d", s->stc[i]);
+    }
+    putchar('\n');
 }
 
 void free_stack(STACK *s) {
@@ -34,7 +41,7 @@ int push(STACK *s, int elem) {
     }
     s->stc[s->sp] = elem;
     s->sp++;
-    
+
     return 0;
 }
 
@@ -43,6 +50,15 @@ int pop(STACK *s, int *elem) {
         return 1;
     }
     s->sp--;
+    *elem = s->stc[s->sp];
+
+    return 0;
+}
+
+int peek(STACK *s, int *elem) {
+    if (s->sp == 0) {
+        return 1;
+    }
     *elem = s->stc[s->sp];
 
     return 0;
