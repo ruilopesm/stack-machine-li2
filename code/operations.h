@@ -1,4 +1,4 @@
-#define N_OPERATORS 2
+#define N_OPERATORS 5
 
 char get_operator(int i);
 
