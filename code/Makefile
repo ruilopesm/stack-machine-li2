@@ -19,3 +19,6 @@ clean:
 
 test:
 	$(value script)
+
+submit:
+	cd ..; zip -r submission.zip code/*{.c,.h}
