@@ -24,3 +24,8 @@ $ make test
 ```sh
 $ make submit
 ```
+
+### Generate documentation
+```sh
+$ make doc
+```
