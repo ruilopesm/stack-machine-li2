@@ -5,6 +5,11 @@
 #include "stack.h"
 #include "parser.h"
 
+/**
+ * @brief Função principal do programa.
+ * 
+ * @return int 
+ */
 int main() {
     STACK *s = create_stack();
 
