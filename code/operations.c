@@ -6,12 +6,15 @@
 
 int get_index(char operator) {
     int index;
-    char operators[2] = {
+    char operators[5] = {
         '+',
-        '-'
+        '-',
+        '*',
+        '/',
+        '%'
     };
 
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 5; i++) {
         if (operator == operators[i]) {
             index = i;
         }
@@ -23,7 +26,10 @@ int get_index(char operator) {
 void dispatch_table(STACK *s, char operator) {
     table functions[] = {
         sum, 
-        sub
+        sub,
+        mul,
+        divi,
+        resto
     };
 
     int index = get_index(operator);
@@ -45,4 +51,31 @@ void sub(STACK *s) {
     assert(pop(s, &x) == 0);
 
     push(s, x - y);
+}
+
+void mul(STACK *s) {
+    int x, y;
+    assert(pop(s, &x) == 0);
+    assert(pop(s, &y) == 0);
+
+    push(s, x * y);
+}
+
+void divi(STACK *s) {
+    int x, y;
+    assert(pop(s, &x) == 0);
+    assert(pop(s, &y) == 0);                              
+    assert(y != 0);
+
+    push(s, y / x);
+}
+
+
+void resto(STACK *s) {
+    int x, y;
+    assert(pop(s, &x) == 0);
+    assert(pop(s, &y) == 0);                              
+    assert(y != 0);
+
+    push(s, (int) y-(y / x));
 }

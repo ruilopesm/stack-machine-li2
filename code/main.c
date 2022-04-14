@@ -11,7 +11,7 @@ int main() {
     assert(push(s, 2) == 0);
     assert(push(s, 3) == 0); 
 
-    dispatch_table(s, '+'); 
+    dispatch_table(s, '%'); 
 
     // Print stack content
     for (int i = 0; i < s->sp; i++) {
