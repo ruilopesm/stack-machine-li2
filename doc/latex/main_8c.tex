@@ -1,0 +1,47 @@
+\hypertarget{main_8c}{}\doxysection{Referência ao ficheiro main.\+c}
+\label{main_8c}\index{main.c@{main.c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}stack.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}parser.\+h\char`\"{}}\newline
+\doxysubsection*{Funções}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\begin{DoxyCompactList}\small\item\em Função principal do programa. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentação das funções}
+\mbox{\Hypertarget{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Função principal do programa. 
+
+\begin{DoxyReturn}{Retorna}
+int 
+\end{DoxyReturn}
+
+
+Definido na linha \mbox{\hyperlink{main_8c_source_l00013}{13}} do ficheiro \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00013            \{}
+\DoxyCodeLine{00014     \mbox{\hyperlink{structSTACK}{STACK}} *s = \mbox{\hyperlink{stack_8c_a000f06fe10503e388d8f7616b2a3b039}{create\_stack}}();}
+\DoxyCodeLine{00015 }
+\DoxyCodeLine{00016     \mbox{\hyperlink{parser_8c_a4f314e5cb4e10b4bf2371aebb7d34edb}{parse\_line}}(s);}
+\DoxyCodeLine{00017 }
+\DoxyCodeLine{00018     \mbox{\hyperlink{stack_8c_a42b87bab2d601cb02900935c9b80fc23}{print\_stack}}(s);}
+\DoxyCodeLine{00019     }
+\DoxyCodeLine{00020     \mbox{\hyperlink{stack_8c_a63946e6b4c1f92cf0f7b778cc2613193}{free\_stack}}(s);}
+\DoxyCodeLine{00021 }
+\DoxyCodeLine{00022     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00023 \}}
+
+\end{DoxyCode}
