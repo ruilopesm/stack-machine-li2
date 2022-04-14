@@ -1,0 +1,179 @@
+\hypertarget{stack_8h}{}\doxysection{Referência ao ficheiro stack.\+h}
+\label{stack_8h}\index{stack.h@{stack.h}}
+\doxysubsection*{Estruturas de Dados}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structSTACK}{STACK}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Funções}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structSTACK}{STACK}} $\ast$ \mbox{\hyperlink{stack_8h_a000f06fe10503e388d8f7616b2a3b039}{create\+\_\+stack}} ()
+\item 
+int \mbox{\hyperlink{stack_8h_afa3f7fccc83c6ee8144a7995795a7023}{increase\+\_\+stack}} (\mbox{\hyperlink{structSTACK}{STACK}} $\ast$s)
+\item 
+void \mbox{\hyperlink{stack_8h_a42b87bab2d601cb02900935c9b80fc23}{print\+\_\+stack}} (\mbox{\hyperlink{structSTACK}{STACK}} $\ast$s)
+\item 
+void \mbox{\hyperlink{stack_8h_a63946e6b4c1f92cf0f7b778cc2613193}{free\+\_\+stack}} (\mbox{\hyperlink{structSTACK}{STACK}} $\ast$s)
+\item 
+int \mbox{\hyperlink{stack_8h_a1434f9b9bed78e32bcb538d626db20ab}{push}} (\mbox{\hyperlink{structSTACK}{STACK}} $\ast$s, int elem)
+\item 
+int \mbox{\hyperlink{stack_8h_a50aeb87b23e93cc45de776873a7f1455}{pop}} (\mbox{\hyperlink{structSTACK}{STACK}} $\ast$s, int $\ast$elem)
+\item 
+int \mbox{\hyperlink{stack_8h_a58a4f510fb49080940e67bd99f8620d3}{peek}} (\mbox{\hyperlink{structSTACK}{STACK}} $\ast$s, int $\ast$elem)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentação das funções}
+\mbox{\Hypertarget{stack_8h_a000f06fe10503e388d8f7616b2a3b039}\label{stack_8h_a000f06fe10503e388d8f7616b2a3b039}} 
+\index{stack.h@{stack.h}!create\_stack@{create\_stack}}
+\index{create\_stack@{create\_stack}!stack.h@{stack.h}}
+\doxysubsubsection{\texorpdfstring{create\_stack()}{create\_stack()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structSTACK}{STACK}} $\ast$ create\+\_\+stack (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definido na linha \mbox{\hyperlink{stack_8c_source_l00006}{6}} do ficheiro \mbox{\hyperlink{stack_8c_source}{stack.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00006                       \{}
+\DoxyCodeLine{00007     \mbox{\hyperlink{structSTACK}{STACK}} *s = malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structSTACK}{STACK}}));}
+\DoxyCodeLine{00008     s-\/>\mbox{\hyperlink{structSTACK_a1b186cf876dace2f1e30fcbe260cad9a}{sp}} = 0;}
+\DoxyCodeLine{00009     s-\/>\mbox{\hyperlink{structSTACK_ad10f9d8025122e8c82832d7a34c77e40}{size}} = 100;}
+\DoxyCodeLine{00010     s-\/>\mbox{\hyperlink{structSTACK_ab0c4d2fb403683dee2776131b98d761d}{stc}} = calloc(\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}), s-\/>\mbox{\hyperlink{structSTACK_ad10f9d8025122e8c82832d7a34c77e40}{size}});}
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012     \textcolor{keywordflow}{return} s;}
+\DoxyCodeLine{00013 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{stack_8h_a63946e6b4c1f92cf0f7b778cc2613193}\label{stack_8h_a63946e6b4c1f92cf0f7b778cc2613193}} 
+\index{stack.h@{stack.h}!free\_stack@{free\_stack}}
+\index{free\_stack@{free\_stack}!stack.h@{stack.h}}
+\doxysubsubsection{\texorpdfstring{free\_stack()}{free\_stack()}}
+{\footnotesize\ttfamily void free\+\_\+stack (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structSTACK}{STACK}} $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Definido na linha \mbox{\hyperlink{stack_8c_source_l00031}{31}} do ficheiro \mbox{\hyperlink{stack_8c_source}{stack.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031                           \{}
+\DoxyCodeLine{00032     free(s-\/>\mbox{\hyperlink{structSTACK_ab0c4d2fb403683dee2776131b98d761d}{stc}});}
+\DoxyCodeLine{00033     free(s);}
+\DoxyCodeLine{00034 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{stack_8h_afa3f7fccc83c6ee8144a7995795a7023}\label{stack_8h_afa3f7fccc83c6ee8144a7995795a7023}} 
+\index{stack.h@{stack.h}!increase\_stack@{increase\_stack}}
+\index{increase\_stack@{increase\_stack}!stack.h@{stack.h}}
+\doxysubsubsection{\texorpdfstring{increase\_stack()}{increase\_stack()}}
+{\footnotesize\ttfamily int increase\+\_\+stack (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structSTACK}{STACK}} $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Definido na linha \mbox{\hyperlink{stack_8c_source_l00015}{15}} do ficheiro \mbox{\hyperlink{stack_8c_source}{stack.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00015                              \{}
+\DoxyCodeLine{00016     \textcolor{keywordflow}{if} ((s-\/>\mbox{\hyperlink{structSTACK_ab0c4d2fb403683dee2776131b98d761d}{stc}} = realloc(s-\/>\mbox{\hyperlink{structSTACK_ab0c4d2fb403683dee2776131b98d761d}{stc}}, \textcolor{keyword}{sizeof}(s-\/>\mbox{\hyperlink{structSTACK_ab0c4d2fb403683dee2776131b98d761d}{stc}}) * 2)) == NULL) \{}
+\DoxyCodeLine{00017         \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00018     \}}
+\DoxyCodeLine{00019     s-\/>\mbox{\hyperlink{structSTACK_ad10f9d8025122e8c82832d7a34c77e40}{size}} *= 2;}
+\DoxyCodeLine{00020 }
+\DoxyCodeLine{00021     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00022 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{stack_8h_a58a4f510fb49080940e67bd99f8620d3}\label{stack_8h_a58a4f510fb49080940e67bd99f8620d3}} 
+\index{stack.h@{stack.h}!peek@{peek}}
+\index{peek@{peek}!stack.h@{stack.h}}
+\doxysubsubsection{\texorpdfstring{peek()}{peek()}}
+{\footnotesize\ttfamily int peek (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structSTACK}{STACK}} $\ast$}]{s,  }\item[{int $\ast$}]{elem }\end{DoxyParamCaption})}
+
+
+
+Definido na linha \mbox{\hyperlink{stack_8c_source_l00058}{58}} do ficheiro \mbox{\hyperlink{stack_8c_source}{stack.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00058                               \{}
+\DoxyCodeLine{00059     \textcolor{keywordflow}{if} (s-\/>\mbox{\hyperlink{structSTACK_a1b186cf876dace2f1e30fcbe260cad9a}{sp}} == 0) \{}
+\DoxyCodeLine{00060         \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00061     \}}
+\DoxyCodeLine{00062     *elem = s-\/>\mbox{\hyperlink{structSTACK_ab0c4d2fb403683dee2776131b98d761d}{stc}}[s-\/>\mbox{\hyperlink{structSTACK_a1b186cf876dace2f1e30fcbe260cad9a}{sp}}];}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00065 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{stack_8h_a50aeb87b23e93cc45de776873a7f1455}\label{stack_8h_a50aeb87b23e93cc45de776873a7f1455}} 
+\index{stack.h@{stack.h}!pop@{pop}}
+\index{pop@{pop}!stack.h@{stack.h}}
+\doxysubsubsection{\texorpdfstring{pop()}{pop()}}
+{\footnotesize\ttfamily int pop (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structSTACK}{STACK}} $\ast$}]{s,  }\item[{int $\ast$}]{elem }\end{DoxyParamCaption})}
+
+
+
+Definido na linha \mbox{\hyperlink{stack_8c_source_l00048}{48}} do ficheiro \mbox{\hyperlink{stack_8c_source}{stack.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00048                              \{}
+\DoxyCodeLine{00049     \textcolor{keywordflow}{if} (s-\/>\mbox{\hyperlink{structSTACK_a1b186cf876dace2f1e30fcbe260cad9a}{sp}} == 0) \{}
+\DoxyCodeLine{00050         \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00051     \}}
+\DoxyCodeLine{00052     s-\/>\mbox{\hyperlink{structSTACK_a1b186cf876dace2f1e30fcbe260cad9a}{sp}}-\/-\/;}
+\DoxyCodeLine{00053     *elem = s-\/>\mbox{\hyperlink{structSTACK_ab0c4d2fb403683dee2776131b98d761d}{stc}}[s-\/>\mbox{\hyperlink{structSTACK_a1b186cf876dace2f1e30fcbe260cad9a}{sp}}];}
+\DoxyCodeLine{00054 }
+\DoxyCodeLine{00055     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00056 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{stack_8h_a42b87bab2d601cb02900935c9b80fc23}\label{stack_8h_a42b87bab2d601cb02900935c9b80fc23}} 
+\index{stack.h@{stack.h}!print\_stack@{print\_stack}}
+\index{print\_stack@{print\_stack}!stack.h@{stack.h}}
+\doxysubsubsection{\texorpdfstring{print\_stack()}{print\_stack()}}
+{\footnotesize\ttfamily void print\+\_\+stack (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structSTACK}{STACK}} $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Definido na linha \mbox{\hyperlink{stack_8c_source_l00024}{24}} do ficheiro \mbox{\hyperlink{stack_8c_source}{stack.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00024                            \{}
+\DoxyCodeLine{00025     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < s-\/>\mbox{\hyperlink{structSTACK_a1b186cf876dace2f1e30fcbe260cad9a}{sp}}; i++) \{}
+\DoxyCodeLine{00026         printf(\textcolor{stringliteral}{"{}\%d"{}}, s-\/>\mbox{\hyperlink{structSTACK_ab0c4d2fb403683dee2776131b98d761d}{stc}}[i]);}
+\DoxyCodeLine{00027     \}}
+\DoxyCodeLine{00028     putchar(\textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{00029 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{stack_8h_a1434f9b9bed78e32bcb538d626db20ab}\label{stack_8h_a1434f9b9bed78e32bcb538d626db20ab}} 
+\index{stack.h@{stack.h}!push@{push}}
+\index{push@{push}!stack.h@{stack.h}}
+\doxysubsubsection{\texorpdfstring{push()}{push()}}
+{\footnotesize\ttfamily int push (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structSTACK}{STACK}} $\ast$}]{s,  }\item[{int}]{elem }\end{DoxyParamCaption})}
+
+
+
+Definido na linha \mbox{\hyperlink{stack_8c_source_l00036}{36}} do ficheiro \mbox{\hyperlink{stack_8c_source}{stack.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00036                              \{}
+\DoxyCodeLine{00037     \textcolor{keywordflow}{if} (s-\/>\mbox{\hyperlink{structSTACK_a1b186cf876dace2f1e30fcbe260cad9a}{sp}} == s-\/>\mbox{\hyperlink{structSTACK_ad10f9d8025122e8c82832d7a34c77e40}{size}}) \{}
+\DoxyCodeLine{00038         \textcolor{keywordflow}{if} (\mbox{\hyperlink{stack_8c_afa3f7fccc83c6ee8144a7995795a7023}{increase\_stack}}(s)) \{}
+\DoxyCodeLine{00039             \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00040         \}}
+\DoxyCodeLine{00041     \}}
+\DoxyCodeLine{00042     s-\/>\mbox{\hyperlink{structSTACK_ab0c4d2fb403683dee2776131b98d761d}{stc}}[s-\/>\mbox{\hyperlink{structSTACK_a1b186cf876dace2f1e30fcbe260cad9a}{sp}}] = elem;}
+\DoxyCodeLine{00043     s-\/>\mbox{\hyperlink{structSTACK_a1b186cf876dace2f1e30fcbe260cad9a}{sp}}++;}
+\DoxyCodeLine{00044 }
+\DoxyCodeLine{00045     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00046 \}}
+
+\end{DoxyCode}
