@@ -10,7 +10,11 @@ char get_operator(int i) {
         '-',
         '*',
         '/',
-        '%'
+        '%',
+        '#',
+        '^',
+        '&',
+        '|'
     };
 
     return operators[i];
@@ -27,7 +31,7 @@ int is_operator(char *token) {
 }
 
 int get_index(char operator) {
-    int index;
+    int index = -1;
 
     for (int i = 0; i < N_OPERATORS; i++) {
         if (operator == get_operator(i)) {
@@ -44,7 +48,11 @@ void dispatch_table(STACK *s, char operator) {
         sub,
         mult,
         divi,
-        rem
+        rem,
+        power,
+        bw_xor,
+        bw_and,
+        bw_or
     };
 
     int index = get_index(operator);
@@ -93,4 +101,36 @@ void rem(STACK *s) {
     assert(pop(s, &x) == 0);                              
 
     push(s, x % y);
+}
+
+void power(STACK *s) {
+    int x, y;
+    assert(pop(s, &y) == 0);
+    assert(pop(s, &x) == 0);
+
+    push(s, pow(x, y));
+}
+
+void bw_xor(STACK *s) {
+    int x, y;
+    assert(pop(s, &x) == 0);
+    assert(pop(s, &y) == 0);
+
+    push(s, x ^ y);
+}
+
+void bw_and(STACK *s) {
+    int x, y;
+    assert(pop(s, &x) == 0);
+    assert(pop(s, &y) == 0);
+
+    push(s, x & y);
+}
+
+void bw_or(STACK *s) {
+    int x, y;
+    assert(pop(s, &x) == 0);
+    assert(pop(s, &y) == 0);
+
+    push(s, x | y);
 }
