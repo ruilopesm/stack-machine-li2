@@ -22,6 +22,7 @@ char get_operator(int i) {
 
     return operators[i];
 }
+
 int is_operator(char *token) {
     for (int i = 0; i < N_OPERATORS; i++) {
         if (token[0] == get_operator(i)) {
@@ -98,7 +99,6 @@ void divi(STACK *s) {
 
     push(s, x / y);
 }
-
 
 void rem(STACK *s) {
     int x, y;
