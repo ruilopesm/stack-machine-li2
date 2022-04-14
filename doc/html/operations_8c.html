@@ -1,0 +1,756 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.3"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Stack-Machine-LI2: Referência ao ficheiro operations.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Stack-Machine-LI2<span id="projectnumber">&#160;0.1</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.9.3 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Localizar','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Localizar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Funções</a>  </div>
+  <div class="headertitle"><div class="title">Referência ao ficheiro operations.c</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="stack_8h_source.html">stack.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="operations_8h_source.html">operations.h</a>&quot;</code><br />
+<code>#include &lt;assert.h&gt;</code><br />
+<code>#include &lt;math.h&gt;</code><br />
+</div>
+<p><a href="operations_8c_source.html">Ir para o código fonte deste ficheiro.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Funções</h2></td></tr>
+<tr class="memitem:a2b21279929babdaa6ae2c154d03b2b34"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="operations_8c.html#a2b21279929babdaa6ae2c154d03b2b34">get_operator</a> (int i)</td></tr>
+<tr class="memdesc:a2b21279929babdaa6ae2c154d03b2b34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que retorna o operador associado ao índice dado.  <a href="operations_8c.html#a2b21279929babdaa6ae2c154d03b2b34">Mais...</a><br /></td></tr>
+<tr class="separator:a2b21279929babdaa6ae2c154d03b2b34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ed3e19c7ee228d940f902f81280ccba"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="operations_8c.html#a2ed3e19c7ee228d940f902f81280ccba">is_operator</a> (char *token)</td></tr>
+<tr class="memdesc:a2ed3e19c7ee228d940f902f81280ccba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que verifica se um dado char é um operador.  <a href="operations_8c.html#a2ed3e19c7ee228d940f902f81280ccba">Mais...</a><br /></td></tr>
+<tr class="separator:a2ed3e19c7ee228d940f902f81280ccba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9d682d6ffcc0608d184da487ea89f68"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="operations_8c.html#ab9d682d6ffcc0608d184da487ea89f68">get_index</a> (char operator)</td></tr>
+<tr class="memdesc:ab9d682d6ffcc0608d184da487ea89f68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que retorna o índice associado a um operador.  <a href="operations_8c.html#ab9d682d6ffcc0608d184da487ea89f68">Mais...</a><br /></td></tr>
+<tr class="separator:ab9d682d6ffcc0608d184da487ea89f68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2352339cb3063f267fc391dfa14c6ff4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="operations_8c.html#a2352339cb3063f267fc391dfa14c6ff4">dispatch_table</a> (<a class="el" href="structSTACK.html">STACK</a> *s, char operator)</td></tr>
+<tr class="memdesc:a2352339cb3063f267fc391dfa14c6ff4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uma tabela de despacho responsável por invocar a função correspondente ao operador dado.  <a href="operations_8c.html#a2352339cb3063f267fc391dfa14c6ff4">Mais...</a><br /></td></tr>
+<tr class="separator:a2352339cb3063f267fc391dfa14c6ff4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f093c329035a9002e6bb3e9b347c8c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="operations_8c.html#a4f093c329035a9002e6bb3e9b347c8c0">sum</a> (<a class="el" href="structSTACK.html">STACK</a> *s)</td></tr>
+<tr class="memdesc:a4f093c329035a9002e6bb3e9b347c8c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que soma dois elementos da stack.  <a href="operations_8c.html#a4f093c329035a9002e6bb3e9b347c8c0">Mais...</a><br /></td></tr>
+<tr class="separator:a4f093c329035a9002e6bb3e9b347c8c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0be10fa2e7b410007fa5f636331ab467"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="operations_8c.html#a0be10fa2e7b410007fa5f636331ab467">sub</a> (<a class="el" href="structSTACK.html">STACK</a> *s)</td></tr>
+<tr class="memdesc:a0be10fa2e7b410007fa5f636331ab467"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que subtrai dois elementos da stack.  <a href="operations_8c.html#a0be10fa2e7b410007fa5f636331ab467">Mais...</a><br /></td></tr>
+<tr class="separator:a0be10fa2e7b410007fa5f636331ab467"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a677f43a17e3ec86964dcedfdcf7ff731"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="operations_8c.html#a677f43a17e3ec86964dcedfdcf7ff731">mult</a> (<a class="el" href="structSTACK.html">STACK</a> *s)</td></tr>
+<tr class="memdesc:a677f43a17e3ec86964dcedfdcf7ff731"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que multiplica dois elementos da stack.  <a href="operations_8c.html#a677f43a17e3ec86964dcedfdcf7ff731">Mais...</a><br /></td></tr>
+<tr class="separator:a677f43a17e3ec86964dcedfdcf7ff731"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71ed2dcaa6269ca36d9fe95a31b47de4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="operations_8c.html#a71ed2dcaa6269ca36d9fe95a31b47de4">divi</a> (<a class="el" href="structSTACK.html">STACK</a> *s)</td></tr>
+<tr class="memdesc:a71ed2dcaa6269ca36d9fe95a31b47de4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que divide dois elementos da stack.  <a href="operations_8c.html#a71ed2dcaa6269ca36d9fe95a31b47de4">Mais...</a><br /></td></tr>
+<tr class="separator:a71ed2dcaa6269ca36d9fe95a31b47de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91b32fcc1cd83172719d552f01fa81d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="operations_8c.html#a91b32fcc1cd83172719d552f01fa81d7">rem</a> (<a class="el" href="structSTACK.html">STACK</a> *s)</td></tr>
+<tr class="memdesc:a91b32fcc1cd83172719d552f01fa81d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que calcula o resto da divisão inteiros de dois elementos da stack.  <a href="operations_8c.html#a91b32fcc1cd83172719d552f01fa81d7">Mais...</a><br /></td></tr>
+<tr class="separator:a91b32fcc1cd83172719d552f01fa81d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cfa559a2ed1203d1563ffd75f944e7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="operations_8c.html#a3cfa559a2ed1203d1563ffd75f944e7a">power</a> (<a class="el" href="structSTACK.html">STACK</a> *s)</td></tr>
+<tr class="memdesc:a3cfa559a2ed1203d1563ffd75f944e7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que calcula a exponenciação de dois elementos da stack.  <a href="operations_8c.html#a3cfa559a2ed1203d1563ffd75f944e7a">Mais...</a><br /></td></tr>
+<tr class="separator:a3cfa559a2ed1203d1563ffd75f944e7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d207f7dff5e9ec8ef6c46c712a02f54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="operations_8c.html#a1d207f7dff5e9ec8ef6c46c712a02f54">bw_xor</a> (<a class="el" href="structSTACK.html">STACK</a> *s)</td></tr>
+<tr class="memdesc:a1d207f7dff5e9ec8ef6c46c712a02f54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que calcula, ao nível dos bits, o "ou exclusivo" entre dois elementos da stack.  <a href="operations_8c.html#a1d207f7dff5e9ec8ef6c46c712a02f54">Mais...</a><br /></td></tr>
+<tr class="separator:a1d207f7dff5e9ec8ef6c46c712a02f54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a404f99b692493c72a7ed04916a2e896e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="operations_8c.html#a404f99b692493c72a7ed04916a2e896e">bw_and</a> (<a class="el" href="structSTACK.html">STACK</a> *s)</td></tr>
+<tr class="memdesc:a404f99b692493c72a7ed04916a2e896e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que calcula, ao nível dos bits, o "e" entre dois elementos da stack.  <a href="operations_8c.html#a404f99b692493c72a7ed04916a2e896e">Mais...</a><br /></td></tr>
+<tr class="separator:a404f99b692493c72a7ed04916a2e896e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a0d2fc7985d743ed5296dcde192f58d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="operations_8c.html#a2a0d2fc7985d743ed5296dcde192f58d">bw_or</a> (<a class="el" href="structSTACK.html">STACK</a> *s)</td></tr>
+<tr class="memdesc:a2a0d2fc7985d743ed5296dcde192f58d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que calcula, ao nível dos bits, o "ou" entre dois elementos da stack.  <a href="operations_8c.html#a2a0d2fc7985d743ed5296dcde192f58d">Mais...</a><br /></td></tr>
+<tr class="separator:a2a0d2fc7985d743ed5296dcde192f58d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a764302a501a724ac69b681c0928303de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="operations_8c.html#a764302a501a724ac69b681c0928303de">increment</a> (<a class="el" href="structSTACK.html">STACK</a> *s)</td></tr>
+<tr class="memdesc:a764302a501a724ac69b681c0928303de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que incrementa um elemento da stack.  <a href="operations_8c.html#a764302a501a724ac69b681c0928303de">Mais...</a><br /></td></tr>
+<tr class="separator:a764302a501a724ac69b681c0928303de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c5bdba500f413c422fb2deb781be8d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="operations_8c.html#a3c5bdba500f413c422fb2deb781be8d2">decrement</a> (<a class="el" href="structSTACK.html">STACK</a> *s)</td></tr>
+<tr class="memdesc:a3c5bdba500f413c422fb2deb781be8d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que decrementa um elemento da stack.  <a href="operations_8c.html#a3c5bdba500f413c422fb2deb781be8d2">Mais...</a><br /></td></tr>
+<tr class="separator:a3c5bdba500f413c422fb2deb781be8d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47a97e16d8344db980f51604c44d996a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="operations_8c.html#a47a97e16d8344db980f51604c44d996a">bw_not</a> (<a class="el" href="structSTACK.html">STACK</a> *s)</td></tr>
+<tr class="memdesc:a47a97e16d8344db980f51604c44d996a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função que calcula, ao nível dos bits, o "not" de um elemento da stack.  <a href="operations_8c.html#a47a97e16d8344db980f51604c44d996a">Mais...</a><br /></td></tr>
+<tr class="separator:a47a97e16d8344db980f51604c44d996a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Documentação das funções</h2>
+<a id="a404f99b692493c72a7ed04916a2e896e" name="a404f99b692493c72a7ed04916a2e896e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a404f99b692493c72a7ed04916a2e896e">&#9670;&nbsp;</a></span>bw_and()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bw_and </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSTACK.html">STACK</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que calcula, ao nível dos bits, o "e" entre dois elementos da stack. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Um apontador para a stack. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definido na linha <a class="el" href="operations_8c_source.html#l00127">127</a> do ficheiro <a class="el" href="operations_8c_source.html">operations.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  127</span>                      {</div>
+<div class="line"><span class="lineno">  128</span>    <span class="keywordtype">int</span> x, y;</div>
+<div class="line"><span class="lineno">  129</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;x) == 0);</div>
+<div class="line"><span class="lineno">  130</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;y) == 0);</div>
+<div class="line"><span class="lineno">  131</span> </div>
+<div class="line"><span class="lineno">  132</span>    <a class="code hl_function" href="stack_8c.html#a1434f9b9bed78e32bcb538d626db20ab">push</a>(s, x &amp; y);</div>
+<div class="line"><span class="lineno">  133</span>}</div>
+<div class="ttc" id="astack_8c_html_a1434f9b9bed78e32bcb538d626db20ab"><div class="ttname"><a href="stack_8c.html#a1434f9b9bed78e32bcb538d626db20ab">push</a></div><div class="ttdeci">int push(STACK *s, int elem)</div><div class="ttdef"><b>Definition:</b> <a href="stack_8c_source.html#l00036">stack.c:36</a></div></div>
+<div class="ttc" id="astack_8c_html_a50aeb87b23e93cc45de776873a7f1455"><div class="ttname"><a href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a></div><div class="ttdeci">int pop(STACK *s, int *elem)</div><div class="ttdef"><b>Definition:</b> <a href="stack_8c_source.html#l00048">stack.c:48</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a47a97e16d8344db980f51604c44d996a" name="a47a97e16d8344db980f51604c44d996a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47a97e16d8344db980f51604c44d996a">&#9670;&nbsp;</a></span>bw_not()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bw_not </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSTACK.html">STACK</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que calcula, ao nível dos bits, o "not" de um elemento da stack. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Um apontador para a stack. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definido na linha <a class="el" href="operations_8c_source.html#l00157">157</a> do ficheiro <a class="el" href="operations_8c_source.html">operations.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  157</span>                      {</div>
+<div class="line"><span class="lineno">  158</span>    <span class="keywordtype">int</span> x;</div>
+<div class="line"><span class="lineno">  159</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;x) == 0);</div>
+<div class="line"><span class="lineno">  160</span> </div>
+<div class="line"><span class="lineno">  161</span>    <a class="code hl_function" href="stack_8c.html#a1434f9b9bed78e32bcb538d626db20ab">push</a>(s, ~x);</div>
+<div class="line"><span class="lineno">  162</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2a0d2fc7985d743ed5296dcde192f58d" name="a2a0d2fc7985d743ed5296dcde192f58d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a0d2fc7985d743ed5296dcde192f58d">&#9670;&nbsp;</a></span>bw_or()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bw_or </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSTACK.html">STACK</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que calcula, ao nível dos bits, o "ou" entre dois elementos da stack. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Um apontador para a stack. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definido na linha <a class="el" href="operations_8c_source.html#l00135">135</a> do ficheiro <a class="el" href="operations_8c_source.html">operations.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  135</span>                     {</div>
+<div class="line"><span class="lineno">  136</span>    <span class="keywordtype">int</span> x, y;</div>
+<div class="line"><span class="lineno">  137</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;x) == 0);</div>
+<div class="line"><span class="lineno">  138</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;y) == 0);</div>
+<div class="line"><span class="lineno">  139</span> </div>
+<div class="line"><span class="lineno">  140</span>    <a class="code hl_function" href="stack_8c.html#a1434f9b9bed78e32bcb538d626db20ab">push</a>(s, x | y);</div>
+<div class="line"><span class="lineno">  141</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1d207f7dff5e9ec8ef6c46c712a02f54" name="a1d207f7dff5e9ec8ef6c46c712a02f54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d207f7dff5e9ec8ef6c46c712a02f54">&#9670;&nbsp;</a></span>bw_xor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bw_xor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSTACK.html">STACK</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que calcula, ao nível dos bits, o "ou exclusivo" entre dois elementos da stack. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Um apontador para a stack. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definido na linha <a class="el" href="operations_8c_source.html#l00119">119</a> do ficheiro <a class="el" href="operations_8c_source.html">operations.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  119</span>                      {</div>
+<div class="line"><span class="lineno">  120</span>    <span class="keywordtype">int</span> x, y;</div>
+<div class="line"><span class="lineno">  121</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;x) == 0);</div>
+<div class="line"><span class="lineno">  122</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;y) == 0);</div>
+<div class="line"><span class="lineno">  123</span> </div>
+<div class="line"><span class="lineno">  124</span>    <a class="code hl_function" href="stack_8c.html#a1434f9b9bed78e32bcb538d626db20ab">push</a>(s, x ^ y);</div>
+<div class="line"><span class="lineno">  125</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3c5bdba500f413c422fb2deb781be8d2" name="a3c5bdba500f413c422fb2deb781be8d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c5bdba500f413c422fb2deb781be8d2">&#9670;&nbsp;</a></span>decrement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void decrement </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSTACK.html">STACK</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que decrementa um elemento da stack. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Um apontador para a stack. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definido na linha <a class="el" href="operations_8c_source.html#l00150">150</a> do ficheiro <a class="el" href="operations_8c_source.html">operations.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  150</span>                         {</div>
+<div class="line"><span class="lineno">  151</span>    <span class="keywordtype">int</span> x;</div>
+<div class="line"><span class="lineno">  152</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;x) == 0);</div>
+<div class="line"><span class="lineno">  153</span> </div>
+<div class="line"><span class="lineno">  154</span>    <a class="code hl_function" href="stack_8c.html#a1434f9b9bed78e32bcb538d626db20ab">push</a>(s, --x);</div>
+<div class="line"><span class="lineno">  155</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2352339cb3063f267fc391dfa14c6ff4" name="a2352339cb3063f267fc391dfa14c6ff4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2352339cb3063f267fc391dfa14c6ff4">&#9670;&nbsp;</a></span>dispatch_table()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void dispatch_table </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSTACK.html">STACK</a> *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>operator</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Uma tabela de despacho responsável por invocar a função correspondente ao operador dado. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Um apontador para a stack. </td></tr>
+    <tr><td class="paramname">operator</td><td>O operador. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definido na linha <a class="el" href="operations_8c_source.html#l00048">48</a> do ficheiro <a class="el" href="operations_8c_source.html">operations.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   48</span>                                             {</div>
+<div class="line"><span class="lineno">   49</span>    <a class="code hl_typedef" href="operations_8h.html#aaba375d425cf8f4cdbb1b1b9c1caf2e0">function</a> table[] = {</div>
+<div class="line"><span class="lineno">   50</span>        <a class="code hl_function" href="operations_8c.html#a4f093c329035a9002e6bb3e9b347c8c0">sum</a>, </div>
+<div class="line"><span class="lineno">   51</span>        <a class="code hl_function" href="operations_8c.html#a0be10fa2e7b410007fa5f636331ab467">sub</a>,</div>
+<div class="line"><span class="lineno">   52</span>        <a class="code hl_function" href="operations_8c.html#a677f43a17e3ec86964dcedfdcf7ff731">mult</a>,</div>
+<div class="line"><span class="lineno">   53</span>        <a class="code hl_function" href="operations_8c.html#a71ed2dcaa6269ca36d9fe95a31b47de4">divi</a>,</div>
+<div class="line"><span class="lineno">   54</span>        <a class="code hl_function" href="operations_8c.html#a91b32fcc1cd83172719d552f01fa81d7">rem</a>,</div>
+<div class="line"><span class="lineno">   55</span>        <a class="code hl_function" href="operations_8c.html#a3cfa559a2ed1203d1563ffd75f944e7a">power</a>,</div>
+<div class="line"><span class="lineno">   56</span>        <a class="code hl_function" href="operations_8c.html#a1d207f7dff5e9ec8ef6c46c712a02f54">bw_xor</a>,</div>
+<div class="line"><span class="lineno">   57</span>        <a class="code hl_function" href="operations_8c.html#a404f99b692493c72a7ed04916a2e896e">bw_and</a>,</div>
+<div class="line"><span class="lineno">   58</span>        <a class="code hl_function" href="operations_8c.html#a2a0d2fc7985d743ed5296dcde192f58d">bw_or</a>,</div>
+<div class="line"><span class="lineno">   59</span>        <a class="code hl_function" href="operations_8c.html#a764302a501a724ac69b681c0928303de">increment</a>,</div>
+<div class="line"><span class="lineno">   60</span>        <a class="code hl_function" href="operations_8c.html#a3c5bdba500f413c422fb2deb781be8d2">decrement</a>,</div>
+<div class="line"><span class="lineno">   61</span>        <a class="code hl_function" href="operations_8c.html#a47a97e16d8344db980f51604c44d996a">bw_not</a></div>
+<div class="line"><span class="lineno">   62</span>    };</div>
+<div class="line"><span class="lineno">   63</span> </div>
+<div class="line"><span class="lineno">   64</span>    <span class="keywordtype">int</span> index = <a class="code hl_function" href="operations_8c.html#ab9d682d6ffcc0608d184da487ea89f68">get_index</a>(<span class="keyword">operator</span>);</div>
+<div class="line"><span class="lineno">   65</span> </div>
+<div class="line"><span class="lineno">   66</span>    table[index](s);</div>
+<div class="line"><span class="lineno">   67</span>}</div>
+<div class="ttc" id="aoperations_8c_html_a0be10fa2e7b410007fa5f636331ab467"><div class="ttname"><a href="operations_8c.html#a0be10fa2e7b410007fa5f636331ab467">sub</a></div><div class="ttdeci">void sub(STACK *s)</div><div class="ttdoc">Função que subtrai dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00078">operations.c:78</a></div></div>
+<div class="ttc" id="aoperations_8c_html_a1d207f7dff5e9ec8ef6c46c712a02f54"><div class="ttname"><a href="operations_8c.html#a1d207f7dff5e9ec8ef6c46c712a02f54">bw_xor</a></div><div class="ttdeci">void bw_xor(STACK *s)</div><div class="ttdoc">Função que calcula, ao nível dos bits, o &quot;ou exclusivo&quot; entre dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00119">operations.c:119</a></div></div>
+<div class="ttc" id="aoperations_8c_html_a2a0d2fc7985d743ed5296dcde192f58d"><div class="ttname"><a href="operations_8c.html#a2a0d2fc7985d743ed5296dcde192f58d">bw_or</a></div><div class="ttdeci">void bw_or(STACK *s)</div><div class="ttdoc">Função que calcula, ao nível dos bits, o &quot;ou&quot; entre dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00135">operations.c:135</a></div></div>
+<div class="ttc" id="aoperations_8c_html_a3c5bdba500f413c422fb2deb781be8d2"><div class="ttname"><a href="operations_8c.html#a3c5bdba500f413c422fb2deb781be8d2">decrement</a></div><div class="ttdeci">void decrement(STACK *s)</div><div class="ttdoc">Função que decrementa um elemento da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00150">operations.c:150</a></div></div>
+<div class="ttc" id="aoperations_8c_html_a3cfa559a2ed1203d1563ffd75f944e7a"><div class="ttname"><a href="operations_8c.html#a3cfa559a2ed1203d1563ffd75f944e7a">power</a></div><div class="ttdeci">void power(STACK *s)</div><div class="ttdoc">Função que calcula a exponenciação de dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00111">operations.c:111</a></div></div>
+<div class="ttc" id="aoperations_8c_html_a404f99b692493c72a7ed04916a2e896e"><div class="ttname"><a href="operations_8c.html#a404f99b692493c72a7ed04916a2e896e">bw_and</a></div><div class="ttdeci">void bw_and(STACK *s)</div><div class="ttdoc">Função que calcula, ao nível dos bits, o &quot;e&quot; entre dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00127">operations.c:127</a></div></div>
+<div class="ttc" id="aoperations_8c_html_a47a97e16d8344db980f51604c44d996a"><div class="ttname"><a href="operations_8c.html#a47a97e16d8344db980f51604c44d996a">bw_not</a></div><div class="ttdeci">void bw_not(STACK *s)</div><div class="ttdoc">Função que calcula, ao nível dos bits, o &quot;not&quot; de um elemento da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00157">operations.c:157</a></div></div>
+<div class="ttc" id="aoperations_8c_html_a4f093c329035a9002e6bb3e9b347c8c0"><div class="ttname"><a href="operations_8c.html#a4f093c329035a9002e6bb3e9b347c8c0">sum</a></div><div class="ttdeci">void sum(STACK *s)</div><div class="ttdoc">Função que soma dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00069">operations.c:69</a></div></div>
+<div class="ttc" id="aoperations_8c_html_a677f43a17e3ec86964dcedfdcf7ff731"><div class="ttname"><a href="operations_8c.html#a677f43a17e3ec86964dcedfdcf7ff731">mult</a></div><div class="ttdeci">void mult(STACK *s)</div><div class="ttdoc">Função que multiplica dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00087">operations.c:87</a></div></div>
+<div class="ttc" id="aoperations_8c_html_a71ed2dcaa6269ca36d9fe95a31b47de4"><div class="ttname"><a href="operations_8c.html#a71ed2dcaa6269ca36d9fe95a31b47de4">divi</a></div><div class="ttdeci">void divi(STACK *s)</div><div class="ttdoc">Função que divide dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00095">operations.c:95</a></div></div>
+<div class="ttc" id="aoperations_8c_html_a764302a501a724ac69b681c0928303de"><div class="ttname"><a href="operations_8c.html#a764302a501a724ac69b681c0928303de">increment</a></div><div class="ttdeci">void increment(STACK *s)</div><div class="ttdoc">Função que incrementa um elemento da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00143">operations.c:143</a></div></div>
+<div class="ttc" id="aoperations_8c_html_a91b32fcc1cd83172719d552f01fa81d7"><div class="ttname"><a href="operations_8c.html#a91b32fcc1cd83172719d552f01fa81d7">rem</a></div><div class="ttdeci">void rem(STACK *s)</div><div class="ttdoc">Função que calcula o resto da divisão inteiros de dois elementos da stack.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00103">operations.c:103</a></div></div>
+<div class="ttc" id="aoperations_8c_html_ab9d682d6ffcc0608d184da487ea89f68"><div class="ttname"><a href="operations_8c.html#ab9d682d6ffcc0608d184da487ea89f68">get_index</a></div><div class="ttdeci">int get_index(char operator)</div><div class="ttdoc">Função que retorna o índice associado a um operador.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00036">operations.c:36</a></div></div>
+<div class="ttc" id="aoperations_8h_html_aaba375d425cf8f4cdbb1b1b9c1caf2e0"><div class="ttname"><a href="operations_8h.html#aaba375d425cf8f4cdbb1b1b9c1caf2e0">function</a></div><div class="ttdeci">void(* function)(STACK *s)</div><div class="ttdoc">Definição do tipo de cada elemento da tabela de despacho.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8h_source.html#l00039">operations.h:39</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a71ed2dcaa6269ca36d9fe95a31b47de4" name="a71ed2dcaa6269ca36d9fe95a31b47de4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71ed2dcaa6269ca36d9fe95a31b47de4">&#9670;&nbsp;</a></span>divi()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void divi </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSTACK.html">STACK</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que divide dois elementos da stack. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Um apontador para a stack. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definido na linha <a class="el" href="operations_8c_source.html#l00095">95</a> do ficheiro <a class="el" href="operations_8c_source.html">operations.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   95</span>                    {</div>
+<div class="line"><span class="lineno">   96</span>    <span class="keywordtype">int</span> x, y;</div>
+<div class="line"><span class="lineno">   97</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;y) == 0);</div>
+<div class="line"><span class="lineno">   98</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;x) == 0);                              </div>
+<div class="line"><span class="lineno">   99</span> </div>
+<div class="line"><span class="lineno">  100</span>    <a class="code hl_function" href="stack_8c.html#a1434f9b9bed78e32bcb538d626db20ab">push</a>(s, x / y);</div>
+<div class="line"><span class="lineno">  101</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab9d682d6ffcc0608d184da487ea89f68" name="ab9d682d6ffcc0608d184da487ea89f68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9d682d6ffcc0608d184da487ea89f68">&#9670;&nbsp;</a></span>get_index()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int get_index </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>operator</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que retorna o índice associado a um operador. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">operator</td><td>O operador. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>int </dd></dl>
+
+<p class="definition">Definido na linha <a class="el" href="operations_8c_source.html#l00036">36</a> do ficheiro <a class="el" href="operations_8c_source.html">operations.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   36</span>                             {</div>
+<div class="line"><span class="lineno">   37</span>    <span class="keywordtype">int</span> index = -1;</div>
+<div class="line"><span class="lineno">   38</span> </div>
+<div class="line"><span class="lineno">   39</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code hl_define" href="operations_8h.html#ab80c84c45bedd30f360e9cffb763c563">N_OPERATORS</a>; i++) {</div>
+<div class="line"><span class="lineno">   40</span>        <span class="keywordflow">if</span> (<span class="keyword">operator</span> == <a class="code hl_function" href="operations_8c.html#a2b21279929babdaa6ae2c154d03b2b34">get_operator</a>(i)) {</div>
+<div class="line"><span class="lineno">   41</span>            index = i;</div>
+<div class="line"><span class="lineno">   42</span>        }</div>
+<div class="line"><span class="lineno">   43</span>    }</div>
+<div class="line"><span class="lineno">   44</span> </div>
+<div class="line"><span class="lineno">   45</span>    <span class="keywordflow">return</span> index;</div>
+<div class="line"><span class="lineno">   46</span>}</div>
+<div class="ttc" id="aoperations_8c_html_a2b21279929babdaa6ae2c154d03b2b34"><div class="ttname"><a href="operations_8c.html#a2b21279929babdaa6ae2c154d03b2b34">get_operator</a></div><div class="ttdeci">char get_operator(int i)</div><div class="ttdoc">Função que retorna o operador associado ao índice dado.</div><div class="ttdef"><b>Definition:</b> <a href="operations_8c_source.html#l00007">operations.c:7</a></div></div>
+<div class="ttc" id="aoperations_8h_html_ab80c84c45bedd30f360e9cffb763c563"><div class="ttname"><a href="operations_8h.html#ab80c84c45bedd30f360e9cffb763c563">N_OPERATORS</a></div><div class="ttdeci">#define N_OPERATORS</div><div class="ttdef"><b>Definition:</b> <a href="operations_8h_source.html#l00001">operations.h:1</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2b21279929babdaa6ae2c154d03b2b34" name="a2b21279929babdaa6ae2c154d03b2b34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b21279929babdaa6ae2c154d03b2b34">&#9670;&nbsp;</a></span>get_operator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char get_operator </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que retorna o operador associado ao índice dado. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td>O índice. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>char </dd></dl>
+
+<p class="definition">Definido na linha <a class="el" href="operations_8c_source.html#l00007">7</a> do ficheiro <a class="el" href="operations_8c_source.html">operations.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">    7</span>                         {</div>
+<div class="line"><span class="lineno">    8</span>    <span class="keyword">static</span> <span class="keywordtype">char</span> <span class="keyword">const</span> operators[<a class="code hl_define" href="operations_8h.html#ab80c84c45bedd30f360e9cffb763c563">N_OPERATORS</a>] = {</div>
+<div class="line"><span class="lineno">    9</span>        <span class="charliteral">&#39;+&#39;</span>,</div>
+<div class="line"><span class="lineno">   10</span>        <span class="charliteral">&#39;-&#39;</span>,</div>
+<div class="line"><span class="lineno">   11</span>        <span class="charliteral">&#39;*&#39;</span>,</div>
+<div class="line"><span class="lineno">   12</span>        <span class="charliteral">&#39;/&#39;</span>,</div>
+<div class="line"><span class="lineno">   13</span>        <span class="charliteral">&#39;%&#39;</span>,</div>
+<div class="line"><span class="lineno">   14</span>        <span class="charliteral">&#39;#&#39;</span>,</div>
+<div class="line"><span class="lineno">   15</span>        <span class="charliteral">&#39;^&#39;</span>,</div>
+<div class="line"><span class="lineno">   16</span>        <span class="charliteral">&#39;&amp;&#39;</span>,</div>
+<div class="line"><span class="lineno">   17</span>        <span class="charliteral">&#39;|&#39;</span>,</div>
+<div class="line"><span class="lineno">   18</span>        <span class="charliteral">&#39;)&#39;</span>,</div>
+<div class="line"><span class="lineno">   19</span>        <span class="charliteral">&#39;(&#39;</span>,</div>
+<div class="line"><span class="lineno">   20</span>        <span class="charliteral">&#39;~&#39;</span></div>
+<div class="line"><span class="lineno">   21</span>    };</div>
+<div class="line"><span class="lineno">   22</span> </div>
+<div class="line"><span class="lineno">   23</span>    <span class="keywordflow">return</span> operators[i];</div>
+<div class="line"><span class="lineno">   24</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a764302a501a724ac69b681c0928303de" name="a764302a501a724ac69b681c0928303de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a764302a501a724ac69b681c0928303de">&#9670;&nbsp;</a></span>increment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void increment </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSTACK.html">STACK</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que incrementa um elemento da stack. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Um apontador para a stack. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definido na linha <a class="el" href="operations_8c_source.html#l00143">143</a> do ficheiro <a class="el" href="operations_8c_source.html">operations.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  143</span>                         {</div>
+<div class="line"><span class="lineno">  144</span>    <span class="keywordtype">int</span> x;</div>
+<div class="line"><span class="lineno">  145</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;x) == 0);</div>
+<div class="line"><span class="lineno">  146</span> </div>
+<div class="line"><span class="lineno">  147</span>    <a class="code hl_function" href="stack_8c.html#a1434f9b9bed78e32bcb538d626db20ab">push</a>(s, ++x);</div>
+<div class="line"><span class="lineno">  148</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2ed3e19c7ee228d940f902f81280ccba" name="a2ed3e19c7ee228d940f902f81280ccba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ed3e19c7ee228d940f902f81280ccba">&#9670;&nbsp;</a></span>is_operator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int is_operator </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>token</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que verifica se um dado char é um operador. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">token</td><td>Uma string cujo primeiro elemento é o char a ser verificado. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Retorna</dt><dd>int </dd></dl>
+
+<p class="definition">Definido na linha <a class="el" href="operations_8c_source.html#l00026">26</a> do ficheiro <a class="el" href="operations_8c_source.html">operations.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   26</span>                             {</div>
+<div class="line"><span class="lineno">   27</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code hl_define" href="operations_8h.html#ab80c84c45bedd30f360e9cffb763c563">N_OPERATORS</a>; i++) {</div>
+<div class="line"><span class="lineno">   28</span>        <span class="keywordflow">if</span> (token[0] == <a class="code hl_function" href="operations_8c.html#a2b21279929babdaa6ae2c154d03b2b34">get_operator</a>(i)) {</div>
+<div class="line"><span class="lineno">   29</span>            <span class="keywordflow">return</span> 1;</div>
+<div class="line"><span class="lineno">   30</span>        }</div>
+<div class="line"><span class="lineno">   31</span>    }</div>
+<div class="line"><span class="lineno">   32</span>    </div>
+<div class="line"><span class="lineno">   33</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><span class="lineno">   34</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a677f43a17e3ec86964dcedfdcf7ff731" name="a677f43a17e3ec86964dcedfdcf7ff731"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a677f43a17e3ec86964dcedfdcf7ff731">&#9670;&nbsp;</a></span>mult()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mult </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSTACK.html">STACK</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que multiplica dois elementos da stack. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Um apontador para a stack. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definido na linha <a class="el" href="operations_8c_source.html#l00087">87</a> do ficheiro <a class="el" href="operations_8c_source.html">operations.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   87</span>                    {</div>
+<div class="line"><span class="lineno">   88</span>    <span class="keywordtype">int</span> x, y;</div>
+<div class="line"><span class="lineno">   89</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;x) == 0);</div>
+<div class="line"><span class="lineno">   90</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;y) == 0);</div>
+<div class="line"><span class="lineno">   91</span> </div>
+<div class="line"><span class="lineno">   92</span>    <a class="code hl_function" href="stack_8c.html#a1434f9b9bed78e32bcb538d626db20ab">push</a>(s, x * y);</div>
+<div class="line"><span class="lineno">   93</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3cfa559a2ed1203d1563ffd75f944e7a" name="a3cfa559a2ed1203d1563ffd75f944e7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3cfa559a2ed1203d1563ffd75f944e7a">&#9670;&nbsp;</a></span>power()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void power </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSTACK.html">STACK</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que calcula a exponenciação de dois elementos da stack. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definido na linha <a class="el" href="operations_8c_source.html#l00111">111</a> do ficheiro <a class="el" href="operations_8c_source.html">operations.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  111</span>                     {</div>
+<div class="line"><span class="lineno">  112</span>    <span class="keywordtype">int</span> x, y;</div>
+<div class="line"><span class="lineno">  113</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;y) == 0);</div>
+<div class="line"><span class="lineno">  114</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;x) == 0);</div>
+<div class="line"><span class="lineno">  115</span> </div>
+<div class="line"><span class="lineno">  116</span>    <a class="code hl_function" href="stack_8c.html#a1434f9b9bed78e32bcb538d626db20ab">push</a>(s, pow(x, y));</div>
+<div class="line"><span class="lineno">  117</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a91b32fcc1cd83172719d552f01fa81d7" name="a91b32fcc1cd83172719d552f01fa81d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91b32fcc1cd83172719d552f01fa81d7">&#9670;&nbsp;</a></span>rem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rem </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSTACK.html">STACK</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que calcula o resto da divisão inteiros de dois elementos da stack. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Um apontador para a stack. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definido na linha <a class="el" href="operations_8c_source.html#l00103">103</a> do ficheiro <a class="el" href="operations_8c_source.html">operations.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  103</span>                   {</div>
+<div class="line"><span class="lineno">  104</span>    <span class="keywordtype">int</span> x, y;</div>
+<div class="line"><span class="lineno">  105</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;y) == 0);</div>
+<div class="line"><span class="lineno">  106</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;x) == 0);                              </div>
+<div class="line"><span class="lineno">  107</span> </div>
+<div class="line"><span class="lineno">  108</span>    <a class="code hl_function" href="stack_8c.html#a1434f9b9bed78e32bcb538d626db20ab">push</a>(s, x % y);</div>
+<div class="line"><span class="lineno">  109</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0be10fa2e7b410007fa5f636331ab467" name="a0be10fa2e7b410007fa5f636331ab467"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0be10fa2e7b410007fa5f636331ab467">&#9670;&nbsp;</a></span>sub()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sub </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSTACK.html">STACK</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que subtrai dois elementos da stack. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Um apontador para a stack. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definido na linha <a class="el" href="operations_8c_source.html#l00078">78</a> do ficheiro <a class="el" href="operations_8c_source.html">operations.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   78</span>                   {</div>
+<div class="line"><span class="lineno">   79</span>    <span class="keywordtype">int</span> x, y;</div>
+<div class="line"><span class="lineno">   80</span>    </div>
+<div class="line"><span class="lineno">   81</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;y) == 0);</div>
+<div class="line"><span class="lineno">   82</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;x) == 0);</div>
+<div class="line"><span class="lineno">   83</span> </div>
+<div class="line"><span class="lineno">   84</span>    <a class="code hl_function" href="stack_8c.html#a1434f9b9bed78e32bcb538d626db20ab">push</a>(s, x - y);</div>
+<div class="line"><span class="lineno">   85</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4f093c329035a9002e6bb3e9b347c8c0" name="a4f093c329035a9002e6bb3e9b347c8c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f093c329035a9002e6bb3e9b347c8c0">&#9670;&nbsp;</a></span>sum()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sum </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSTACK.html">STACK</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Função que soma dois elementos da stack. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Um apontador para a stack. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definido na linha <a class="el" href="operations_8c_source.html#l00069">69</a> do ficheiro <a class="el" href="operations_8c_source.html">operations.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   69</span>                   {</div>
+<div class="line"><span class="lineno">   70</span>    <span class="keywordtype">int</span> x, y;</div>
+<div class="line"><span class="lineno">   71</span>    </div>
+<div class="line"><span class="lineno">   72</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;x) == 0);</div>
+<div class="line"><span class="lineno">   73</span>    assert(<a class="code hl_function" href="stack_8c.html#a50aeb87b23e93cc45de776873a7f1455">pop</a>(s, &amp;y) == 0);</div>
+<div class="line"><span class="lineno">   74</span> </div>
+<div class="line"><span class="lineno">   75</span>    <a class="code hl_function" href="stack_8c.html#a1434f9b9bed78e32bcb538d626db20ab">push</a>(s, x + y);</div>
+<div class="line"><span class="lineno">   76</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+</small></address>
+</body>
+</html>
