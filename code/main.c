@@ -6,7 +6,7 @@
 #include "parser.h"
 
 /**
- * @brief Função principal do programa.
+ * @brief Função principal do programa
  * 
  * @return int 
  */
