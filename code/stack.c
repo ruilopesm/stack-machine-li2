@@ -7,7 +7,7 @@ STACK *create_stack() {
     STACK *s = malloc(sizeof(STACK));
     s->sp = 0;
     s->size = 100;
-    s->stc = calloc(sizeof(int), s->size);
+    s->stc = calloc(sizeof(STACK_ELEM), s->size);
 
     return s;
 }
@@ -24,7 +24,21 @@ int increase_stack(STACK *s) {
 
 void print_stack(STACK *s) {
     for (int i = 0; i < s->sp; i++) {
-        printf("%d", s->stc[i]);
+        STACK_ELEM current = s->stc[i];
+
+        if (current.t == LONG) {
+            printf("%ld", current.data.l);
+            // Testing purposes
+            printf("The result is a long!\n");
+        }
+        else if (current.t == CHAR) {
+            printf("%c", current.data.c);
+        }
+        else if (current.t == DOUBLE) {
+            printf("%lg", current.data.d);
+            // Testing purposes
+            printf("\nThe result is a double!\n");
+        }
     }
     putchar('\n');
 }
@@ -37,7 +51,7 @@ void free_stack(STACK *s) {
     free(s);
 }
 
-int push(STACK *s, int elem) {
+int push(STACK *s, STACK_ELEM elem) {
     if (s->sp == s->size) { 
         // Se não for possível duplicar o tamanho da stack: retorna 1 (ERRO)
         if (increase_stack(s)) { 
@@ -50,18 +64,18 @@ int push(STACK *s, int elem) {
     return 0;
 }
 
-int pop(STACK *s, int *elem) {
+int pop(STACK *s, STACK_ELEM *elem) {
     // Se a stack estiver vazia: retorna 1 (ERRO)
     if (s->sp == 0) {
         return 1; 
     }
-    s->sp--; 
+    s->sp--;
     *elem = s->stc[s->sp];
 
     return 0;
 }
 
-int peek(STACK *s, int *elem) {
+int peek(STACK *s, STACK_ELEM *elem) {
     // Se a stack estiver vazia: retorna 1 (ERRO)
     if (s->sp == 0) {
         return 1;
