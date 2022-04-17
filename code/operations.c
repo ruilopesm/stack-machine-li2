@@ -7,17 +7,17 @@
 char get_operator(int i) {
     static char const operators[N_OPERATORS] = {
         '+',
-        '-',
-        '*',
-        '/',
-        '%',
-        '#',
-        '^',
-        '&',
-        '|',
-        ')',
-        '(',
-        '~'
+        // '-',
+        // '*',
+        // '/',
+        // '%',
+        // '#',
+        // '^',
+        // '&',
+        // '|',
+        // ')',
+        // '(',
+        // '~'
     };
 
     return operators[i];
@@ -42,23 +42,24 @@ int get_index(char operator) {
         }
     }
 
+    // Caso o operador não tenha sido encontrado: retorna -1 (ERRO)
     return index;
 }
 
 void dispatch_table(STACK *s, char operator) {
     function table[] = {
         sum, 
-        sub,
-        mult,
-        divi,
-        rem,
-        power,
-        bw_xor,
-        bw_and,
-        bw_or,
-        increment,
-        decrement,
-        bw_not
+        // sub,
+        // mult,
+        // divi,
+        // rem,
+        // power,
+        // bw_xor,
+        // bw_and,
+        // bw_or,
+        // increment,
+        // decrement,
+        // bw_not
     }; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
 
     int index = get_index(operator);
@@ -67,106 +68,128 @@ void dispatch_table(STACK *s, char operator) {
 }
 
 void sum(STACK *s) {
-    int x, y;
+    STACK_ELEM x, y;
     
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
 
-    push(s, x + y);
-}
-
-void sub(STACK *s) {
-    int x, y;
+    STACK_ELEM result;
     
-    assert(pop(s, &y) == 0);
-    assert(pop(s, &x) == 0);
-
-    push(s, x - y);
+    if (x.t == LONG) {
+        if (y.t == DOUBLE) {
+            result.t = DOUBLE;
+            result.data.d = x.data.l + y.data.d;
+        }
+        else if (y.t == LONG) {
+            result.t = LONG;
+            result.data.l = x.data.l + y.data.l;
+        }
+    } 
+    else if (x.t == DOUBLE) {
+        if (y.t == LONG) {
+            result.t = DOUBLE;
+            result.data.d = x.data.d + y.data.l;
+        }
+        else if (y.t == DOUBLE) {
+            result.t = DOUBLE;
+            result.data.d = x.data.d + y.data.d;
+        }  
+    }
+    push(s, result);
 }
 
-void mult(STACK *s) {
-    int x, y;
+// void sub(STACK *s) {
+//     int x, y;
     
-    assert(pop(s, &x) == 0);
-    assert(pop(s, &y) == 0); 
+//     assert(pop(s, &y) == 0);
+//     assert(pop(s, &x) == 0);
 
-    push(s, x * y);
-}
+//     push(s, x - y);
+// }
 
-void divi(STACK *s) {
-    int x, y;
+// void mult(STACK *s) {
+//     int x, y;
     
-    assert(pop(s, &y) == 0);
-    assert(pop(s, &x) == 0);
+//     assert(pop(s, &x) == 0);
+//     assert(pop(s, &y) == 0); 
 
-    push(s, x / y);
-}
+//     push(s, x * y);
+// }
 
-void rem(STACK *s) {
-    int x, y;
+// void divi(STACK *s) {
+//     int x, y;
     
-    assert(pop(s, &y) == 0);
-    assert(pop(s, &x) == 0);
+//     assert(pop(s, &y) == 0);
+//     assert(pop(s, &x) == 0);
 
-    push(s, x % y);
-}
+//     push(s, x / y);
+// }
 
-void power(STACK *s) {
-    int x, y;
+// void rem(STACK *s) {
+//     int x, y;
     
-    assert(pop(s, &y) == 0);
-    assert(pop(s, &x) == 0);
+//     assert(pop(s, &y) == 0);
+//     assert(pop(s, &x) == 0);
 
-    push(s, pow(x, y));
-}
+//     push(s, x % y);
+// }
 
-void bw_xor(STACK *s) {
-    int x, y;
+// void power(STACK *s) {
+//     int x, y;
     
-    assert(pop(s, &x) == 0);
-    assert(pop(s, &y) == 0);
+//     assert(pop(s, &y) == 0);
+//     assert(pop(s, &x) == 0);
 
-    push(s, x ^ y);
-}
+//     push(s, pow(x, y));
+// }
 
-void bw_and(STACK *s) {
-    int x, y;
+// void bw_xor(STACK *s) {
+//     int x, y;
     
-    assert(pop(s, &x) == 0);
-    assert(pop(s, &y) == 0);
+//     assert(pop(s, &x) == 0);
+//     assert(pop(s, &y) == 0);
 
-    push(s, x & y);
-}
+//     push(s, x ^ y);
+// }
 
-void bw_or(STACK *s) {
-    int x, y;
+// void bw_and(STACK *s) {
+//     int x, y;
     
-    assert(pop(s, &x) == 0);
-    assert(pop(s, &y) == 0);
+//     assert(pop(s, &x) == 0);
+//     assert(pop(s, &y) == 0);
 
-    push(s, x | y);
-}
+//     push(s, x & y);
+// }
 
-void increment(STACK *s) {
-    int x;
+// void bw_or(STACK *s) {
+//     int x, y;
     
-    assert(pop(s, &x) == 0);
+//     assert(pop(s, &x) == 0);
+//     assert(pop(s, &y) == 0);
 
-    push(s, ++x);
-}
+//     push(s, x | y);
+// }
 
-void decrement(STACK *s) {
-    int x;
+// void increment(STACK *s) {
+//     int x;
     
-    assert(pop(s, &x) == 0);
+//     assert(pop(s, &x) == 0);
 
-    push(s, --x);
-}
+//     push(s, ++x);
+// }
 
-void bw_not(STACK *s) {
-    int x;
+// void decrement(STACK *s) {
+//     int x;
     
-    assert(pop(s, &x) == 0);
+//     assert(pop(s, &x) == 0);
 
-    push(s, ~x);
-}
+//     push(s, --x);
+// }
+
+// void bw_not(STACK *s) {
+//     int x;
+    
+//     assert(pop(s, &x) == 0);
+
+//     push(s, ~x);
+// }
