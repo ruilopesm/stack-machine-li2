@@ -1,4 +1,8 @@
-#define N_OPERATORS 12
+/**
+ * @brief Macro que define o número de operadores implementados na stack
+ * 
+ */
+#define N_OPERATORS 1
 
 /**
  * @brief Função que retorna o operador associado ao índice dado

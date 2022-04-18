@@ -1,12 +1,4 @@
-/**
- * @brief A estrutura onde constam os parâmetros da stack
- * 
- */
-typedef struct {
-    int sp; /**< O stack pointer */
-    int size; /**< O tamanho total da stack */
-    int *stc; /**< O conteúdo da stack */
-} STACK;
+#include "types.h"
 
 /**
  * @brief Inicializa uma stack com 100 posições
@@ -44,7 +36,7 @@ void free_stack(STACK *s);
  * @param elem Elemento a ser adicionado à stack
  * @return int 
  */
-int push(STACK *s, int elem);
+int push(STACK *s, STACK_ELEM elem);
 
 /**
  * @brief Retira o elemento que está no topo da stack
@@ -53,7 +45,7 @@ int push(STACK *s, int elem);
  * @param elem Apontador para o elemento que será retirado
  * @return int 
  */
-int pop(STACK *s, int *elem);
+int pop(STACK *s, STACK_ELEM *elem);
 
 /**
  * @brief Encontra o elemento no topo da stack, mas não o retiro (ao contrário da 'pop')
@@ -62,4 +54,4 @@ int pop(STACK *s, int *elem);
  * @param elem Apontador para o elemento que receberá o conteúdo do topo da stack
  * @return int 
  */
-int peek(STACK *s, int *elem);
+int peek(STACK *s, STACK_ELEM *elem);
