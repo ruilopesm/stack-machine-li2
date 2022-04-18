@@ -35,6 +35,19 @@ void handle_token(STACK *s, char *token) {
             // Testing purposes
             printf("A double has been pushed into the stack!\n");
         }
+        // Comando que converte o topo da stack num char
+        else if (token[0] == 'c') {
+            STACK_ELEM top;
+            assert(pop(s, &top) == 0);
+
+            STACK_ELEM new = {
+                .t = CHAR,
+                .data = { .c = top.data.l }
+            };
+            assert(push(s, new) == 0);
+            // Testing purposes
+            printf("A char has been pushed into the stack!\n");
+        }
         else {
             long value;
             sscanf(token, "%ld", &value);

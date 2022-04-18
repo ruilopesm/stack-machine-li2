@@ -29,10 +29,12 @@ void print_stack(STACK *s) {
         if (current.t == LONG) {
             printf("%ld", current.data.l);
             // Testing purposes
-            printf("The result is a long!\n");
+            printf("\nThe result is a long!\n");
         }
         else if (current.t == CHAR) {
             printf("%c", current.data.c);
+            // Testing purposes
+            printf("\nThe result is a char!\n");
         }
         else if (current.t == DOUBLE) {
             printf("%lg", current.data.d);
