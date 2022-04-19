@@ -32,6 +32,12 @@ int is_long(char *token){// se é apenas algarismos
     return 1;
 }
 
+void remove_char(char *s,int p){
+    for(int i=p; s[i]!='\0';i++){
+        s[i]=s[i+1];
+    }
+}
+
 void handle_token(STACK *s, char *token) {
     // Se o símbolo for um operador, irá procurar a operação pretendida e realizá-la
     if (is_operator(token)) { 
@@ -66,11 +72,16 @@ void handle_token(STACK *s, char *token) {
         else { // Se não for long nem int é string
             char value[BUFSIZ];
             sscanf(token, "%s", value);
+            int len = strlen (value);
+            if(value[0]== '"' && value[len-1] == '"'){
+            remove_char(value,0);
+            remove_char(value,len-1);
             STACK_ELEM new = {
                 .t = STRING,
                 .data={ .s = value}
             };
             assert(push(s, new) == 0);
+            }
         }
     }
 }
