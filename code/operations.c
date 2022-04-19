@@ -41,7 +41,7 @@ int get_index(char operator) {
     int index = -1;
 
     for (int i = 0; i < N_OPERATORS; i++) {
-        if (operator== get_operator(i)) {
+        if (operator == get_operator(i)) {
             index = i;
         }
     }
