@@ -1,3 +1,7 @@
+int is_double(char *token);
+int is_long(char *token);
+void remove_char(char *s, size_t p);
+
 /**
  * @brief Realiza a operação pretendida pelo utilizador conforme o símbolo lido
  * 
