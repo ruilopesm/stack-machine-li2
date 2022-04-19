@@ -41,6 +41,11 @@ void print_stack(STACK *s) {
             // Testing purposes
             printf("\nThe result is a double!\n");
         }
+        else if (current.t == STRING) {
+            printf("%s", current.data.s);
+            // Testing purposes
+            printf("\nThe result is a string!\n");
+        }
     }
     putchar('\n');
 }

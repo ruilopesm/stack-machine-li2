@@ -8,7 +8,7 @@ typedef enum {
     LONG,
     CHAR,
     DOUBLE,
-    STRING 
+    STRING
 } TYPE;
 
 /**
@@ -21,7 +21,7 @@ typedef struct {
         long l;
         char c;
         double d;
-        char s[BUFSIZ];
+        char *s;
     } data; /**< Conteúdo do elemento */
 } STACK_ELEM;
 

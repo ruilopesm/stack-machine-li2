@@ -7,24 +7,21 @@
 #include <string.h>
 #include <assert.h>
 
-int is_double(char *token) { // se número é double (tem de só ter algarismos, exceto um .)
-    int npoint = 0;
+int is_double(char *token) { // se número é double (tem de só ter algarismos, exceto um .)  
     for (int i = 0; token[i] != '\0'; i++) {
-        if (token[i] < 48 || token[i] > 57){
+        if (token[i] < 48 || token[i] > 57) {
             if (token[i] == '.') {
-                npoint++;
+                return 1;
             }
-            else return 0;
         }
     }
-
-    if (npoint == 1) return 1;
-    else return 0;
+    
+    return 0;
 }
 
-int is_long(char *token){// se é apenas algarismos
-    for (int i=0;token[i] != '\0';i++){
-        if (token[i] < 48 || token[i] > 57){
+int is_long(char *token) { // se é apenas algarismos
+    for (int i = 0; token[i] != '\0'; i++){
+        if (token[i] < 48 || token[i] > 57) {
             return 0;
         }
     }
@@ -70,17 +67,23 @@ void handle_token(STACK *s, char *token) {
             printf("A double has been pushed into the stack!\n");
         }
         else { // Se não for long nem int é string
-            char value[BUFSIZ];
+            char *value = malloc(sizeof(char) * BUFSIZ);
             sscanf(token, "%s", value);
+            
             int len = strlen (value);
-            if(value[0]== '"' && value[len-1] == '"'){
-            remove_char(value,0);
-            remove_char(value,len-1);
-            STACK_ELEM new = {
-                .t = STRING,
-                .data={ .s = value}
-            };
-            assert(push(s, new) == 0);
+            
+            if (value[0] == '"' && value[len - 1] == '"') {
+                remove_char(value, 0);
+                remove_char(value, len - 2);
+
+                STACK_ELEM new = {
+                    .t = STRING,
+                    .data={ .s = value }
+                };
+                assert(push(s, new) == 0);
+                // Testing purposes
+                printf("A string has been pushed into the stack!\n");
+            
             }
         }
     }

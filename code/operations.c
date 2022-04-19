@@ -67,6 +67,27 @@ void dispatch_table(STACK *s, char operator) {
     table[index](s);
 }
 
+double get_double(STACK_ELEM x){
+    if (x.t == DOUBLE) {
+        return x.data.d;
+    }
+    else if (x.t == LONG) {
+        return x.data.l;
+    }
+    else {
+        return x.data.c;
+    }
+}
+
+long get_long(STACK_ELEM x){
+    if (x.t == LONG){
+        return x.data.l;
+    }
+    else {
+        return x.data.c;
+    }
+}
+
 void sum(STACK *s) {
     STACK_ELEM x, y;
     
@@ -75,26 +96,19 @@ void sum(STACK *s) {
 
     STACK_ELEM result;
     
-    if (x.t == LONG) {
-        if (y.t == DOUBLE) {
-            result.t = DOUBLE;
-            result.data.d = x.data.l + y.data.d;
-        }
-        else if (y.t == LONG) {
-            result.t = LONG;
-            result.data.l = x.data.l + y.data.l;
-        }
-    } 
-    else if (x.t == DOUBLE) {
-        if (y.t == LONG) {
-            result.t = DOUBLE;
-            result.data.d = x.data.d + y.data.l;
-        }
-        else if (y.t == DOUBLE) {
-            result.t = DOUBLE;
-            result.data.d = x.data.d + y.data.d;
-        }  
+    if (x.t == DOUBLE || y.t == DOUBLE) {
+        result.t = DOUBLE;
+        result.data.d = get_double(x) + get_double(y);
     }
+    else if (x.t == LONG || y.t == LONG) {
+        result.t = LONG;
+        result.data.l = get_long(x) + get_long(y);
+    }
+    else {
+        result.t = CHAR;
+        result.data.c= x.data.c + y.data.c;
+    }
+
     push(s, result);
 }
 
