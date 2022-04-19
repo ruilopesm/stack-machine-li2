@@ -7,13 +7,29 @@
 #include <string.h>
 #include <assert.h>
 
-int has_point(char *token) {
+int is_double(char *token) { // se número é double (tem de só ter algarismos, exceto um .)
+    int npoint = 0;
     for (int i = 0; token[i] != '\0'; i++) {
-        if (token[i] == '.') {
-            return 1;
+        if (token[i] < 48 || token[i] > 57){
+            if (token[i] == '.') {
+                npoint++;
+            }
+            else return 0;
         }
     }
-    return 0;
+
+    if (npoint == 1) return 1;
+    else return 0;
+}
+
+int is_long(char *token){// se é apenas algarismos
+    for (int i=0;token[i] != '\0';i++){
+        if (token[i] < 48 || token[i] > 57){
+            return 0;
+        }
+    }
+
+    return 1;
 }
 
 void handle_token(STACK *s, char *token) {
@@ -23,7 +39,19 @@ void handle_token(STACK *s, char *token) {
     }
     // Caso contrário, irá ler esse elemento e de seguida adicioná-lo à stack, se possível
     else {
-        if (has_point(token)) {
+        if (is_long(token)){
+            long value;
+            sscanf(token, "%ld", &value);
+
+            STACK_ELEM new = {
+                .t = LONG,
+                .data = { .l = value }
+            };
+            assert(push(s, new) == 0);
+            // Testing purposes
+            printf("A long has been pushed into the stack!\n");
+        }
+        else if (is_double(token)) {
             double value;
             sscanf(token, "%lg", &value);
 
@@ -35,30 +63,14 @@ void handle_token(STACK *s, char *token) {
             // Testing purposes
             printf("A double has been pushed into the stack!\n");
         }
-        // Comando que converte o topo da stack num char
-        else if (token[0] == 'c') {
-            STACK_ELEM top;
-            assert(pop(s, &top) == 0);
-
+        else { // Se não for long nem int é string
+            char value[BUFSIZ];
+            sscanf(token, "%s", value);
             STACK_ELEM new = {
-                .t = CHAR,
-                .data = { .c = top.data.l }
+                .t = STRING,
+                .data={ .s = value}
             };
             assert(push(s, new) == 0);
-            // Testing purposes
-            printf("A char has been pushed into the stack!\n");
-        }
-        else {
-            long value;
-            sscanf(token, "%ld", &value);
-
-            STACK_ELEM new = {
-                .t = LONG,
-                .data = { .l = value }
-            };
-            assert(push(s, new) == 0);
-            // Testing purposes
-            printf("A long has been pushed into the stack!\n");
         }
     }
 }
