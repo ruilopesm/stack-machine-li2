@@ -1,5 +1,5 @@
-#include "stack.h"
 #include "operations.h"
+#include "stack.h"
 
 #include <assert.h>
 #include <math.h>
@@ -21,8 +21,7 @@ char get_operator(int i) {
         'i',
         'f',
         'c',
-        's'
-    };
+        's'};
 
     return operators[i];
 }
@@ -41,7 +40,7 @@ int get_index(char operator) {
     int index = -1;
 
     for (int i = 0; i < N_OPERATORS; i++) {
-        if (operator == get_operator(i)) {
+        if (operator== get_operator(i)) {
             index = i;
         }
     }
@@ -67,8 +66,7 @@ void dispatch_table(STACK *s, char operator) {
         convI,
         convD,
         convC,
-        convS
-    }; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
+        convS}; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
 
     int index = get_index(operator);
 
@@ -76,23 +74,20 @@ void dispatch_table(STACK *s, char operator) {
     table[index](s);
 }
 
-double get_double_arg(STACK_ELEM x){
+double get_double_arg(STACK_ELEM x) {
     if (x.t == DOUBLE) {
         return x.data.d;
-    }
-    else if (x.t == LONG) {
+    } else if (x.t == LONG) {
         return x.data.l;
-    }
-    else {
+    } else {
         return x.data.c;
     }
 }
 
-long get_long_arg(STACK_ELEM x){
-    if (x.t == LONG){
+long get_long_arg(STACK_ELEM x) {
+    if (x.t == LONG) {
         return x.data.l;
-    }
-    else {
+    } else {
         return x.data.c;
     }
 }
@@ -104,16 +99,14 @@ void sum(STACK *s) {
     assert(pop(s, &y) == 0);
 
     STACK_ELEM result;
-    
+
     if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) + get_double_arg(y);
-    }
-    else if (x.t == LONG || y.t == LONG) {
+    } else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) + get_long_arg(y);
-    }
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = x.data.c + y.data.c;
     }
@@ -123,7 +116,7 @@ void sum(STACK *s) {
 
 void sub(STACK *s) {
     STACK_ELEM x, y;
-    
+
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
 
@@ -132,12 +125,10 @@ void sub(STACK *s) {
     if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) - get_double_arg(y);
-    }
-    else if (x.t == LONG || y.t == LONG) {
+    } else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) - get_long_arg(y);
-    }
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = x.data.c - y.data.c;
     }
@@ -147,21 +138,19 @@ void sub(STACK *s) {
 
 void mult(STACK *s) {
     STACK_ELEM x, y;
-    
+
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
 
     STACK_ELEM result;
-    
+
     if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) * get_double_arg(y);
-    }
-    else if (x.t == LONG || y.t == LONG) {
+    } else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) * get_long_arg(y);
-    }
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = x.data.c * y.data.c;
     }
@@ -171,7 +160,7 @@ void mult(STACK *s) {
 
 void divi(STACK *s) {
     STACK_ELEM x, y;
-    
+
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
 
@@ -180,12 +169,10 @@ void divi(STACK *s) {
     if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) / get_double_arg(y);
-    }
-    else if (x.t == LONG || y.t == LONG) {
+    } else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) / get_long_arg(y);
-    }
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = x.data.c / y.data.c;
     }
@@ -195,7 +182,7 @@ void divi(STACK *s) {
 
 void rem(STACK *s) {
     STACK_ELEM x, y;
-    
+
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
 
@@ -204,8 +191,7 @@ void rem(STACK *s) {
     if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) % get_long_arg(y);
-    }
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = x.data.c % y.data.c;
     }
@@ -215,7 +201,7 @@ void rem(STACK *s) {
 
 void power(STACK *s) {
     STACK_ELEM x, y;
-    
+
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
 
@@ -224,14 +210,12 @@ void power(STACK *s) {
     if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = pow(get_double_arg(x), get_double_arg(y));
-    }
-    else if (x.t == LONG || y.t == LONG) {
+    } else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
-        result.data.l = (int) pow(get_long_arg(x), get_long_arg(y));
-    }
-    else {
+        result.data.l = (int)pow(get_long_arg(x), get_long_arg(y));
+    } else {
         result.t = CHAR;
-        result.data.c = (char) pow(x.data.c, y.data.c);
+        result.data.c = (char)pow(x.data.c, y.data.c);
     }
 
     push(s, result);
@@ -239,7 +223,7 @@ void power(STACK *s) {
 
 void bw_xor(STACK *s) {
     STACK_ELEM x, y;
-    
+
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
 
@@ -248,8 +232,7 @@ void bw_xor(STACK *s) {
     if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) ^ get_long_arg(y);
-    }
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = x.data.c ^ y.data.c;
     }
@@ -259,7 +242,7 @@ void bw_xor(STACK *s) {
 
 void bw_and(STACK *s) {
     STACK_ELEM x, y;
-    
+
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
 
@@ -268,8 +251,7 @@ void bw_and(STACK *s) {
     if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) & get_long_arg(y);
-    }
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = x.data.c & y.data.c;
     }
@@ -279,7 +261,7 @@ void bw_and(STACK *s) {
 
 void bw_or(STACK *s) {
     STACK_ELEM x, y;
-    
+
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
 
@@ -288,8 +270,7 @@ void bw_or(STACK *s) {
     if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) | get_long_arg(y);
-    }
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = x.data.c | y.data.c;
     }
@@ -299,20 +280,18 @@ void bw_or(STACK *s) {
 
 void increment(STACK *s) {
     STACK_ELEM x;
-    
+
     assert(pop(s, &x) == 0);
-    
+
     STACK_ELEM result;
 
     if (x.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = ++x.data.d;
-    }
-    else if (x.t == LONG) {
+    } else if (x.t == LONG) {
         result.t = LONG;
         result.data.l = ++x.data.l;
-    }
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = ++x.data.c;
     }
@@ -322,20 +301,18 @@ void increment(STACK *s) {
 
 void decrement(STACK *s) {
     STACK_ELEM x;
-    
+
     assert(pop(s, &x) == 0);
-    
+
     STACK_ELEM result;
 
     if (x.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = --x.data.d;
-    }
-    else if (x.t == LONG) {
+    } else if (x.t == LONG) {
         result.t = LONG;
         result.data.l = --x.data.l;
-    }
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = --x.data.c;
     }
@@ -345,16 +322,15 @@ void decrement(STACK *s) {
 
 void bw_not(STACK *s) {
     STACK_ELEM x;
-    
+
     assert(pop(s, &x) == 0);
-    
+
     STACK_ELEM result;
 
     if (x.t == LONG) {
         result.t = LONG;
         result.data.l = ~x.data.l;
-    }
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = ~x.data.c;
     }
@@ -364,7 +340,7 @@ void bw_not(STACK *s) {
 
 void convI(STACK *s) {
     STACK_ELEM x;
-    
+
     STACK_ELEM result;
 
     assert(pop(s, &x) == 0);
@@ -373,11 +349,13 @@ void convI(STACK *s) {
         result.t = LONG;
         result.data.l = x.data.d;
         push(s, result);
-    } 
-    else if (x.t == CHAR) {
+    } else if (x.t == CHAR) {
         result.t = LONG;
         result.data.l = x.data.c;
         push(s, result);
+    } else if (x.t == STRING) {
+        result.t = LONG;
+        sscanf(x.data.s, "%ld", &result.data.l);
     }
     // Conversão redundante
     else {
@@ -395,12 +373,14 @@ void convD(STACK *s) {
         result.t = DOUBLE;
         result.data.d = x.data.l;
         push(s, result);
-    } 
-    else if (x.t == CHAR) {
+    } else if (x.t == CHAR) {
         result.t = DOUBLE;
         result.data.d = x.data.c;
         push(s, result);
-    } 
+    } else if (x.t == STRING) {
+        result.t = DOUBLE;
+        sscanf(x.data.s, "%lg", &result.data.d);
+    }
     // Conversão redundante
     else {
         push(s, x);
@@ -417,13 +397,11 @@ void convC(STACK *s) {
         result.t = CHAR;
         result.data.c = x.data.l % 256;
         push(s, result);
-    } 
-    else if (x.t == STRING) {
+    } else if (x.t == STRING) {
         result.t = CHAR;
         result.data.c = x.data.s[0];
         push(s, result);
-    } 
-    else {
+    } else {
         push(s, x);
     }
 }
@@ -438,19 +416,16 @@ void convS(STACK *s) {
         result.t = STRING;
         snprintf(result.data.s, BUFSIZ, "%ld", x.data.l);
         push(s, result);
-    } 
-    else if (x.t == DOUBLE) {
+    } else if (x.t == DOUBLE) {
         result.t = STRING;
         snprintf(result.data.s, BUFSIZ, "%lg", x.data.d);
         push(s, result);
-    } 
-    else if (x.t == CHAR) {
+    } else if (x.t == CHAR) {
         result.t = STRING;
         result.data.s[0] = x.data.c;
         result.data.s[1] = '\0';
         push(s, result);
-    } 
-    else {
+    } else {
         push(s, x);
     }
 }
