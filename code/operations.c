@@ -1,6 +1,7 @@
 #include "stack.h"
 #include "operations.h"
 
+#include <stdlib.h>
 #include <assert.h>
 #include <math.h>
 
@@ -21,7 +22,13 @@ char get_operator(int i) {
         'i',
         'f',
         'c',
-        's'
+        's',
+        '_',
+        ';',
+        '\\',
+        '@',
+        '$',
+        'l'
     };
 
     return operators[i];
@@ -64,10 +71,16 @@ void dispatch_table(STACK *s, char operator) {
         increment,
         decrement,
         bw_not,
-        convI,
-        convD,
-        convC,
-        convS
+        conv_int,
+        conv_double,
+        conv_char,
+        conv_str,
+        duplicate,
+        other_pop,
+        swap,
+        rotate,
+        copy_nth,
+        read_line
     }; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
 
     int index = get_index(operator);
@@ -88,7 +101,7 @@ double get_double_arg(STACK_ELEM x){
     }
 }
 
-long get_long_arg(STACK_ELEM x){
+long get_long_arg(STACK_ELEM x) {
     if (x.t == LONG){
         return x.data.l;
     }
@@ -362,12 +375,12 @@ void bw_not(STACK *s) {
     push(s, result);
 }
 
-void convI(STACK *s) {
+void conv_int(STACK *s) {
     STACK_ELEM x;
     
-    STACK_ELEM result;
-
     assert(pop(s, &x) == 0);
+    
+    STACK_ELEM result;
 
     if (x.t == DOUBLE) {
         result.t = LONG;
@@ -385,11 +398,12 @@ void convI(STACK *s) {
     }
 }
 
-void convD(STACK *s) {
+void conv_double(STACK *s) {
     STACK_ELEM x;
-    STACK_ELEM result;
-
+    
     assert(pop(s, &x) == 0);
+    
+    STACK_ELEM result;
 
     if (x.t == LONG) {
         result.t = DOUBLE;
@@ -407,11 +421,12 @@ void convD(STACK *s) {
     }
 }
 
-void convC(STACK *s) {
+void conv_char(STACK *s) {
     STACK_ELEM x;
-    STACK_ELEM result;
-
+    
     assert(pop(s, &x) == 0);
+    
+    STACK_ELEM result;
 
     if (x.t == LONG) {
         result.t = CHAR;
@@ -428,11 +443,12 @@ void convC(STACK *s) {
     }
 }
 
-void convS(STACK *s) {
+void conv_str(STACK *s) {
     STACK_ELEM x;
-    STACK_ELEM result;
-
+    
     assert(pop(s, &x) == 0);
+    
+    STACK_ELEM result;
 
     if (x.t == LONG) {
         result.t = STRING;
@@ -453,4 +469,65 @@ void convS(STACK *s) {
     else {
         push(s, x);
     }
+}
+
+void duplicate(STACK *s) {
+    STACK_ELEM x;
+    
+    assert(pop(s, &x) == 0);
+    
+    assert(push(s, x) == 0);
+    assert(push(s, x) == 0);
+}
+
+void other_pop(STACK *s) {
+    STACK_ELEM x;
+    
+    assert(pop(s, &x) == 0);
+}
+
+void swap(STACK *s) {
+    STACK_ELEM x, y;
+
+    assert(pop(s, &x) == 0);
+    assert(pop(s, &y) == 0);
+
+    assert(push(s, x) == 0);
+    assert(push(s, y) == 0);
+}
+
+void rotate(STACK *s) {
+    STACK_ELEM x, y, z;
+
+    assert(pop(s, &x) == 0);
+    assert(pop(s, &y) == 0);
+    assert(pop(s, &z) == 0);
+
+    assert(push(s, y) == 0);
+    assert(push(s, x) == 0);
+    assert(push(s, z) == 0);   
+}
+
+void copy_nth(STACK *s) {
+    STACK_ELEM x;
+
+    assert(pop(s, &x) == 0);
+
+    int n = x.data.l;
+    STACK_ELEM result;
+    assert(nth_element(s, &result, n) == 0);
+
+    assert(push(s, result) == 0);
+}
+
+void read_line(STACK *s) {
+    STACK_ELEM result;
+    char *str = malloc(sizeof(char) * BUFSIZ);
+
+    assert(fgets(str, BUFSIZ, stdin) != NULL);
+
+    result.t = STRING;
+    result.data.s = str;
+
+    assert(push(s, result) == 0);
 }

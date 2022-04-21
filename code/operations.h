@@ -2,7 +2,7 @@
  * @brief Macro que define o número de operadores implementados na stack
  *
  */
-#define N_OPERATORS 16
+#define N_OPERATORS 22
 
 /**
  * @brief Função que retorna o operador associado ao índice dado
@@ -126,7 +126,15 @@ void decrement(STACK *s);
  */
 void bw_not(STACK *s);
 
-void convI(STACK *s);
-void convD(STACK *s);
-void convC(STACK *s);
-void convS(STACK *s);
+void conv_int(STACK *s);
+void conv_double(STACK *s);
+void conv_char(STACK *s);
+void conv_str(STACK *s);
+
+void duplicate(STACK *s);
+void other_pop(STACK *s);
+void swap(STACK *s);
+void rotate(STACK *s);
+void copy_nth(STACK *s);
+
+void read_line(STACK *s);

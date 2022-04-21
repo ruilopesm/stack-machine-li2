@@ -55,3 +55,5 @@ int pop(STACK *s, STACK_ELEM *elem);
  * @return int 
  */
 int peek(STACK *s, STACK_ELEM *elem);
+
+int nth_element(STACK *s, STACK_ELEM *elem, int n);
