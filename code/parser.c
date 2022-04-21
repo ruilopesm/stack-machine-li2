@@ -41,7 +41,6 @@ void remove_char(char *s, size_t p) {
 void handle_token(STACK *s, char *token) {
     // Se o símbolo for um operador, irá procurar a operação pretendida e realizá-la
     if (is_operator(token)) {
-        
         dispatch_table(s, token[0]);
     }
     // Caso contrário, irá ler esse elemento e de seguida adicioná-lo à stack, se possível
