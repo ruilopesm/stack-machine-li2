@@ -83,3 +83,12 @@ int peek(STACK *s, STACK_ELEM *elem) {
 
     return 0;
 }
+
+int nth_element(STACK *s, STACK_ELEM *elem, int n) {
+    if (s->sp == 0) {
+        return 1;
+    }
+    *elem = s->stc[s->sp - n - 1];
+
+    return 0;
+}
