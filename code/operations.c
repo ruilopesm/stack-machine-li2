@@ -1,5 +1,6 @@
-#include "operations.h"
 #include "stack.h"
+#include "operations.h"
+#include "parser.h"
 
 #include <stdlib.h>
 #include <assert.h>
@@ -520,13 +521,5 @@ void copy_nth(STACK *s) {
 }
 
 void read_line(STACK *s) {
-    STACK_ELEM result;
-    char *str = malloc(sizeof(char) * BUFSIZ);
-
-    assert(fgets(str, BUFSIZ, stdin) != NULL);
-
-    result.t = STRING;
-    result.data.s = str;
-
-    assert(push(s, result) == 0);
+    parse_line(s);
 }
