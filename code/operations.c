@@ -1,6 +1,7 @@
 #include "operations.h"
 #include "stack.h"
 
+#include <stdlib.h>
 #include <assert.h>
 #include <math.h>
 
@@ -21,7 +22,14 @@ char get_operator(int i) {
         'i',
         'f',
         'c',
-        's'};
+        's',
+        '_',
+        ';',
+        '\\',
+        '@',
+        '$',
+        'l'
+    };
 
     return operators[i];
 }
@@ -40,7 +48,7 @@ int get_index(char operator) {
     int index = -1;
 
     for (int i = 0; i < N_OPERATORS; i++) {
-        if (operator== get_operator(i)) {
+        if (operator == get_operator(i)) {
             index = i;
         }
     }
@@ -63,10 +71,17 @@ void dispatch_table(STACK *s, char operator) {
         increment,
         decrement,
         bw_not,
-        convI,
-        convD,
-        convC,
-        convS}; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
+        conv_int,
+        conv_double,
+        conv_char,
+        conv_str,
+        duplicate,
+        other_pop,
+        swap,
+        rotate,
+        copy_nth,
+        read_line
+    }; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
 
     int index = get_index(operator);
 
@@ -77,9 +92,11 @@ void dispatch_table(STACK *s, char operator) {
 double get_double_arg(STACK_ELEM x) {
     if (x.t == DOUBLE) {
         return x.data.d;
-    } else if (x.t == LONG) {
+    } 
+    else if (x.t == LONG) {
         return x.data.l;
-    } else {
+    } 
+    else {
         return x.data.c;
     }
 }
@@ -87,7 +104,8 @@ double get_double_arg(STACK_ELEM x) {
 long get_long_arg(STACK_ELEM x) {
     if (x.t == LONG) {
         return x.data.l;
-    } else {
+    } 
+    else {
         return x.data.c;
     }
 }
@@ -103,10 +121,12 @@ void sum(STACK *s) {
     if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) + get_double_arg(y);
-    } else if (x.t == LONG || y.t == LONG) {
+    } 
+    else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) + get_long_arg(y);
-    } else {
+    } 
+    else {
         result.t = CHAR;
         result.data.c = x.data.c + y.data.c;
     }
@@ -125,10 +145,12 @@ void sub(STACK *s) {
     if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) - get_double_arg(y);
-    } else if (x.t == LONG || y.t == LONG) {
+    } 
+    else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) - get_long_arg(y);
-    } else {
+    } 
+    else {
         result.t = CHAR;
         result.data.c = x.data.c - y.data.c;
     }
@@ -147,10 +169,12 @@ void mult(STACK *s) {
     if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) * get_double_arg(y);
-    } else if (x.t == LONG || y.t == LONG) {
+    } 
+    else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) * get_long_arg(y);
-    } else {
+    } 
+    else {
         result.t = CHAR;
         result.data.c = x.data.c * y.data.c;
     }
@@ -169,10 +193,12 @@ void divi(STACK *s) {
     if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) / get_double_arg(y);
-    } else if (x.t == LONG || y.t == LONG) {
+    } 
+    else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) / get_long_arg(y);
-    } else {
+    } 
+    else {
         result.t = CHAR;
         result.data.c = x.data.c / y.data.c;
     }
@@ -191,7 +217,8 @@ void rem(STACK *s) {
     if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) % get_long_arg(y);
-    } else {
+    } 
+    else {
         result.t = CHAR;
         result.data.c = x.data.c % y.data.c;
     }
@@ -210,10 +237,12 @@ void power(STACK *s) {
     if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = pow(get_double_arg(x), get_double_arg(y));
-    } else if (x.t == LONG || y.t == LONG) {
+    } 
+    else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = (int)pow(get_long_arg(x), get_long_arg(y));
-    } else {
+    } 
+    else {
         result.t = CHAR;
         result.data.c = (char)pow(x.data.c, y.data.c);
     }
@@ -232,7 +261,8 @@ void bw_xor(STACK *s) {
     if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) ^ get_long_arg(y);
-    } else {
+    } 
+    else {
         result.t = CHAR;
         result.data.c = x.data.c ^ y.data.c;
     }
@@ -251,7 +281,8 @@ void bw_and(STACK *s) {
     if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) & get_long_arg(y);
-    } else {
+    } 
+    else {
         result.t = CHAR;
         result.data.c = x.data.c & y.data.c;
     }
@@ -270,7 +301,8 @@ void bw_or(STACK *s) {
     if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) | get_long_arg(y);
-    } else {
+    } 
+    else {
         result.t = CHAR;
         result.data.c = x.data.c | y.data.c;
     }
@@ -288,10 +320,12 @@ void increment(STACK *s) {
     if (x.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = ++x.data.d;
-    } else if (x.t == LONG) {
+    } 
+    else if (x.t == LONG) {
         result.t = LONG;
         result.data.l = ++x.data.l;
-    } else {
+    } 
+    else {
         result.t = CHAR;
         result.data.c = ++x.data.c;
     }
@@ -309,10 +343,12 @@ void decrement(STACK *s) {
     if (x.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = --x.data.d;
-    } else if (x.t == LONG) {
+    } 
+    else if (x.t == LONG) {
         result.t = LONG;
         result.data.l = --x.data.l;
-    } else {
+    } 
+    else {
         result.t = CHAR;
         result.data.c = --x.data.c;
     }
@@ -330,7 +366,8 @@ void bw_not(STACK *s) {
     if (x.t == LONG) {
         result.t = LONG;
         result.data.l = ~x.data.l;
-    } else {
+    } 
+    else {
         result.t = CHAR;
         result.data.c = ~x.data.c;
     }
@@ -338,12 +375,12 @@ void bw_not(STACK *s) {
     push(s, result);
 }
 
-void convI(STACK *s) {
+void conv_int(STACK *s) {
     STACK_ELEM x;
-
-    STACK_ELEM result;
-
+    
     assert(pop(s, &x) == 0);
+    
+    STACK_ELEM result;
 
     if (x.t == DOUBLE) {
         result.t = LONG;
@@ -363,11 +400,12 @@ void convI(STACK *s) {
     }
 }
 
-void convD(STACK *s) {
+void conv_double(STACK *s) {
     STACK_ELEM x;
-    STACK_ELEM result;
-
+    
     assert(pop(s, &x) == 0);
+    
+    STACK_ELEM result;
 
     if (x.t == LONG) {
         result.t = DOUBLE;
@@ -387,11 +425,12 @@ void convD(STACK *s) {
     }
 }
 
-void convC(STACK *s) {
+void conv_char(STACK *s) {
     STACK_ELEM x;
-    STACK_ELEM result;
-
+    
     assert(pop(s, &x) == 0);
+    
+    STACK_ELEM result;
 
     if (x.t == LONG) {
         result.t = CHAR;
@@ -406,11 +445,12 @@ void convC(STACK *s) {
     }
 }
 
-void convS(STACK *s) {
+void conv_str(STACK *s) {
     STACK_ELEM x;
-    STACK_ELEM result;
-
+    
     assert(pop(s, &x) == 0);
+    
+    STACK_ELEM result;
 
     if (x.t == LONG) {
         result.t = STRING;
@@ -428,4 +468,65 @@ void convS(STACK *s) {
     } else {
         push(s, x);
     }
+}
+
+void duplicate(STACK *s) {
+    STACK_ELEM x;
+    
+    assert(pop(s, &x) == 0);
+    
+    assert(push(s, x) == 0);
+    assert(push(s, x) == 0);
+}
+
+void other_pop(STACK *s) {
+    STACK_ELEM x;
+    
+    assert(pop(s, &x) == 0);
+}
+
+void swap(STACK *s) {
+    STACK_ELEM x, y;
+
+    assert(pop(s, &x) == 0);
+    assert(pop(s, &y) == 0);
+
+    assert(push(s, x) == 0);
+    assert(push(s, y) == 0);
+}
+
+void rotate(STACK *s) {
+    STACK_ELEM x, y, z;
+
+    assert(pop(s, &x) == 0);
+    assert(pop(s, &y) == 0);
+    assert(pop(s, &z) == 0);
+
+    assert(push(s, y) == 0);
+    assert(push(s, x) == 0);
+    assert(push(s, z) == 0);   
+}
+
+void copy_nth(STACK *s) {
+    STACK_ELEM x;
+
+    assert(pop(s, &x) == 0);
+
+    int n = x.data.l;
+    STACK_ELEM result;
+    assert(nth_element(s, &result, n) == 0);
+
+    assert(push(s, result) == 0);
+}
+
+void read_line(STACK *s) {
+    STACK_ELEM result;
+    char *str = malloc(sizeof(char) * BUFSIZ);
+
+    assert(fgets(str, BUFSIZ, stdin) != NULL);
+
+    result.t = STRING;
+    result.data.s = str;
+
+    assert(push(s, result) == 0);
 }
