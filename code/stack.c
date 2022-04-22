@@ -8,7 +8,18 @@ STACK *create_stack() {
     s->sp = 0;
     s->size = 100;
     s->stc = calloc(sizeof(STACK_ELEM), s->size);
-
+    for (int i=0;i<=5;i++){
+        (s->gbv[i]).t = LONG;
+        (s->gbv[i]).data.l= i+10;
+    }
+    (s->gbv[13]).t = CHAR;
+    (s->gbv[13]).data.c= '\n';
+    (s->gbv[18]).t = CHAR;
+    (s->gbv[18]).data.c= ' ';
+    for(int i=0;i<=3;i++){
+        (s->gbv[i+22]).t = LONG;
+        (s->gbv[i+22]).data.l= i;
+    }
     return s;
 }
 
