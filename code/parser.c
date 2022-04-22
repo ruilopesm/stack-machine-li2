@@ -60,6 +60,27 @@ void remove_char(char *s, size_t p) {
     }
 }
 
+STACK_ELEM handle_gbv (STACK *s,char value){
+    STACK_ELEM new;
+    if((s->gbv[value-65]).t == DOUBLE){
+            new.t = DOUBLE;
+            new.data.d = (s->gbv[value-65]).data.d;
+        }
+        else if((s->gbv[value-65]).t == LONG){
+            new.t = LONG;
+            new.data.l = (s->gbv[value-65]).data.l;
+        }
+        else if((s->gbv[value-65]).t == DOUBLE){
+            new.t =STRING;
+            new.data.s = (s->gbv[value-65]).data.s;
+        }
+        else {
+            new.t =CHAR;
+            new.data.c = (s->gbv[value-65]).data.c;
+        }
+    return new;
+}
+
 void handle_token(STACK *s, char *token) {
     if (is_long(token)) {
         long value;
@@ -77,23 +98,7 @@ void handle_token(STACK *s, char *token) {
     else if (is_gbv(token)) {
         char value;
         sscanf(token, "%c", &value);
-        STACK_ELEM new;
-        if((s->gbv[value-65]).t == DOUBLE){
-            new.t = DOUBLE;
-            new.data.d = (s->gbv[value-65]).data.d;
-        }
-        else if((s->gbv[value-65]).t == LONG){
-            new.t = LONG;
-            new.data.l = (s->gbv[value-65]).data.l;
-        }
-        else if((s->gbv[value-65]).t == DOUBLE){
-            new.t =STRING;
-            new.data.s = (s->gbv[value-65]).data.s;
-        }
-        else {
-            new.t =CHAR;
-            new.data.c = (s->gbv[value-65]).data.c;
-        }
+        STACK_ELEM new = handle_gbv(s,value);
         assert(push(s, new) == 0);
     }
     // Se não for 'long' nem 'int' é uma 'string' (char *)
