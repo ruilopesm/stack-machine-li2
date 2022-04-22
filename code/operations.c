@@ -3,33 +3,34 @@
 #include "parser.h"
 
 #include <stdlib.h>
+#include <string.h>
 #include <assert.h>
 #include <math.h>
 
-char get_operator(int i) {
-    static char const operators[N_OPERATORS] = {
-        '+',
-        '-',
-        '*',
-        '/',
-        '%',
-        '#',
-        '^',
-        '&',
-        '|',
-        ')',
-        '(',
-        '~',
-        'i',
-        'f',
-        'c',
-        's',
-        '_',
-        ';',
-        '\\',
-        '@',
-        '$',
-        'l'
+char const *get_operator(int i) {
+    static char const* const operators[N_OPERATORS] = {
+        "+",
+        "-",
+        "*",
+        "/",
+        "%",
+        "#",
+        "^",
+        "&",
+        "|",
+        ")",
+        "(",
+        "~",
+        "i",
+        "f",
+        "c",
+        "s",
+        "_",
+        ";",
+        "\\",
+        "@",
+        "$",
+        "l"
     };
 
     return operators[i];
@@ -37,7 +38,7 @@ char get_operator(int i) {
 
 int is_operator(char *token) {
     for (int i = 0; i < N_OPERATORS; i++) {
-        if (token[0] == get_operator(i)) {
+        if (strcmp(token, get_operator(i)) == 0) {
             return 1;
         }
     }
@@ -45,11 +46,11 @@ int is_operator(char *token) {
     return 0;
 }
 
-int get_index(char operator) {
+int get_index(char const *operator) {
     int index = -1;
 
     for (int i = 0; i < N_OPERATORS; i++) {
-        if (operator == get_operator(i)) {
+        if (strcmp(operator, get_operator(i)) == 0) {
             index = i;
         }
     }
@@ -58,7 +59,7 @@ int get_index(char operator) {
     return index;
 }
 
-void dispatch_table(STACK *s, char operator) {
+void dispatch_table(STACK *s, char const *operator) {
     function table[] = {
         sum,
         sub,
