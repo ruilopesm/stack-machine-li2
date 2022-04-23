@@ -10,7 +10,7 @@
  * @param i O índice
  * @return char
  */
-char const *get_operator(int i);
+char *get_operator(int i);
 
 /**
  * @brief Função que verifica se um dado char é um operador
@@ -26,7 +26,7 @@ int is_operator(char *token);
  * @param operator O operador
  * @return int
  */
-int get_index(char const *operator);
+int get_index(char *operator);
 
 /**
  * @brief Uma tabela de despacho responsável por invocar a função correspondente ao operador dado
@@ -34,7 +34,7 @@ int get_index(char const *operator);
  * @param s Apontador para a stack
  * @param operator O operador
  */
-void dispatch_table(STACK *s, char const *operator);
+void dispatch_table(STACK *s, char *operator);
 
 /**
  * @brief Definição do tipo de cada elemento da tabela de despacho
