@@ -1,5 +1,7 @@
-int is_double(char *token);
+#include <stddef.h>
+
 int is_long(char *token);
+int is_double(char *token);
 void remove_char(char *s, size_t p);
 
 /**

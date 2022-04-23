@@ -1,6 +1,6 @@
 #include "stack.h"
-#include "parser.h"
 #include "operations.h"
+#include "parser.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -60,7 +60,8 @@ void handle_token(STACK *s, char *token) {
 
         STACK_ELEM new = {.t = LONG, .data = {.l = value}};
         assert(push(s, new) == 0);
-    } else if (is_double(token)) {
+    } 
+    else if (is_double(token)) {
         double value;
         sscanf(token, "%lg", &value);
 
@@ -77,7 +78,8 @@ void handle_token(STACK *s, char *token) {
 
         STACK_ELEM new = {.t = STRING, .data = {.s = token}};
         assert(push(s, new) == 0);
-    } else {
+    } 
+    else if (is_operator(token)) {
         dispatch_table(s, token);
     }
 }

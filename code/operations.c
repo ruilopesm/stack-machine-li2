@@ -2,13 +2,14 @@
 #include "operations.h"
 #include "parser.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 #include <math.h>
 
-char const *get_operator(int i) {
-    static char const* const operators[N_OPERATORS] = {
+char *get_operator(int i) {
+    static char *operators[N_OPERATORS] = {
         "+",
         "-",
         "*",
@@ -46,7 +47,7 @@ int is_operator(char *token) {
     return 0;
 }
 
-int get_index(char const *operator) {
+int get_index(char *operator) {
     int index = -1;
 
     for (int i = 0; i < N_OPERATORS; i++) {
@@ -59,8 +60,8 @@ int get_index(char const *operator) {
     return index;
 }
 
-void dispatch_table(STACK *s, char const *operator) {
-    function table[] = {
+void dispatch_table(STACK *s, char *operator) {
+    static function table[] = {
         sum,
         sub,
         mult,
@@ -242,11 +243,11 @@ void power(STACK *s) {
     } 
     else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
-        result.data.l = (int)pow(get_long_arg(x), get_long_arg(y));
+        result.data.l = (long int) pow(get_long_arg(x), get_long_arg(y));
     } 
     else {
         result.t = CHAR;
-        result.data.c = (char)pow(x.data.c, y.data.c);
+        result.data.c = (char) pow(x.data.c, y.data.c);
     }
 
     push(s, result);
@@ -388,12 +389,12 @@ void conv_int(STACK *s) {
         result.t = LONG;
         result.data.l = x.data.d;
         push(s, result);
-    } 
+    }
     else if (x.t == CHAR) {
         result.t = LONG;
         result.data.l = x.data.c;
         push(s, result);
-    } 
+    }
     else if (x.t == STRING) {
         result.t = LONG;
         sscanf(x.data.s, "%ld", &result.data.l);
@@ -459,7 +460,6 @@ void conv_str(STACK *s) {
     assert(pop(s, &x) == 0);
     
     STACK_ELEM result;
-    result.data.s = NULL;
 
     if (x.t == LONG) {
         result.t = STRING;
@@ -524,9 +524,9 @@ void copy_nth(STACK *s) {
 
     assert(pop(s, &x) == 0);
 
-    int n = x.data.l;
     STACK_ELEM result;
-    assert(nth_element(s, &result, n) == 0);
+
+    assert(nth_element(s, &result, x.data.l) == 0);
 
     assert(push(s, result) == 0);
 }
