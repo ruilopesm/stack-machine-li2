@@ -535,3 +535,25 @@ void copy_nth(STACK *s) {
 void read_line(STACK *s) {
     parse_line(s);
 }
+
+STACK_ELEM get_global(STACK *s, char value) {
+    STACK_ELEM new;
+    
+    if (s->globals[value - 65].t == DOUBLE) {
+        new.t = DOUBLE;
+        new.data.d = s->globals[value - 65].data.d;
+    }
+    else if (s->globals[value - 65].t == LONG) {
+        new.t = LONG;
+        new.data.l = s->globals[value - 65].data.l;
+    }
+    else if (s->globals[value - 65].t == DOUBLE) {
+        new.t = STRING;
+        new.data.s = s->globals[value - 65].data.s;
+    }
+    else {
+        new.t = CHAR;
+        new.data.c = s->globals[value - 65].data.c;
+    }
+    return new;
+}

@@ -9,17 +9,20 @@ STACK *create_stack() {
     s->size = 100;
     s->stc = calloc(sizeof(STACK_ELEM), s->size);
 
-     for (int i=0;i<=5;i++){
-        (s->gbv[i]).t = LONG;
-        (s->gbv[i]).data.l= i+10;
+    // Inicializar variáveis "globais"
+    for (int i = 0; i < 6; i++) {
+        s->globals[i].t = LONG;
+        s->globals[i].data.l= i + 10;
     }
-    (s->gbv[13]).t = CHAR;
-    (s->gbv[13]).data.c= '\n';
-    (s->gbv[18]).t = CHAR;
-    (s->gbv[18]).data.c= ' ';
-    for(int i=0;i<=3;i++){
-        (s->gbv[i+22]).t = LONG;
-        (s->gbv[i+22]).data.l= i;
+    
+    s->globals[13].t = CHAR;
+    s->globals[13].data.c= '\n';
+    s->globals[18].t = CHAR;
+    s->globals[18].data.c= ' ';
+    
+    for(int i = 0; i < 3; i++) {
+        s->globals[i + 23].t = LONG;
+        s->globals[i + 23].data.l = i;
     }
 
     return s;
