@@ -46,32 +46,15 @@ int is_string(char *token) {
     return regexec(&regex, token, 0, NULL, 0) == 0;
 }
 
-int is_gbv(char *token){ //Se é variável global (letra de A a Z)
-    if(token[0]>=65 && token[0]<=90 && token[1]=='\0'){
-        return 1;
-    }
-    else return 0;
-}
+int is_global(char *token) {
+    static bool flag = false;
+    static regex_t regex;
 
-STACK_ELEM handle_gbv (STACK *s,char value){
-    STACK_ELEM new;
-    if((s->gbv[value-65]).t == DOUBLE){
-            new.t = DOUBLE;
-            new.data.d = (s->gbv[value-65]).data.d;
-        }
-        else if((s->gbv[value-65]).t == LONG){
-            new.t = LONG;
-            new.data.l = (s->gbv[value-65]).data.l;
-        }
-        else if((s->gbv[value-65]).t == DOUBLE){
-            new.t =STRING;
-            new.data.s = (s->gbv[value-65]).data.s;
-        }
-        else {
-            new.t =CHAR;
-            new.data.c = (s->gbv[value-65]).data.c;
-        }
-    return new;
+    if (!flag) {
+        assert(regcomp(&regex, "^[A-Z]$", REG_EXTENDED) == 0);
+    }
+    
+    return regexec(&regex, token, 0, NULL, 0) == 0;
 }
 
 // Remove o caracter na posição indicada por 'p'
@@ -107,7 +90,7 @@ void handle_token(STACK *s, char *token) {
         size_t len = strlen(token);
         char *heap_token = malloc(sizeof(char) * (len + 1));
         
-        strcpy(heap_token, token);
+        strncpy(heap_token, token, len + 1);
 
         // Remove as aspas da string
         remove_char(heap_token, 0);
@@ -119,10 +102,11 @@ void handle_token(STACK *s, char *token) {
         };
         assert(push(s, new) == 0);
     }
-    else if (is_gbv(token)) {
+    else if (is_global(token)) {
         char value;
         sscanf(token, "%c", &value);
-        STACK_ELEM new = handle_gbv(s,value);
+        
+        STACK_ELEM new = get_global(s, value);
         assert(push(s, new) == 0);
     }
     else if (is_operator(token)) {

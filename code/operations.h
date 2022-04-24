@@ -138,3 +138,5 @@ void rotate(STACK *s);
 void copy_nth(STACK *s);
 
 void read_line(STACK *s);
+
+STACK_ELEM get_global(STACK *s, char value);

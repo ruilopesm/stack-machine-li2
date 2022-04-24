@@ -2,6 +2,9 @@
 
 int is_long(char *token);
 int is_double(char *token);
+int is_string(char *token);
+int is_global(char *token);
+
 void remove_char(char *s, size_t p);
 
 /**
