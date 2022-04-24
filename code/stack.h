@@ -31,6 +31,7 @@ typedef struct {
     int sp; /**< O stack pointer */
     int size; /**< O tamanho total da stack */
     STACK_ELEM *stc; /**< O conteúdo da stack */
+    STACK_ELEM globals[26]; /**< Variáveis "globais" */
 } STACK;
 
 /**
