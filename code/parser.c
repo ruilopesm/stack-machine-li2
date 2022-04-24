@@ -46,6 +46,17 @@ int is_string(char *token) {
     return regexec(&regex, token, 0, NULL, 0) == 0;
 }
 
+int is_global(char *token) {
+    static bool flag = false;
+    static regex_t regex;
+
+    if (!flag) {
+        assert(regcomp(&regex, "^[A-Z]$", REG_EXTENDED) == 0);
+    }
+    
+    return regexec(&regex, token, 0, NULL, 0) == 0;
+}
+
 // Remove o caracter na posição indicada por 'p'
 void remove_char(char *s, size_t p) {
     for (size_t i = p; s[i] != '\0'; i++) {
@@ -79,7 +90,7 @@ void handle_token(STACK *s, char *token) {
         size_t len = strlen(token);
         char *heap_token = malloc(sizeof(char) * (len + 1));
         
-        strcpy(heap_token, token);
+        strncpy(heap_token, token, len + 1);
 
         // Remove as aspas da string
         remove_char(heap_token, 0);
@@ -90,7 +101,14 @@ void handle_token(STACK *s, char *token) {
             .data = { .s = heap_token }
         };
         assert(push(s, new) == 0);
-    } 
+    }
+    else if (is_global(token)) {
+        char value;
+        sscanf(token, "%c", &value);
+        
+        STACK_ELEM new = get_global(s, value);
+        assert(push(s, new) == 0);
+    }
     else if (is_operator(token)) {
         dispatch_table(s, token);
     }

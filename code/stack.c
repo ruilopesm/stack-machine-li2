@@ -9,6 +9,22 @@ STACK *create_stack() {
     s->size = 100;
     s->stc = calloc(sizeof(STACK_ELEM), s->size);
 
+    // Inicializar variáveis "globais"
+    for (int i = 0; i < 6; i++) {
+        s->globals[i].t = LONG;
+        s->globals[i].data.l= i + 10;
+    }
+    
+    s->globals[13].t = CHAR;
+    s->globals[13].data.c= '\n';
+    s->globals[18].t = CHAR;
+    s->globals[18].data.c= ' ';
+    
+    for(int i = 0; i < 3; i++) {
+        s->globals[i + 23].t = LONG;
+        s->globals[i + 23].data.l = i;
+    }
+
     return s;
 }
 
