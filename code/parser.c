@@ -46,6 +46,34 @@ int is_string(char *token) {
     return regexec(&regex, token, 0, NULL, 0) == 0;
 }
 
+int is_gbv(char *token){ //Se é variável global (letra de A a Z)
+    if(token[0]>=65 && token[0]<=90 && token[1]=='\0'){
+        return 1;
+    }
+    else return 0;
+}
+
+STACK_ELEM handle_gbv (STACK *s,char value){
+    STACK_ELEM new;
+    if((s->gbv[value-65]).t == DOUBLE){
+            new.t = DOUBLE;
+            new.data.d = (s->gbv[value-65]).data.d;
+        }
+        else if((s->gbv[value-65]).t == LONG){
+            new.t = LONG;
+            new.data.l = (s->gbv[value-65]).data.l;
+        }
+        else if((s->gbv[value-65]).t == DOUBLE){
+            new.t =STRING;
+            new.data.s = (s->gbv[value-65]).data.s;
+        }
+        else {
+            new.t =CHAR;
+            new.data.c = (s->gbv[value-65]).data.c;
+        }
+    return new;
+}
+
 // Remove o caracter na posição indicada por 'p'
 void remove_char(char *s, size_t p) {
     for (size_t i = p; s[i] != '\0'; i++) {
@@ -90,7 +118,13 @@ void handle_token(STACK *s, char *token) {
             .data = { .s = heap_token }
         };
         assert(push(s, new) == 0);
-    } 
+    }
+    else if (is_gbv(token)) {
+        char value;
+        sscanf(token, "%c", &value);
+        STACK_ELEM new = handle_gbv(s,value);
+        assert(push(s, new) == 0);
+    }
     else if (is_operator(token)) {
         dispatch_table(s, token);
     }
