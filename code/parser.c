@@ -58,25 +58,37 @@ void handle_token(STACK *s, char *token) {
         long value;
         sscanf(token, "%ld", &value);
 
-        STACK_ELEM new = {.t = LONG, .data = {.l = value}};
+        STACK_ELEM new = {
+            .t = LONG, 
+            .data = { .l = value }
+        };
         assert(push(s, new) == 0);
     } 
     else if (is_double(token)) {
         double value;
         sscanf(token, "%lg", &value);
 
-        STACK_ELEM new = {.t = DOUBLE, .data = {.d = value}};
+        STACK_ELEM new = {
+            .t = DOUBLE, 
+            .data = { .d = value }
+        };
         assert(push(s, new) == 0);
     }
     // Se não for 'long' nem 'int' é uma 'string' (char *)
     else if (is_string(token)) {
-        int len = strlen(token);
+        size_t len = strlen(token);
+        char *heap_token = malloc(sizeof(char) * (len + 1));
+        
+        strcpy(heap_token, token);
 
         // Remove as aspas da string
-        remove_char(token, 0);
-        remove_char(token, len - 2);
+        remove_char(heap_token, 0);
+        remove_char(heap_token, len - 2);
 
-        STACK_ELEM new = {.t = STRING, .data = {.s = token}};
+        STACK_ELEM new = {
+            .t = STRING, 
+            .data = { .s = heap_token }
+        };
         assert(push(s, new) == 0);
     } 
     else if (is_operator(token)) {
