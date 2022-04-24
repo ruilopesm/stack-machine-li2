@@ -460,7 +460,7 @@ void conv_str(STACK *s) {
     assert(pop(s, &x) == 0);
     
     STACK_ELEM result;
-    result.data.s = "";
+    result.data.s = malloc(sizeof(char) * BUFSIZ);
 
     if (x.t == LONG) {
         result.t = STRING;
