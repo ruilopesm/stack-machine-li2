@@ -9,7 +9,7 @@
 #include <assert.h>
 #include <regex.h>
 
-// Verifica se a string contém apenas algarismos
+
 int is_long(char *token) {
     static bool flag = false;
     static regex_t regex;
@@ -22,7 +22,6 @@ int is_long(char *token) {
     return regexec(&regex, token, 0, NULL, 0) == 0;
 }
 
-// Verifica se a string contém apenas algarismos e um ponto (.)
 int is_double(char *token) {
     static bool flag = false;
     static regex_t regex;
@@ -57,7 +56,7 @@ int is_global(char *token) {
     return regexec(&regex, token, 0, NULL, 0) == 0;
 }
 
-// Remove o caracter na posição indicada por 'p'
+
 void remove_char(char *s, size_t p) {
     for (size_t i = p; s[i] != '\0'; i++) {
         s[i] = s[i + 1];

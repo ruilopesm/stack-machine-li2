@@ -90,4 +90,12 @@ int pop(STACK *s, STACK_ELEM *elem);
  */
 int peek(STACK *s, STACK_ELEM *elem);
 
+/**
+ * @brief Verifica o conteudo do n-ésimo elemento
+ * 
+ * @param s 
+ * @param elem 
+ * @param n 
+ * @return int 
+ */
 int nth_element(STACK *s, STACK_ELEM *elem, int n);
