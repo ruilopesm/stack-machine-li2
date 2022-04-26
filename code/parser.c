@@ -57,6 +57,18 @@ int is_global(char *token) {
     return regexec(&regex, token, 0, NULL, 0) == 0;
 }
 
+int is_readress_global(char *token) {
+    static bool flag = false;
+    static regex_t regex;
+
+    if (!flag) {
+        assert(regcomp(&regex, "^:[A-Z]$", REG_EXTENDED) == 0);
+    }
+    
+    return regexec(&regex, token, 0, NULL, 0) == 0;
+}
+
+
 // Remove o caracter na posição indicada por 'p'
 void remove_char(char *s, size_t p) {
     for (size_t i = p; s[i] != '\0'; i++) {
@@ -108,6 +120,12 @@ void handle_token(STACK *s, char *token) {
         
         STACK_ELEM new = get_global(s, value);
         assert(push(s, new) == 0);
+    }
+    else if (is_readress_global(token)){
+        STACK_ELEM top;
+        assert (peek(s,&top) == 0);
+        char value = token[1];
+        s->globals[value - 65] = top;
     }
     else if (is_operator(token)) {
         dispatch_table(s, token);
