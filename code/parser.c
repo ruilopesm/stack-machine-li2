@@ -104,6 +104,17 @@ int is_double(char *token) {
     return regexec(&regex, token, 0, NULL, 0) == 0;
 }
 
+int is_string(char *token) {
+    static bool flag = false;
+    static regex_t regex;
+
+    if (!flag) {
+        assert(regcomp(&regex, "^\".*\"$", REG_EXTENDED) == 0);
+    }
+
+    return regexec(&regex, token, 0, NULL, 0) == 0;
+}
+
 int is_global(char *token) {
     static bool flag = false;
     static regex_t regex;
