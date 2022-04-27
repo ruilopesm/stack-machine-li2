@@ -128,7 +128,7 @@ void sum(STACK *s) {
     else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) + get_long_arg(y);
-    } 
+    }
     else {
         result.t = CHAR;
         result.data.c = x.data.c + y.data.c;
@@ -538,22 +538,24 @@ void read_line(STACK *s) {
 
 STACK_ELEM get_global(STACK *s, char value) {
     STACK_ELEM new;
+    STACK_ELEM current = s->globals[value -  65];
     
-    if (s->globals[value - 65].t == DOUBLE) {
+    if (current.t == DOUBLE) {
         new.t = DOUBLE;
-        new.data.d = s->globals[value - 65].data.d;
+        new.data.d = current.data.d;
     }
-    else if (s->globals[value - 65].t == LONG) {
+    else if (current.t == LONG) {
         new.t = LONG;
-        new.data.l = s->globals[value - 65].data.l;
+        new.data.l = current.data.l;
     }
-    else if (s->globals[value - 65].t == DOUBLE) {
+    else if (current.t == STRING) {
         new.t = STRING;
-        new.data.s = s->globals[value - 65].data.s;
+        new.data.s = current.data.s;
     }
     else {
         new.t = CHAR;
-        new.data.c = s->globals[value - 65].data.c;
+        new.data.c = current.data.c;
     }
+
     return new;
 }

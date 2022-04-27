@@ -20,7 +20,7 @@ STACK *create_stack() {
     s->globals[18].t = CHAR;
     s->globals[18].data.c= ' ';
     
-    for(int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++) {
         s->globals[i + 23].t = LONG;
         s->globals[i + 23].data.l = i;
     }
@@ -85,8 +85,11 @@ int pop(STACK *s, STACK_ELEM *elem) {
         return 1; 
     }
     s->sp--;
-    *elem = s->stc[s->sp];
 
+    STACK_ELEM current = s->stc[s->sp];
+    
+    *elem = current;
+    
     return 0;
 }
 

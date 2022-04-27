@@ -8,72 +8,19 @@
 #include <string.h>
 #include <assert.h>
 #include <regex.h>
-
-// Verifica se a string contém apenas algarismos
-int is_long(char *token) {
-    static bool flag = false;
-    static regex_t regex;
-
-    if (!flag) {
-        assert(regcomp(&regex, "^-?[0-9]+$", REG_EXTENDED) == 0);
-        flag = true;
-    }
-
-    return regexec(&regex, token, 0, NULL, 0) == 0;
-}
-
-// Verifica se a string contém apenas algarismos e um ponto (.)
-int is_double(char *token) {
-    static bool flag = false;
-    static regex_t regex;
-
-    if (!flag) {
-        assert(regcomp(&regex, "^-?[0-9]+\\.[0-9]+$", REG_EXTENDED) == 0);
-        flag = true;
-    }
-
-    return regexec(&regex, token, 0, NULL, 0) == 0;
-}
-
-int is_string(char *token) {
-    static bool flag = false;
-    static regex_t regex;
-
-    if (!flag) {
-        assert(regcomp(&regex, "^\".+\"$", REG_EXTENDED) == 0);
-    }
-
-    return regexec(&regex, token, 0, NULL, 0) == 0;
-}
-
-int is_global(char *token) {
-    static bool flag = false;
-    static regex_t regex;
-
-    if (!flag) {
-        assert(regcomp(&regex, "^[A-Z]$", REG_EXTENDED) == 0);
-    }
     
-    return regexec(&regex, token, 0, NULL, 0) == 0;
-}
+int parse_line(STACK *s) {
+    char line[BUFSIZ];
+    char token[BUFSIZ];
 
-int is_readress_global(char *token) {
-    static bool flag = false;
-    static regex_t regex;
-
-    if (!flag) {
-        assert(regcomp(&regex, "^:[A-Z]$", REG_EXTENDED) == 0);
+    if (fgets(line, BUFSIZ, stdin) != NULL) {
+        while (sscanf(line, "%s%[^\n]", token, line) == 2) {
+            handle_token(s, token);
+        }
+        handle_token(s, token);
     }
-    
-    return regexec(&regex, token, 0, NULL, 0) == 0;
-}
 
-
-// Remove o caracter na posição indicada por 'p'
-void remove_char(char *s, size_t p) {
-    for (size_t i = p; s[i] != '\0'; i++) {
-        s[i] = s[i + 1];
-    }
+    return 0;
 }
 
 void handle_token(STACK *s, char *token) {
@@ -97,7 +44,6 @@ void handle_token(STACK *s, char *token) {
         };
         assert(push(s, new) == 0);
     }
-    // Se não for 'long' nem 'int' é uma 'string' (char *)
     else if (is_string(token)) {
         size_t len = strlen(token);
         char *heap_token = malloc(sizeof(char) * (len + 1));
@@ -132,16 +78,57 @@ void handle_token(STACK *s, char *token) {
     }
 }
 
-int parse_line(STACK *s) {
-    char line[BUFSIZ];
-    char token[BUFSIZ];
+// Verifica se a string contém apenas algarismos
+int is_long(char *token) {
+    static bool flag = false;
+    static regex_t regex;
 
-    if (fgets(line, BUFSIZ, stdin) != NULL) {
-        while (sscanf(line, "%s%[^\n]", token, line) == 2) {
-            handle_token(s, token);
-        }
-        handle_token(s, token);
+    if (!flag) {
+        assert(regcomp(&regex, "^-?[0-9]+$", REG_EXTENDED) == 0);
+        flag = true;
     }
 
-    return 0;
+    return regexec(&regex, token, 0, NULL, 0) == 0;
+}
+
+// Verifica se a string contém apenas algarismos e um ponto (.)
+int is_double(char *token) {
+    static bool flag = false;
+    static regex_t regex;
+
+    if (!flag) {
+        assert(regcomp(&regex, "^-?[0-9]+\\.[0-9]+$", REG_EXTENDED) == 0);
+        flag = true;
+    }
+
+    return regexec(&regex, token, 0, NULL, 0) == 0;
+}
+
+int is_global(char *token) {
+    static bool flag = false;
+    static regex_t regex;
+
+    if (!flag) {
+        assert(regcomp(&regex, "^[A-Z]$", REG_EXTENDED) == 0);
+    }
+    
+    return regexec(&regex, token, 0, NULL, 0) == 0;
+}
+
+int is_readress_global(char *token) {
+    static bool flag = false;
+    static regex_t regex;
+
+    if (!flag) {
+        assert(regcomp(&regex, "^:[A-Z]$", REG_EXTENDED) == 0);
+    }
+    
+    return regexec(&regex, token, 0, NULL, 0) == 0;
+}
+
+// Remove o caracter na posição indicada por 'p'
+void remove_char(char *s, size_t p) {
+    for (size_t i = p; s[i] != '\0'; i++) {
+        s[i] = s[i + 1];
+    }
 }
