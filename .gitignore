@@ -1,3 +1,4 @@
 code/main
 code/*.o 
 .vscode
+test
