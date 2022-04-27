@@ -29,6 +29,21 @@ int is_operator(char *token);
 int get_index(char *operator);
 
 /**
+ * @brief Funçao que obtem um argumento e converte para o tipo "double"
+ * 
+ * @param x 
+ * @return double 
+ */
+double get_double_arg(STACK_ELEM x);
+
+/**
+ * @brief Funçao que obtem um argumento e converte para o tipo "long"
+ * 
+ * @param x 
+ * @return long 
+ */
+long get_long_arg(STACK_ELEM x);
+/**
  * @brief Uma tabela de despacho responsável por invocar a função correspondente ao operador dado
  *
  * @param s Apontador para a stack
@@ -126,17 +141,82 @@ void decrement(STACK *s);
  */
 void bw_not(STACK *s);
 
+/**
+ * @brief Converte o elemento no topo da stack para o tipo "int"
+ * 
+ * @param s Apontador para a stack
+ */
 void conv_int(STACK *s);
+
+/**
+ * @brief Converte o elemento no topo da stack para o tipo "double"
+ * 
+ * @param s Apontador para a stack
+ */
 void conv_double(STACK *s);
+
+/**
+ * @brief Converte o elemento no topo da stack para o tipo "char"
+ * 
+ * 
+ * @param s Apontador para a stack
+ */
 void conv_char(STACK *s);
+
+/**
+ * @brief Converte o elemento no topo da stack para o tipo "string"
+ * 
+ * @param s Apontador para a stack
+ */
 void conv_str(STACK *s);
 
+/**
+ * @brief Duplica o elemento no topo da stack
+ * 
+ * @param s Apontador para a stack
+ */
 void duplicate(STACK *s);
+
+/**
+ * @brief Dá pop do elemento no topo da stack
+ * 
+ * @param s Apontador para a stack
+ */
 void other_pop(STACK *s);
+
+/**
+ * @brief Troca a ordem dos dois elementos no topo da stack
+ * 
+ * @param s Apontador para a stack
+ */
 void swap(STACK *s);
+
+/**
+ * @brief Coloca o terceiro elemento no topo da stack
+ * 
+ * @param s Apontador para a stack
+ */
 void rotate(STACK *s);
+
+/**
+ * @brief Copia o n-ésimo elemento para o topo da stack
+ * 
+ * @param s Apontador para a stack
+ */
 void copy_nth(STACK *s);
 
+/**
+ * @brief Lê a linha seguinte e adiciona-a à stack
+ * 
+ * @param s Apontador para a stack
+ */
 void read_line(STACK *s);
 
+/**
+ * @brief Coloca o valor atual da variável global na stack
+ * 
+ * @param s 
+ * @param value 
+ * @return STACK_ELEM 
+ */
 STACK_ELEM get_global(STACK *s, char value);
