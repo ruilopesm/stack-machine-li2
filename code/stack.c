@@ -98,7 +98,7 @@ int peek(STACK *s, STACK_ELEM *elem) {
     if (s->sp == 0) {
         return 1;
     }
-    *elem = s->stc[s->sp];
+    *elem = s->stc[s->sp - 1];
 
     return 0;
 }

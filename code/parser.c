@@ -44,13 +44,34 @@ void handle_token(STACK *s, char *token) {
         };
         assert(push(s, new) == 0);
     }
+    else if (is_string(token)) {
+        size_t len = strlen(token);
+        char *heap_token = malloc(sizeof(char) * (len + 1));
+        
+        strncpy(heap_token, token, len + 1);
+
+        // Remove as aspas da string
+        remove_char(heap_token, 0);
+        remove_char(heap_token, len - 2);
+
+        STACK_ELEM new = {
+            .t = STRING, 
+            .data = { .s = heap_token }
+        };
+        assert(push(s, new) == 0);
+    }
     else if (is_global(token)) {
         char value;
         sscanf(token, "%c", &value);
         
-
         STACK_ELEM new = get_global(s, value);
         assert(push(s, new) == 0);
+    }
+    else if (is_readress_global(token)){
+        STACK_ELEM top;
+        assert (peek(s,&top) == 0);
+        char value = token[1];
+        s->globals[value - 65] = top;
     }
     else if (is_operator(token)) {
         dispatch_table(s, token);
@@ -89,6 +110,17 @@ int is_global(char *token) {
 
     if (!flag) {
         assert(regcomp(&regex, "^[A-Z]$", REG_EXTENDED) == 0);
+    }
+    
+    return regexec(&regex, token, 0, NULL, 0) == 0;
+}
+
+int is_readress_global(char *token) {
+    static bool flag = false;
+    static regex_t regex;
+
+    if (!flag) {
+        assert(regcomp(&regex, "^:[A-Z]$", REG_EXTENDED) == 0);
     }
     
     return regexec(&regex, token, 0, NULL, 0) == 0;
