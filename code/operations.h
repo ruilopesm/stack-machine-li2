@@ -215,18 +215,71 @@ void read_line(STACK *s);
 /**
  * @brief Coloca o valor atual da variável global na stack
  * 
- * @param s 
- * @param value 
+ * @param s Apontador para a stack
+ * @param value letra que se encontra na variável global
  * @return STACK_ELEM 
  */
 STACK_ELEM get_global(STACK *s, char value);
 
+/**
+ * @brief Função que compara se os dois elementos do topo da stack são iguais
+ * 
+ * @param s Apontador para a stack
+ */
 void igual(STACK *s);
+
+/**
+ * @brief Função que compara se o elemento do topo da stack é menor do que o segundo elemento da stack
+ * 
+ * @param s Apontador para a stack
+ */
 void menor(STACK *s);
+
+/**
+ * @brief Função que compara se o elemento do topo da stack é maoir do que o segundo elemento da stack
+ * 
+ * @param s Apontador para a stack
+ */
 void maior(STACK *s);
+
+/**
+ * @brief Função que devolve a negação de um argumento
+ * 
+ * @param s Apontador para a stack
+ */
 void negacao(STACK *s);
+
+/**
+ * @brief operador lógico "e". Recebe dois argumentos, se ambos forem verdadeiros devolve verdadeiro
+ * 
+ * @param s Apontador para a stack
+ */
 void e_shortcut(STACK *s);
+
+/**
+ * @brief operador lógico "ou". Recebe dois argumentos, caso um deles seja verdadeiro devolve verdadeiro
+ * 
+ * @param s Apontador para a stack
+ */
 void ou_shortcut(STACK *s);
+
+/**
+ * @brief Funçao que coloca o menor de dois números no topo da stack
+ * 
+ * @param s Apontador para a stack
+ */
 void e_menor(STACK *s);
+
+/**
+ * @brief Funçao que coloca o maior de dois números no topo da stack
+ * 
+ * @param s Apontador para a stack
+ */
 void e_maior(STACK *s);
+
+/**
+ * @brief Função que recebe tres argumentos. Caso o primeiro seja verdadeiro devolve o segundo elemento, caso contrario devolve o terceiro
+ * 
+ * @param s Apontador para a stack
+ */
 void if_then_else(STACK *s);
