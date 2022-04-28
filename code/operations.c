@@ -31,7 +31,16 @@ char *get_operator(int i) {
         "\\",
         "@",
         "$",
-        "l"
+        "l",
+        "=",
+        "<",
+        ">",
+        "!",
+        "e&",
+        "e|",
+        "e<",
+        "e>",
+        "?"
     };
 
     return operators[i];
@@ -83,7 +92,16 @@ void dispatch_table(STACK *s, char *operator) {
         swap,
         rotate,
         copy_nth,
-        read_line
+        read_line,
+        igual,
+        menor,
+        maior,
+        negacao,
+        e_shortcut,
+        ou_shortcut,
+        e_menor,
+        e_maior,
+        if_then_else
     }; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
 
     int index = get_index(operator);
@@ -558,4 +576,219 @@ STACK_ELEM get_global(STACK *s, char value) {
     }
 
     return new;
+}
+
+void igual(STACK *s) {
+    STACK_ELEM x, y;
+    long to_push = 0;
+
+    STACK_ELEM result;
+    result.t = LONG;
+
+    assert(pop(s, &x) == 0);
+    assert(pop(s, &y) == 0);
+
+    if (x.t == DOUBLE || y.t == DOUBLE) {
+        if (get_double_arg(x) == get_double_arg(y)) {
+            to_push = 1;
+        }
+    }
+    else if (x.t == LONG || y.t == LONG) {
+        if (get_long_arg(x) == get_long_arg(y)) {
+            to_push = 1;
+        }
+    }
+    else {
+        if (x.data.c == y.data.c) {
+            to_push = 1;
+        }
+    }
+
+    result.data.l = to_push;
+    push(s, result);
+}
+
+void menor(STACK *s) {
+    STACK_ELEM x, y;
+    long to_push = 0;
+
+    STACK_ELEM result;
+    result.t = LONG;
+
+    assert(pop(s, &y) == 0);
+    assert(pop(s, &x) == 0);
+
+    if (x.t == DOUBLE || y.t == DOUBLE) {
+        if (get_double_arg(x) < get_double_arg(y)) {
+            to_push = 1;
+        }
+    }
+    else if (x.t == LONG || y.t == LONG) {
+        if (get_long_arg(x) < get_long_arg(y)) {
+            to_push = 1;
+        }
+    }
+    else {
+        if (x.data.c < y.data.c) {
+            to_push = 1;
+        }
+    }
+
+    result.data.l = to_push;
+    push(s, result);
+}
+
+void maior(STACK *s) {
+    STACK_ELEM x, y;
+    long to_push = 0;
+
+    STACK_ELEM result;
+    result.t = LONG;
+
+    assert(pop(s, &y) == 0);
+    assert(pop(s, &x) == 0);   
+
+    if (x.t == DOUBLE || y.t == DOUBLE) {
+        if (get_double_arg(x) > get_double_arg(y)) {
+            to_push = 1;
+        }
+    }
+    else if (x.t == LONG || y.t == LONG) {
+        if (get_long_arg(x) > get_long_arg(y)) {
+            to_push = 1;
+        }
+    }
+    else {
+        if (x.data.c > y.data.c) {
+            to_push = 1;
+        }
+    }
+
+    result.data.l = to_push;
+    push(s, result);
+}
+
+void negacao(STACK *s) {
+    STACK_ELEM x;
+    long to_push = 0;
+
+    STACK_ELEM result;
+    result.t = LONG;
+
+    assert(pop(s, &x) == 0);
+
+    if ((x.t == LONG || x.t == CHAR) && x.data.l == 0) {
+        to_push = 1;
+    }
+    else if (x.t == DOUBLE && x.data.d == 0.0) {
+        to_push = 1;
+    }
+
+    result.data.l = to_push;
+    push(s, result);
+}
+
+void e_shortcut(STACK *s) {
+    STACK_ELEM x, y;
+    
+    assert(pop(s, &y) == 0);
+    assert(pop(s, &x) == 0);
+
+    STACK_ELEM result = x;
+
+    if (x.t == LONG && x.data.l) {
+        result = y;
+    }
+    else if (x.t == DOUBLE && x.data.d) {
+        result = y;
+    }
+    else if (x.t == CHAR && x.data.c) {
+        result = y;
+    }
+
+    push(s, result);
+}
+
+void ou_shortcut(STACK *s) {
+    STACK_ELEM x, y;
+    
+    assert(pop(s, &y) == 0);
+    assert(pop(s, &x) == 0);
+
+    STACK_ELEM result = y;
+
+    if (x.t == LONG && x.data.l) {
+        result = x;
+    }
+    else if (x.t == DOUBLE && x.data.d) {
+        result = x;
+    }
+    else if (x.t == CHAR && x.data.c) {
+        result = x;
+    }
+
+    push(s, result);
+}
+
+void e_menor(STACK *s) {
+    STACK_ELEM x, y;
+
+    assert(pop(s, &y) == 0);
+    assert(pop(s, &x) == 0);
+
+    STACK_ELEM result = y;
+
+    if (x.t == DOUBLE && y.t == DOUBLE) {
+        if (x.data.d < y.data.d) {
+            result = x;
+        }
+    }
+    else {
+        if (get_long_arg(x) < get_long_arg(y)) {
+            result = x;
+        }
+    }
+    
+    push(s, result);
+}
+
+void e_maior(STACK *s) {
+    STACK_ELEM x, y;
+
+    assert(pop(s, &y) == 0);
+    assert(pop(s, &x) == 0);
+
+    STACK_ELEM result = y;
+
+    if (x.t == DOUBLE && y.t == DOUBLE) {
+        if (x.data.d > y.data.d) {
+            result = x;
+        }
+    }
+    else {
+        if (get_long_arg(x) > get_long_arg(y)) {
+            result = x;
+        }
+    }
+    
+    push(s, result);
+}
+
+void if_then_else(STACK *s) {
+    STACK_ELEM x, y, z;
+
+    assert(pop(s, &z) == 0);
+    assert(pop(s, &y) == 0);
+    assert(pop(s, &x) == 0);
+
+    STACK_ELEM result = z;
+
+    if (x.t == LONG && x.data.l) {
+        result = y;
+    }
+    else if (x.t == DOUBLE && x.data.d == 0.0) {
+        result = y;
+    }
+
+    push(s, result);
 }
