@@ -45,10 +45,8 @@ void handle_token(STACK *s, char *token) {
         assert(push(s, new) == 0);
     }
     else if (is_string(token)) {
+        char *heap_token = strdup(token);
         size_t len = strlen(token);
-        char *heap_token = malloc(sizeof(char) * (len + 1));
-        
-        strncpy(heap_token, token, len + 1);
 
         // Remove as aspas da string
         remove_char(heap_token, 0);
