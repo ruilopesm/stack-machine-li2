@@ -2,7 +2,7 @@
  * @brief Macro que define o número de operadores implementados na stack
  *
  */
-#define N_OPERATORS 22
+#define N_OPERATORS 31
 
 /**
  * @brief Função que retorna o operador associado ao índice dado
@@ -220,3 +220,13 @@ void read_line(STACK *s);
  * @return STACK_ELEM 
  */
 STACK_ELEM get_global(STACK *s, char value);
+
+void igual(STACK *s);
+void menor(STACK *s);
+void maior(STACK *s);
+void negacao(STACK *s);
+void e_shortcut(STACK *s);
+void ou_shortcut(STACK *s);
+void e_menor(STACK *s);
+void e_maior(STACK *s);
+void if_then_else(STACK *s);
