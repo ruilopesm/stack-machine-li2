@@ -788,7 +788,7 @@ void if_then_else(STACK *s) {
     }
     else if (x.t == DOUBLE && x.data.d == 0.0) {
         result = y;
-    }
+    } 
 
     push(s, result);
 }
