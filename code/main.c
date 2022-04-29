@@ -13,7 +13,7 @@
 int main() {
     STACK *s = create_stack();
 
-    parse_line(s);
+    get_line(s);
 
     print_stack(s);
     

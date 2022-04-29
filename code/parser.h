@@ -24,6 +24,8 @@ int is_double(char *token);
  */
 int is_string(char *token);
 
+int is_array(char *token);
+
 /**
  * @brief Remove o caracter na posição indicada por 'p'
  * 
@@ -56,4 +58,6 @@ void handle_token(STACK *s, char *token);
  * @param s Um apontador para a stack
  * @return int 
  */
-int parse_line(STACK *s);
+int parse_line(STACK *s,char *line);
+
+int get_line (STACK *s);
