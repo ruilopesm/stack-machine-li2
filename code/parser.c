@@ -9,17 +9,46 @@
 #include <assert.h>
 #include <regex.h>
     
-int parse_line(STACK *s) {
-    char line[BUFSIZ];
-    char token[BUFSIZ];
+int find_char(char *line,char c,int parsed){
+    int i;
+    for (i=1+parsed;line[i]!=c && line[i]!= '\0' && line[i]!= '\n' ;i++){}
+    return i-parsed;
+}
 
+void copy (char *token, char *line,int len,int parsed){
+    int i;
+    for(i=0;i<len;i++){
+        token[i] = line[i+parsed];
+    }
+    token[i]='\0';
+}
+
+int get_line (STACK *s){
+    char line[BUFSIZ];
     if (fgets(line, BUFSIZ, stdin) != NULL) {
-        while (sscanf(line, "%s%[^\n]", token, line) == 2) {
-            handle_token(s, token);
+        parse_line (s,line);
+    }
+    return 0;
+}
+
+int parse_line(STACK *s, char *line) {
+    char token[BUFSIZ];
+    int parsed = 0;
+
+    while ((int)(strlen(line)) != parsed) {
+        if (line[parsed]==' ') parsed++;
+        if (line[parsed]=='\"'){
+            copy(token, line, find_char(line,'\"',parsed)+1,parsed);
+        }
+        else if (line[parsed]=='['){
+            copy(token, line, find_char(line,'[',parsed)+1,parsed);
+        }
+        else {
+            copy(token, line, find_char(line,' ',parsed),parsed);
         }
         handle_token(s, token);
+        parsed += strlen(token);
     }
-
     return 0;
 }
 
@@ -57,6 +86,22 @@ void handle_token(STACK *s, char *token) {
             .data = { .s = heap_token }
         };
         assert(push(s, new) == 0);
+    }
+    else if (is_array(token)) {
+        size_t len = strlen(token);
+        //Remove os [] da string
+        /*remove_char(token, len - 2);
+        remove_char(token, len - 2);
+        remove_char(token, 0);
+        remove_char(token, 0);*/
+        printf("%s",token);
+        /*STACK *array = create_stack();
+        parse_line(array,token);
+        STACK_ELEM new ={
+            .t = ARRAY,
+            .data= { .a = array }
+        };
+        assert(push(s, new) == 0);*/
     }
     else if (is_global(token)) {
         char value;
@@ -108,6 +153,17 @@ int is_string(char *token) {
 
     if (!flag) {
         assert(regcomp(&regex, "^\".*\"$", REG_EXTENDED) == 0);
+    }
+
+    return regexec(&regex, token, 0, NULL, 0) == 0;
+}
+
+int is_array(char *token) {
+   static bool flag = false;
+    static regex_t regex;
+    printf("a");
+    if (!flag) {
+        assert(regcomp(&regex, "^\\[.*\\]$", REG_EXTENDED) == 0);
     }
 
     return regexec(&regex, token, 0, NULL, 0) == 0;

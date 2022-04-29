@@ -551,7 +551,7 @@ void copy_nth(STACK *s) {
 }
 
 void read_line(STACK *s) {
-    parse_line(s);
+    read_line(s);
 }
 
 STACK_ELEM get_global(STACK *s, char value) {
