@@ -551,7 +551,7 @@ void copy_nth(STACK *s) {
 }
 
 void read_line(STACK *s) {
-    read_line(s);
+    get_line(s);
 }
 
 STACK_ELEM get_global(STACK *s, char value) {
@@ -788,7 +788,7 @@ void if_then_else(STACK *s) {
     }
     else if (x.t == DOUBLE && x.data.d == 0.0) {
         result = y;
-    } 
+    }
 
     push(s, result);
 }
