@@ -1,3 +1,4 @@
+typedef struct STACK STACK;
 /**
  * @brief Enum que guarda os tipos implementados na stack
  * 
@@ -6,7 +7,8 @@ typedef enum {
     LONG,
     CHAR,
     DOUBLE,
-    STRING
+    STRING,
+    ARRAY
 } TYPE;
 
 /**
@@ -20,6 +22,7 @@ typedef struct {
         char c;
         double d;
         char *s;
+        STACK *a;
     } data; /**< Conteúdo do elemento */
 } STACK_ELEM;
 
@@ -27,12 +30,12 @@ typedef struct {
  * @brief A estrutura onde constam os parâmetros da stack
  * 
  */
-typedef struct {
+struct STACK{
     int sp; /**< O stack pointer */
     int size; /**< O tamanho total da stack */
     STACK_ELEM *stc; /**< O conteúdo da stack */
     STACK_ELEM globals[26]; /**< Variáveis "globais" */
-} STACK;
+};
 
 /**
  * @brief Inicializa uma stack com 100 posições
