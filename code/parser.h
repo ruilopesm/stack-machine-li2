@@ -61,3 +61,5 @@ void handle_token(STACK *s, char *token);
 int parse_line(STACK *s,char *line);
 
 int get_line (STACK *s);
+
+int remove_slashn (char *token);
