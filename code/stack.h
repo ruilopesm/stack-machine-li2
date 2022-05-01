@@ -59,6 +59,8 @@ int increase_stack(STACK *s);
  */
 void print_stack(STACK *s);
 
+void print_elems (STACK *s);
+
 /**
  * @brief Liberta a memória alocada, na heap, pela stack
  * 
