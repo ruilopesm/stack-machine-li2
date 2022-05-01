@@ -39,6 +39,11 @@ int increase_stack(STACK *s) {
 }
 
 void print_stack(STACK *s) {
+    print_elems (s); //É necessária para não imprimir /n quando le um array
+    putchar('\n');
+}
+
+void print_elems(STACK *s){
     for (int i = 0; i < s->sp; i++) {
         STACK_ELEM current = s->stc[i];
 
@@ -54,8 +59,10 @@ void print_stack(STACK *s) {
         else if (current.t == STRING) {
             printf("%s", current.data.s);
         }
+        else if (current.t == ARRAY) {
+            print_elems(current.data.a);
+        }
     }
-    putchar('\n');
 }
 
 void free_stack(STACK *s) {

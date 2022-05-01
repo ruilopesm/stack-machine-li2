@@ -31,6 +31,15 @@ int get_line (STACK *s){
     return 0;
 }
 
+int remove_slashn (char *token){
+    int len = strlen(token);
+    if (token[len-1] == '\n'){
+        remove_char(token, len - 1);
+        return 1;
+    }
+    else return 0;
+}
+
 int parse_line(STACK *s, char *line) {
     char token[BUFSIZ];
     int parsed = 0;
@@ -41,13 +50,16 @@ int parse_line(STACK *s, char *line) {
             copy(token, line, find_char(line,'\"',parsed)+1,parsed);
         }
         else if (line[parsed]=='['){
-            copy(token, line, find_char(line,'[',parsed)+1,parsed);
+            copy(token, line, find_char(line,']',parsed)+1,parsed);
         }
         else {
             copy(token, line, find_char(line,' ',parsed),parsed);
         }
-        handle_token(s, token);
+        if (remove_slashn(token)){
+            parsed ++;
+        }
         parsed += strlen(token);
+        handle_token(s, token);
     }
     return 0;
 }
@@ -56,7 +68,6 @@ void handle_token(STACK *s, char *token) {
     if (is_long(token)) {
         long value;
         sscanf(token, "%ld", &value);
-
         STACK_ELEM new = {
             .t = LONG, 
             .data = { .l = value }
@@ -73,6 +84,21 @@ void handle_token(STACK *s, char *token) {
         };
         assert(push(s, new) == 0);
     }
+    else if (is_array(token)) {
+        size_t len = strlen(token);
+        //Remove os [] da string e espaços entre esses e os elementos do array
+        remove_char(token, len - 2);
+        remove_char(token, len - 2);
+        remove_char(token, 0);
+        remove_char(token, 0);
+        STACK *array = create_stack();
+        parse_line(array,token);
+        STACK_ELEM new ={
+            .t = ARRAY,
+            .data= { .a = array }
+        };
+        assert(push(s, new) == 0);
+    }
     else if (is_string(token)) {
         char *heap_token = strdup(token);
         size_t len = strlen(token);
@@ -86,22 +112,6 @@ void handle_token(STACK *s, char *token) {
             .data = { .s = heap_token }
         };
         assert(push(s, new) == 0);
-    }
-    else if (is_array(token)) {
-        size_t len = strlen(token);
-        //Remove os [] da string
-        /*remove_char(token, len - 2);
-        remove_char(token, len - 2);
-        remove_char(token, 0);
-        remove_char(token, 0);*/
-        printf("%s",token);
-        /*STACK *array = create_stack();
-        parse_line(array,token);
-        STACK_ELEM new ={
-            .t = ARRAY,
-            .data= { .a = array }
-        };
-        assert(push(s, new) == 0);*/
     }
     else if (is_global(token)) {
         char value;
@@ -159,14 +169,10 @@ int is_string(char *token) {
 }
 
 int is_array(char *token) {
-   static bool flag = false;
-    static regex_t regex;
-    printf("a");
-    if (!flag) {
-        assert(regcomp(&regex, "^\\[.*\\]$", REG_EXTENDED) == 0);
+    if(token[0] == '[' && token [strlen(token)-1] == ']') {
+        return 1;
     }
-
-    return regexec(&regex, token, 0, NULL, 0) == 0;
+    else return 0;
 }
 
 int is_global(char *token) {
