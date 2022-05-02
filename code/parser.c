@@ -15,6 +15,24 @@ int find_char(char *line,char c,int parsed){
     return i-parsed;
 }
 
+int find_array(char *line,int parsed){
+    int i,array_number = 0;
+    for (i=1+parsed;line[i]!= '\0' && line[i]!= '\n'; i++){
+        if (line[i] == '['){
+            array_number++;
+        }
+        else if (line[i]==']'){
+                if (array_number == 0){
+                    return i-parsed;
+                }
+                else{
+                    array_number--;
+                }
+        }
+    }
+    return i-parsed;
+}
+
 void copy (char *token, char *line,int len,int parsed){
     int i;
     for(i=0;i<len;i++){
@@ -50,7 +68,7 @@ int parse_line(STACK *s, char *line) {
             copy(token, line, find_char(line,'\"',parsed)+1,parsed);
         }
         else if (line[parsed]=='['){
-            copy(token, line, find_char(line,']',parsed)+1,parsed);
+            copy(token, line, find_array(line,parsed)+1,parsed);
         }
         else {
             copy(token, line, find_char(line,' ',parsed),parsed);
