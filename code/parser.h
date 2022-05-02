@@ -1,5 +1,23 @@
 #include <stddef.h>
 
+int get_line(STACK *s);
+
+/**
+ * @brief Lê o input do utilizador e realiza as operações pretendidas pelo mesmo
+ * 
+ * @param s Um apontador para a stack
+ * @return int 
+ */
+void parse_line(STACK *s,char *line);
+
+/**
+ * @brief Realiza a operação pretendida pelo utilizador conforme o símbolo lido
+ * 
+ * @param s Um apontador para a stack
+ * @param token Símbolo lido
+ */
+void handle_token(STACK *s, char *token);
+
 /**
  * @brief Verifica se a string contém apenas algarismos
  * 
@@ -27,14 +45,6 @@ int is_string(char *token);
 int is_array(char *token);
 
 /**
- * @brief Remove o caracter na posição indicada por 'p'
- * 
- * @param s 
- * @param p 
- */
-void remove_char(char *s, size_t p);
-
-/**
  * @brief Verifica se o token é uma "vaiável global"
  * 
  * @param token 
@@ -44,24 +54,18 @@ int is_global(char *token);
 
 int is_readress_global(char *token);
 
-/**
- * @brief Realiza a operação pretendida pelo utilizador conforme o símbolo lido
- * 
- * @param s Um apontador para a stack
- * @param token Símbolo lido
- */
-void handle_token(STACK *s, char *token);
+int find_char(char *line, char c, int parsed);
 
-/**
- * @brief Lê o input do utilizador e realiza as operações pretendidas pelo mesmo
- * 
- * @param s Um apontador para a stack
- * @return int 
- */
-int parse_line(STACK *s,char *line);
+int get_array_length(char *line, int parsed);
 
-int get_line (STACK *s);
+void copy(char *token, char *line, int len, int parsed);
 
 int remove_slashn (char *token);
 
-int find_array(char *line,int parsed);
+/**
+ * @brief Remove o caracter na posição indicada por 'p'
+ * 
+ * @param s 
+ * @param p 
+ */
+void remove_char(char *s, int p);
