@@ -7,6 +7,7 @@
 #include <string.h>
 #include <assert.h>
 #include <math.h>
+#include <float.h>
 
 char *get_operator(int i) {
     static char *operators[N_OPERATORS] = {
@@ -378,22 +379,32 @@ void decrement(STACK *s) {
 }
 
 void bw_not(STACK *s) {
+    
     STACK_ELEM x;
 
     assert(pop(s, &x) == 0);
 
-    STACK_ELEM result;
-
-    if (x.t == LONG) {
-        result.t = LONG;
-        result.data.l = ~x.data.l;
-    } 
-    else {
-        result.t = CHAR;
-        result.data.c = ~x.data.c;
+    if (x.t == ARRAY) {
+        for (int i = x.data.a->sp -1;i>=0;i--){
+            STACK_ELEM new;
+            assert (nth_element(x.data.a, &new,i) == 0);
+            assert (push(s,new) == 0);
+        }
     }
+    else {
 
+        STACK_ELEM result;
+    
+        if (x.t == LONG) {
+            result.t = LONG;
+            result.data.l = ~x.data.l;
+        } 
+        else {
+            result.t = CHAR;
+           result.data.c = ~x.data.c;
+        }
     push(s, result);
+    }
 }
 
 void conv_int(STACK *s) {
@@ -551,7 +562,7 @@ void copy_nth(STACK *s) {
 }
 
 void read_line(STACK *s) {
-    read_line(s);
+    get_line(s);
 }
 
 STACK_ELEM get_global(STACK *s, char value) {
@@ -588,20 +599,8 @@ void igual(STACK *s) {
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
 
-    if (x.t == DOUBLE || y.t == DOUBLE) {
-        if (get_double_arg(x) == get_double_arg(y)) {
-            to_push = 1;
-        }
-    }
-    else if (x.t == LONG || y.t == LONG) {
-        if (get_long_arg(x) == get_long_arg(y)) {
-            to_push = 1;
-        }
-    }
-    else {
-        if (x.data.c == y.data.c) {
-            to_push = 1;
-        }
+    if(get_double_arg(x) == get_double_arg (y)){
+        to_push = 1;
     }
 
     result.data.l = to_push;
@@ -618,20 +617,8 @@ void menor(STACK *s) {
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
 
-    if (x.t == DOUBLE || y.t == DOUBLE) {
-        if (get_double_arg(x) < get_double_arg(y)) {
-            to_push = 1;
-        }
-    }
-    else if (x.t == LONG || y.t == LONG) {
-        if (get_long_arg(x) < get_long_arg(y)) {
-            to_push = 1;
-        }
-    }
-    else {
-        if (x.data.c < y.data.c) {
-            to_push = 1;
-        }
+    if(get_double_arg(x) < get_double_arg (y)){
+        to_push = 1;
     }
 
     result.data.l = to_push;
@@ -648,20 +635,8 @@ void maior(STACK *s) {
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);   
 
-    if (x.t == DOUBLE || y.t == DOUBLE) {
-        if (get_double_arg(x) > get_double_arg(y)) {
-            to_push = 1;
-        }
-    }
-    else if (x.t == LONG || y.t == LONG) {
-        if (get_long_arg(x) > get_long_arg(y)) {
-            to_push = 1;
-        }
-    }
-    else {
-        if (x.data.c > y.data.c) {
-            to_push = 1;
-        }
+    if(get_double_arg(x) > get_double_arg(y)){
+        to_push = 1;
     }
 
     result.data.l = to_push;
@@ -699,12 +674,15 @@ void e_shortcut(STACK *s) {
     if (x.t == LONG && x.data.l) {
         result = y;
     }
+    /*if (x.t == LONG && x.data.l) {
+        result = y;
+    }
     else if (x.t == DOUBLE && x.data.d) {
         result = y;
     }
     else if (x.t == CHAR && x.data.c) {
         result = y;
-    }
+    }*/
 
     push(s, result);
 }
@@ -717,7 +695,10 @@ void ou_shortcut(STACK *s) {
 
     STACK_ELEM result = y;
 
-    if (x.t == LONG && x.data.l) {
+    if (get_double_arg(x)) {
+        result = x;
+    }
+    /*if (x.t == LONG && x.data.l) {
         result = x;
     }
     else if (x.t == DOUBLE && x.data.d) {
@@ -725,7 +706,7 @@ void ou_shortcut(STACK *s) {
     }
     else if (x.t == CHAR && x.data.c) {
         result = x;
-    }
+    }*/
 
     push(s, result);
 }
@@ -738,15 +719,8 @@ void e_menor(STACK *s) {
 
     STACK_ELEM result = y;
 
-    if (x.t == DOUBLE && y.t == DOUBLE) {
-        if (x.data.d < y.data.d) {
-            result = x;
-        }
-    }
-    else {
-        if (get_long_arg(x) < get_long_arg(y)) {
-            result = x;
-        }
+    if (get_double_arg(x) < get_double_arg(y)) {
+        result = x;
     }
     
     push(s, result);
@@ -760,15 +734,8 @@ void e_maior(STACK *s) {
 
     STACK_ELEM result = y;
 
-    if (x.t == DOUBLE && y.t == DOUBLE) {
-        if (x.data.d > y.data.d) {
-            result = x;
-        }
-    }
-    else {
-        if (get_long_arg(x) > get_long_arg(y)) {
-            result = x;
-        }
+    if (get_double_arg(x) > get_double_arg(y)) {
+        result = x;
     }
     
     push(s, result);

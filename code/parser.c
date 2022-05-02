@@ -15,10 +15,10 @@ int find_char(char *line,char c,int parsed){
     return i-parsed;
 }
 
-int find_array(char *line,int parsed){
+int find_array(char *line,int parsed){ // Encontra o tamanho total do array
     int i,array_number = 0;
     for (i=1+parsed;line[i]!= '\0' && line[i]!= '\n'; i++){
-        if (line[i] == '['){
+        if (line[i] == '['){ // Se encontrar um array dentro do mesmo, irá ignorar o próximo ']' que encontrar, visto que esse pertencerá ao array dentro desse mesmo
             array_number++;
         }
         else if (line[i]==']'){
@@ -63,7 +63,7 @@ int parse_line(STACK *s, char *line) {
     int parsed = 0;
 
     while ((int)(strlen(line)) != parsed) {
-        if (line[parsed]==' ') parsed++;
+        while (line[parsed]==' ') parsed++;
         if (line[parsed]=='\"'){
             copy(token, line, find_char(line,'\"',parsed)+1,parsed);
         }
