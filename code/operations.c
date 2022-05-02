@@ -81,7 +81,7 @@ void dispatch_table(STACK *s, char *operator) {
         bw_or,
         increment,
         decrement,
-        bw_not,
+        not,
         conv_int,
         conv_double,
         conv_char,
@@ -194,12 +194,24 @@ void mult(STACK *s) {
         result.t = LONG;
         result.data.l = get_long_arg(x) * get_long_arg(y);
     } 
-    else {
+    else if (x.t == CHAR && y.t == CHAR) {
         result.t = CHAR;
         result.data.c = x.data.c * y.data.c;
     }
 
+    if (x.t == LONG && y.t == STRING) {
+        char *new = strdup(y.data.s);
+
+        for (int i = 0; i < x.data.l - 1; i++) {
+            strcat(new, y.data.s);
+        }
+
+        result.t = STRING;
+        result.data.s = new;
+    }
+
     push(s, result);
+    free(y.data.s);
 }
 
 void divi(STACK *s) {
@@ -376,7 +388,7 @@ void decrement(STACK *s) {
     push(s, result);
 }
 
-void bw_not(STACK *s) {
+void not(STACK *s) {
     
     STACK_ELEM x;
 

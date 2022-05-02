@@ -139,7 +139,7 @@ void decrement(STACK *s);
  *
  * @param s Apontador para a stack
  */
-void bw_not(STACK *s);
+void not(STACK *s);
 
 /**
  * @brief Converte o elemento no topo da stack para o tipo "int"
