@@ -63,3 +63,5 @@ int parse_line(STACK *s,char *line);
 int get_line (STACK *s);
 
 int remove_slashn (char *token);
+
+int find_array(char *line,int parsed);
