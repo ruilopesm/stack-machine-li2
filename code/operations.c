@@ -58,16 +58,14 @@ int is_operator(char *token) {
 }
 
 int get_index(char *operator) {
-    int index = -1;
-
     for (int i = 0; i < N_OPERATORS; i++) {
         if (strcmp(operator, get_operator(i)) == 0) {
-            index = i;
+            return i;
         }
     }
 
     // Caso o operador não tenha sido encontrado: retorna -1 (ERRO)
-    return index;
+    return -1;
 }
 
 void dispatch_table(STACK *s, char *operator) {
@@ -674,15 +672,6 @@ void e_shortcut(STACK *s) {
     if (x.t == LONG && x.data.l) {
         result = y;
     }
-    /*if (x.t == LONG && x.data.l) {
-        result = y;
-    }
-    else if (x.t == DOUBLE && x.data.d) {
-        result = y;
-    }
-    else if (x.t == CHAR && x.data.c) {
-        result = y;
-    }*/
 
     push(s, result);
 }
@@ -698,15 +687,6 @@ void ou_shortcut(STACK *s) {
     if (get_double_arg(x)) {
         result = x;
     }
-    /*if (x.t == LONG && x.data.l) {
-        result = x;
-    }
-    else if (x.t == DOUBLE && x.data.d) {
-        result = x;
-    }
-    else if (x.t == CHAR && x.data.c) {
-        result = x;
-    }*/
 
     push(s, result);
 }
