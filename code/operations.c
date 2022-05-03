@@ -200,7 +200,10 @@ void mult(STACK *s) {
     }
 
     if (x.t == LONG && y.t == STRING) {
-        char *new = strdup(y.data.s);
+        int len = strlen(y.data.s);
+
+        char *new = malloc((len + 1) * x.data.l * sizeof(char));
+        strcpy(new, y.data.s);
 
         for (int i = 0; i < x.data.l - 1; i++) {
             strcat(new, y.data.s);
@@ -208,10 +211,11 @@ void mult(STACK *s) {
 
         result.t = STRING;
         result.data.s = new;
+
+        free(y.data.s);
     }
 
     push(s, result);
-    free(y.data.s);
 }
 
 void divi(STACK *s) {
@@ -395,14 +399,13 @@ void not(STACK *s) {
     assert(pop(s, &x) == 0);
 
     if (x.t == ARRAY) {
-        for (int i = x.data.a->sp -1;i>=0;i--){
+        for (int i = x.data.a->sp - 1; i >= 0; i--){
             STACK_ELEM new;
-            assert (nth_element(x.data.a, &new,i) == 0);
-            assert (push(s,new) == 0);
+            assert(nth_element(x.data.a, &new, i) == 0);
+            assert(push(s, new) == 0);
         }
     }
     else {
-
         STACK_ELEM result;
     
         if (x.t == LONG) {
@@ -411,9 +414,10 @@ void not(STACK *s) {
         } 
         else {
             result.t = CHAR;
-           result.data.c = ~x.data.c;
+            result.data.c = ~x.data.c;
         }
-    push(s, result);
+        
+        push(s, result);
     }
 }
 
