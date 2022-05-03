@@ -138,7 +138,28 @@ void sum(STACK *s) {
 
     STACK_ELEM result;
 
-    if (x.t == DOUBLE || y.t == DOUBLE) {
+    if (y.t == ARRAY){
+        if(x.t == ARRAY){
+            for (int i = 0 ; i<x.data.a->sp;i++){
+                assert(push(y.data.a,x.data.a->stc[i]) == 0);
+            }
+            result = y;
+        }
+        else {
+            assert(push(y.data.a,x) == 0);
+            result = y;
+        }
+    }
+    if (y.t == STRING && x.t == STRING){
+        char *new = malloc(strlen(y.data.s) + strlen(x.data.s) + 1);
+        strcpy(new,y.data.s);
+        strcat(new,x.data.s);
+        result.t = STRING;
+        result.data.s = new;
+        free(y.data.s);
+        free(x.data.s);
+    }        
+    else if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) + get_double_arg(y);
     } 
@@ -198,7 +219,6 @@ void mult(STACK *s) {
         result.t = CHAR;
         result.data.c = x.data.c * y.data.c;
     }
-
     if (x.t == LONG && y.t == STRING) {
         int len = strlen(y.data.s);
 
@@ -608,17 +628,21 @@ void igual(STACK *s) {
     long to_push = 0;
 
     STACK_ELEM result;
-    result.t = LONG;
 
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
 
-    if(get_double_arg(x) == get_double_arg (y)){
-        to_push = 1;
+    if (y.t == ARRAY){
+        long pos = get_long_arg(x);
+        assert (nth_element(y.data.a, &result, (y.data.a->sp) - pos -1) == 0);
+        push(s, result);
     }
-
-    result.data.l = to_push;
-    push(s, result);
+    else if(get_double_arg(x) == get_double_arg (y)){
+        result.t = LONG;
+        to_push = 1;
+        result.data.l = to_push;
+        push(s, result);
+    }
 }
 
 void menor(STACK *s) {
@@ -626,17 +650,23 @@ void menor(STACK *s) {
     long to_push = 0;
 
     STACK_ELEM result;
-    result.t = LONG;
 
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
 
-    if(get_double_arg(x) < get_double_arg (y)){
-        to_push = 1;
+    if (x.t == ARRAY){
+        long num = get_long_arg(y);
+        for (int i = 0; i<num; i++){
+            assert (nth_element(x.data.a, &result, (x.data.a->sp) - i-1) == 0); // Elemento é copiado do array
+            assert (push(s,result) == 0); // Elemento é colocado na stack
+        }
     }
-
-    result.data.l = to_push;
-    push(s, result);
+    else if(get_double_arg(x) < get_double_arg (y)){
+        result.t = LONG;
+        to_push = 1;
+        result.data.l = to_push;
+        push(s, result);
+    }
 }
 
 void maior(STACK *s) {
@@ -644,17 +674,23 @@ void maior(STACK *s) {
     long to_push = 0;
 
     STACK_ELEM result;
-    result.t = LONG;
 
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);   
 
-    if(get_double_arg(x) > get_double_arg(y)){
-        to_push = 1;
+    if (x.t == ARRAY){
+        long num = get_long_arg(y);
+        for (int i = num-1; i>=0; i--){
+            assert (nth_element(x.data.a, &result, i) == 0); // Elemento é copiado do array
+            assert (push(s,result) == 0); // Elemento é colocado na stack
+        }
     }
-
-    result.data.l = to_push;
-    push(s, result);
+    else if(get_double_arg(x) > get_double_arg(y)){
+        result.t = LONG;
+        to_push = 1;
+        result.data.l = to_push;
+        push(s, result);
+    }
 }
 
 void negacao(STACK *s) {
