@@ -12,13 +12,13 @@ STACK *create_stack() {
     // Inicializar variáveis "globais"
     for (int i = 0; i < 6; i++) {
         s->globals[i].t = LONG;
-        s->globals[i].data.l= i + 10;
+        s->globals[i].data.l = i + 10;
     }
     
     s->globals[13].t = CHAR;
-    s->globals[13].data.c= '\n';
+    s->globals[13].data.c = '\n';
     s->globals[18].t = CHAR;
-    s->globals[18].data.c= ' ';
+    s->globals[18].data.c = ' ';
     
     for (int i = 0; i < 3; i++) {
         s->globals[i + 23].t = LONG;
@@ -39,7 +39,7 @@ int increase_stack(STACK *s) {
 }
 
 void print_stack(STACK *s) {
-    print_elems (s); //É necessária para não imprimir /n quando le um array
+    print_elems(s); // É necessária para não imprimir /n quando lê um array
     putchar('\n');
 }
 
@@ -67,9 +67,9 @@ void print_elems(STACK *s){
 
 void free_stack(STACK *s) {
     //Procura-se por arrays dentro da stack para libertar
-    for (int i = 0;i<s->sp;i++){
+    for (int i = 0; i < s->sp; i++){
         if (s->stc[i].t == ARRAY){
-            free_stack (s->stc[i].data.a);
+            free_stack(s->stc[i].data.a);
         }
     }
     // De seguida liberta-se o outro conteúdo da stack

@@ -9,7 +9,7 @@
 #include <assert.h>
 #include <regex.h>
 
-int get_line(STACK *s){
+int get_line(STACK *s) {
     char line[BUFSIZ];
     
     if (fgets(line, BUFSIZ, stdin) != NULL) {
@@ -28,10 +28,10 @@ void parse_line(STACK *s, char *line) {
             parsed++;
         }
         
-        if (line[parsed] == '\"'){
+        if (line[parsed] == '\"') {
             copy(token, line, find_char(line, '\"', parsed) + 1, parsed);
         }
-        else if (line[parsed] == '['){
+        else if (line[parsed] == '[') {
             copy(token, line, get_array_length(line, parsed) + 1, parsed);
         }
         else {
@@ -112,7 +112,7 @@ void handle_token(STACK *s, char *token) {
         
         assert(push(s, new) == 0);
     }
-    else if (is_readress_global(token)){
+    else if (is_readress_global(token)) {
         STACK_ELEM top;
         
         assert(peek(s, &top) == 0);
@@ -228,7 +228,7 @@ void copy(char *token, char *line, int len, int parsed) {
 }
 
 // Remove o '\n' da string (retorna ainda se o \n existia na string ou não)
-int remove_slashn(char *token){
+int remove_slashn(char *token) {
     int len = strlen(token);
     
     if (token[len - 1] == '\n'){

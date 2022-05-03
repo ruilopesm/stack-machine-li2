@@ -219,20 +219,33 @@ void mult(STACK *s) {
         result.t = CHAR;
         result.data.c = x.data.c * y.data.c;
     }
-    if (x.t == LONG && y.t == STRING) {
-        int len = strlen(y.data.s);
 
-        char *new = malloc((len + 1) * x.data.l * sizeof(char));
-        strcpy(new, y.data.s);
+    if (x.t == LONG || x.t == CHAR) {
+        if (y.t == STRING) {
+            int len = strlen(y.data.s) + 1;
 
-        for (int i = 0; i < x.data.l - 1; i++) {
-            strcat(new, y.data.s);
+            char *new = malloc(len * x.data.l * sizeof(char));
+            strcpy(new, y.data.s);
+
+            for (int i = 0; i < x.data.l - 1; i++) {
+                strcat(new, y.data.s);
+            }
+
+            result.t = STRING;
+            result.data.s = new;
+
+            free(y.data.s);
         }
+        else if (y.t == ARRAY) {
+            int len = y.data.a->sp;
 
-        result.t = STRING;
-        result.data.s = new;
+            for (int i = len; i < len * x.data.l; i++) {
+                push(y.data.a, y.data.a->stc[i % len]);
+            }
 
-        free(y.data.s);
+            result.t = ARRAY;
+            result.data.a = y.data.a;
+        }
     }
 
     push(s, result);
@@ -419,11 +432,14 @@ void not(STACK *s) {
     assert(pop(s, &x) == 0);
 
     if (x.t == ARRAY) {
-        for (int i = x.data.a->sp - 1; i >= 0; i--){
+        for (int i = x.data.a->sp - 1; i >= 0; i--) {
             STACK_ELEM new;
+            
             assert(nth_element(x.data.a, &new, i) == 0);
             assert(push(s, new) == 0);
         }
+
+        free(x.data.a);
     }
     else {
         STACK_ELEM result;

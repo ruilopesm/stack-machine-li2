@@ -78,6 +78,8 @@ void sub(STACK *s);
  */
 void mult(STACK *s);
 
+void mult_structure(STACK_ELEM *x, STACK_ELEM *y, STACK_ELEM *result);
+
 /**
  * @brief Retira os dois elementos do topo da stack e coloca no topo a divisão do penúltimo pelo último
  *

@@ -30,7 +30,7 @@ typedef struct {
  * @brief A estrutura onde constam os parâmetros da stack
  * 
  */
-struct STACK{
+struct STACK {
     int sp; /**< O stack pointer */
     int size; /**< O tamanho total da stack */
     STACK_ELEM *stc; /**< O conteúdo da stack */
