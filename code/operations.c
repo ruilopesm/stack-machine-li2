@@ -174,7 +174,7 @@ void n_append_string (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result){
     else{
         char *temp = malloc(sizeof(char) * 700);
         char *new = malloc(sizeof(char) * 700 + strlen(y.data.s) +1);
-        snprintf(temp, 50, "%g", get_double_arg(x));
+        snprintf(temp, 700, "%g", get_double_arg(x));
         strcpy(new,y.data.s);
         strcat(new,temp);
         result->t = STRING;
@@ -192,8 +192,11 @@ void sum(STACK *s) {
 
     STACK_ELEM result;
 
-    if (y.t == ARRAY || x.t == ARRAY){
+    if (y.t == ARRAY){
         sumarray(y,x,&result);
+    }
+    else if (x.t == ARRAY){
+        sumarray(x,y,&result);
     }
     else if (y.t == STRING || x.t == STRING){
         append_string(y,x,&result);
