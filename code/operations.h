@@ -64,6 +64,11 @@ typedef void (*function)(STACK *s);
  */
 void sum(STACK *s);
 
+void sum_array(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
+void append_string(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
+void append_string_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
+void find_substring_index(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
+
 /**
  * @brief Retira os dois elementos do topo da stack e coloca no topo a subtração do penúltimo pelo último
  *
@@ -78,7 +83,7 @@ void sub(STACK *s);
  */
 void mult(STACK *s);
 
-void mult_structure(STACK_ELEM *x, STACK_ELEM *y, STACK_ELEM *result);
+void mult_structure(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
  * @brief Retira os dois elementos do topo da stack e coloca no topo a divisão do penúltimo pelo último
@@ -285,8 +290,3 @@ void e_maior(STACK *s);
  * @param s Apontador para a stack
  */
 void if_then_else(STACK *s);
-
-void sumarray (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result);
-void append_string(STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result);
-void n_append_string (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result);
-void find_substring_index(STACK_ELEM x,STACK_ELEM y,STACK_ELEM *result);
