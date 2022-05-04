@@ -71,6 +71,9 @@ void free_stack(STACK *s) {
         if (s->stc[i].t == ARRAY){
             free_stack(s->stc[i].data.a);
         }
+        if (s->stc[i].t == STRING){
+            free(s->stc[i].data.s);
+        }
     }
     // De seguida liberta-se o outro conteúdo da stack
     free(s->stc);

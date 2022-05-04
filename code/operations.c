@@ -130,6 +130,60 @@ long get_long_arg(STACK_ELEM x) {
     }
 }
 
+void sumarray (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result){
+    if(x.t == ARRAY){
+            for (int i = 0 ; i<x.data.a->sp;i++){
+                assert(push(y.data.a,x.data.a->stc[i]) == 0);
+            }
+            *result = y;
+        }
+    else {
+        assert(push(y.data.a,x) == 0);
+        *result = y;
+    }
+}
+void append_string(STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result){
+    if (y.t == STRING){
+        n_append_string(y,x,result);
+    }
+    else{
+        n_append_string(x,y,result);
+    }
+}
+
+void n_append_string (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result){
+    if (x.t == STRING){
+        char *new = malloc(strlen(y.data.s) + strlen(x.data.s) + 1);
+        strcpy(new,y.data.s);
+        strcat(new,x.data.s);
+        result->t = STRING;
+        result->data.s = new;
+        free(y.data.s);
+        free(x.data.s);
+    }
+    else if(x.t == CHAR){
+        int len = strlen(y.data.s);
+        char *new = malloc(len + 2);
+        strcpy(new,y.data.s);
+        new[len] = x.data.c;
+        new[len + 1 ] = '\0';
+        result->t = STRING;
+        result->data.s = new;
+        free(y.data.s);
+    }
+    else{
+        char *temp = malloc(sizeof(char) * 700);
+        char *new = malloc(sizeof(char) * 700 + strlen(y.data.s) +1);
+        snprintf(temp, 50, "%g", get_double_arg(x));
+        strcpy(new,y.data.s);
+        strcat(new,temp);
+        result->t = STRING;
+        result->data.s = new;
+        free(y.data.s);
+        free(temp);
+    }
+}
+
 void sum(STACK *s) {
     STACK_ELEM x, y;
 
@@ -138,27 +192,12 @@ void sum(STACK *s) {
 
     STACK_ELEM result;
 
-    if (y.t == ARRAY){
-        if(x.t == ARRAY){
-            for (int i = 0 ; i<x.data.a->sp;i++){
-                assert(push(y.data.a,x.data.a->stc[i]) == 0);
-            }
-            result = y;
-        }
-        else {
-            assert(push(y.data.a,x) == 0);
-            result = y;
-        }
+    if (y.t == ARRAY || x.t == ARRAY){
+        sumarray(y,x,&result);
     }
-    if (y.t == STRING && x.t == STRING){
-        char *new = malloc(strlen(y.data.s) + strlen(x.data.s) + 1);
-        strcpy(new,y.data.s);
-        strcat(new,x.data.s);
-        result.t = STRING;
-        result.data.s = new;
-        free(y.data.s);
-        free(x.data.s);
-    }        
+    else if (y.t == STRING || x.t == STRING){
+        append_string(y,x,&result);
+    }    
     else if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) + get_double_arg(y);
@@ -295,6 +334,27 @@ void rem(STACK *s) {
     push(s, result);
 }
 
+void find_substring_index(STACK_ELEM x,STACK_ELEM y,STACK_ELEM *result){
+    result->t = LONG;
+    char *temp;
+    if(strlen(x.data.s)>strlen(y.data.s)){
+        if ((temp = (strstr(x.data.s,y.data.s))) == NULL){
+            result->data.l=-1;
+        }
+        else{
+            result->data.l=temp-x.data.s;
+        }
+    }
+    else{
+        if ((temp = (strstr(y.data.s,x.data.s))) == NULL){
+            result->data.l=-1;
+        }
+        else{
+            result->data.l=temp-y.data.s;
+        }
+    }
+}
+
 void power(STACK *s) {
     STACK_ELEM x, y;
 
@@ -303,7 +363,10 @@ void power(STACK *s) {
 
     STACK_ELEM result;
 
-    if (x.t == DOUBLE || y.t == DOUBLE) {
+    if (x.t == STRING && y.t == STRING){
+        find_substring_index(x,y,&result);
+    }
+    else if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = pow(get_double_arg(x), get_double_arg(y));
     } 
