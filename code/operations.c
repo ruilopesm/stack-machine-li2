@@ -735,6 +735,7 @@ void igual(STACK *s) {
         long pos = get_long_arg(x);
         assert(nth_element(y.data.a, &result, (y.data.a->sp) - pos - 1) == 0);
         push(s, result);
+        
         return;
     }
     else if (x.t == STRING && y.t == STRING) {
@@ -769,8 +770,9 @@ void menor(STACK *s) {
         for (int i = 0; i < num; i++) {
             assert(nth_element(x.data.a, &result, (x.data.a->sp) - i - 1) == 0);
             assert(push(s, result) == 0);
-            return;
         }
+        
+        return;
     }
     else if (get_double_arg(x) < get_double_arg(y)) {
         result.t = LONG;
@@ -800,8 +802,9 @@ void maior(STACK *s) {
         for (int i = num - 1; i >= 0 ; i--) {
             assert(nth_element(x.data.a, &result, i) == 0);
             assert(push(s, result) == 0);
-            return;
         }
+        
+        return;
     }
     else if (get_double_arg(x) > get_double_arg(y)) {
         result.t = LONG;
