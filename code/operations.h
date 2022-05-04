@@ -285,3 +285,8 @@ void e_maior(STACK *s);
  * @param s Apontador para a stack
  */
 void if_then_else(STACK *s);
+
+void sumarray (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result);
+void append_string(STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result);
+void n_append_string (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result);
+void find_substring_index(STACK_ELEM x,STACK_ELEM y,STACK_ELEM *result);
