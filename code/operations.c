@@ -737,6 +737,11 @@ void igual(STACK *s) {
         push(s, result);
         return;
     }
+    else if (x.t == STRING && y.t == STRING) {
+        result.t = LONG;
+        result.data.l = strcmp(x.data.s, y.data.s) == 0 ? 1 : to_push;
+        push(s, result);
+    }
     else if (get_double_arg(x) == get_double_arg(y)) {
         result.t = LONG;
         to_push = 1;
@@ -924,6 +929,19 @@ void range(STACK *s) {
     }
     else if (x.t == ARRAY) {
         result.data.l = x.data.a->sp;
+    }
+    else if (x.t == LONG) {
+        STACK *arr = create_stack();
+        
+        for (int i = 0; i < x.data.l; i++) {
+            STACK_ELEM to_push = { .t = LONG };
+            to_push.data.l = i;
+            
+            push(arr, to_push);
+        }
+
+        result.t = ARRAY;
+        result.data.a = arr;
     }
 
     push(s, result);
