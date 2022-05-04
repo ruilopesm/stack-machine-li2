@@ -41,7 +41,8 @@ char *get_operator(int i) {
         "e|",
         "e<",
         "e>",
-        "?"
+        "?",
+        ","
     };
 
     return operators[i];
@@ -100,7 +101,8 @@ void dispatch_table(STACK *s, char *operator) {
         ou_shortcut,
         e_menor,
         e_maior,
-        if_then_else
+        if_then_else,
+        range
     }; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
 
     int index = get_index(operator);
@@ -729,14 +731,20 @@ void igual(STACK *s) {
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
 
-    if (y.t == ARRAY){
+    if (y.t == ARRAY) {
         long pos = get_long_arg(x);
-        assert (nth_element(y.data.a, &result, (y.data.a->sp) - pos -1) == 0);
+        assert(nth_element(y.data.a, &result, (y.data.a->sp) - pos - 1) == 0);
         push(s, result);
+        return;
     }
-    else if(get_double_arg(x) == get_double_arg (y)){
+    else if (get_double_arg(x) == get_double_arg(y)) {
         result.t = LONG;
         to_push = 1;
+        result.data.l = to_push;
+        push(s, result);
+    }
+    else {
+        result.t = LONG;
         result.data.l = to_push;
         push(s, result);
     }
@@ -751,19 +759,26 @@ void menor(STACK *s) {
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
 
-    if (x.t == ARRAY){
+    if (x.t == ARRAY) {
         long num = get_long_arg(y);
-        for (int i = 0; i<num; i++){
-            assert (nth_element(x.data.a, &result, (x.data.a->sp) - i-1) == 0); // Elemento é copiado do array
-            assert (push(s,result) == 0); // Elemento é colocado na stack
+        for (int i = 0; i < num; i++) {
+            assert(nth_element(x.data.a, &result, (x.data.a->sp) - i - 1) == 0);
+            assert(push(s, result) == 0);
+            return;
         }
     }
-    else if(get_double_arg(x) < get_double_arg (y)){
+    else if (get_double_arg(x) < get_double_arg(y)) {
         result.t = LONG;
         to_push = 1;
         result.data.l = to_push;
         push(s, result);
     }
+    else {
+        result.t = LONG;
+        result.data.l = to_push;
+        push(s, result);
+    }
+    
 }
 
 void maior(STACK *s) {
@@ -775,19 +790,26 @@ void maior(STACK *s) {
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);   
 
-    if (x.t == ARRAY){
+    if (x.t == ARRAY) {
         long num = get_long_arg(y);
-        for (int i = num-1; i>=0; i--){
-            assert (nth_element(x.data.a, &result, i) == 0); // Elemento é copiado do array
-            assert (push(s,result) == 0); // Elemento é colocado na stack
+        for (int i = num - 1; i >= 0 ; i--) {
+            assert(nth_element(x.data.a, &result, i) == 0);
+            assert(push(s, result) == 0);
+            return;
         }
     }
-    else if(get_double_arg(x) > get_double_arg(y)){
+    else if (get_double_arg(x) > get_double_arg(y)) {
         result.t = LONG;
         to_push = 1;
         result.data.l = to_push;
         push(s, result);
     }
+    else {
+        result.t = LONG;
+        result.data.l = to_push;
+        push(s, result);
+    }
+    
 }
 
 void negacao(STACK *s) {
@@ -884,6 +906,24 @@ void if_then_else(STACK *s) {
     }
     else if (x.t == DOUBLE && x.data.d == 0.0) {
         result = y;
+    }
+
+    push(s, result);
+}
+
+void range(STACK *s) {
+    STACK_ELEM x;
+
+    assert(pop(s, &x) == 0);
+
+    STACK_ELEM result;
+    result.t = LONG;
+
+    if (x.t == STRING) {
+        result.data.l = strlen(x.data.s);
+    }
+    else if (x.t == ARRAY) {
+        result.data.l = x.data.a->sp;
     }
 
     push(s, result);
