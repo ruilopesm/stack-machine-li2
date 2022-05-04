@@ -104,6 +104,7 @@ void dispatch_table(STACK *s, char *operator) {
     }; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
 
     int index = get_index(operator);
+    assert(index != -1);
 
     // Chama o function pointer
     table[index](s);
@@ -130,60 +131,6 @@ long get_long_arg(STACK_ELEM x) {
     }
 }
 
-void sumarray (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result){
-    if(x.t == ARRAY){
-            for (int i = 0 ; i<x.data.a->sp;i++){
-                assert(push(y.data.a,x.data.a->stc[i]) == 0);
-            }
-            *result = y;
-        }
-    else {
-        assert(push(y.data.a,x) == 0);
-        *result = y;
-    }
-}
-void append_string(STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result){
-    if (y.t == STRING){
-        n_append_string(y,x,result);
-    }
-    else{
-        n_append_string(x,y,result);
-    }
-}
-
-void n_append_string (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result){
-    if (x.t == STRING){
-        char *new = malloc(strlen(y.data.s) + strlen(x.data.s) + 1);
-        strcpy(new,y.data.s);
-        strcat(new,x.data.s);
-        result->t = STRING;
-        result->data.s = new;
-        free(y.data.s);
-        free(x.data.s);
-    }
-    else if(x.t == CHAR){
-        int len = strlen(y.data.s);
-        char *new = malloc(len + 2);
-        strcpy(new,y.data.s);
-        new[len] = x.data.c;
-        new[len + 1 ] = '\0';
-        result->t = STRING;
-        result->data.s = new;
-        free(y.data.s);
-    }
-    else{
-        char *temp = malloc(sizeof(char) * 700);
-        char *new = malloc(sizeof(char) * 700 + strlen(y.data.s) +1);
-        snprintf(temp, 700, "%g", get_double_arg(x));
-        strcpy(new,y.data.s);
-        strcat(new,temp);
-        result->t = STRING;
-        result->data.s = new;
-        free(y.data.s);
-        free(temp);
-    }
-}
-
 void sum(STACK *s) {
     STACK_ELEM x, y;
 
@@ -192,14 +139,14 @@ void sum(STACK *s) {
 
     STACK_ELEM result;
 
-    if (y.t == ARRAY){
-        sumarray(y,x,&result);
+    if (y.t == ARRAY) {
+        sum_array(y, x, &result);
     }
-    else if (x.t == ARRAY){
-        sumarray(x,y,&result);
+    else if (x.t == ARRAY) {
+        sum_array(x, y, &result);
     }
-    else if (y.t == STRING || x.t == STRING){
-        append_string(y,x,&result);
+    else if (y.t == STRING || x.t == STRING) {
+        append_string(y, x, &result);
     }    
     else if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
@@ -215,6 +162,71 @@ void sum(STACK *s) {
     }
 
     push(s, result);
+}
+
+void sum_array(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result) {
+    if (x.t == ARRAY) {
+        for (int i = 0; i < x.data.a->sp; i++) {
+            assert(push(y.data.a, x.data.a->stc[i]) == 0);
+        }
+        *result = y;
+    }
+    else {
+        assert(push(y.data.a, x) == 0);
+        *result = y;
+    }
+}
+
+void append_string(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result) {
+    if (y.t == STRING) {
+        append_string_aux(y, x, result);
+    }
+    else {
+        append_string_aux(x, y, result);
+    }
+}
+
+void append_string_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result) {
+    if (x.t == STRING) {
+        char *new = malloc(strlen(y.data.s) + strlen(x.data.s) + 1);
+        
+        strcpy(new,y.data.s);
+        strcat(new,x.data.s);
+        
+        result->t = STRING;
+        result->data.s = new;
+        
+        free(y.data.s);
+        free(x.data.s);
+    }
+    else if (x.t == CHAR) {
+        int len = strlen(y.data.s);
+        char *new = malloc(len + 2);
+        
+        strcpy(new,y.data.s);
+        
+        new[len] = x.data.c;
+        new[len + 1] = '\0';
+        
+        result->t = STRING;
+        result->data.s = new;
+        
+        free(y.data.s);
+    }
+    else {
+        char *temp = malloc(sizeof(char) * BUFSIZ);
+        char *new = malloc(sizeof(char) * BUFSIZ + (strlen(y.data.s) + 1));
+        
+        snprintf(temp, BUFSIZ, "%g", get_double_arg(x));
+        strcpy(new, y.data.s);
+        strcat(new, temp);
+        
+        result->t = STRING;
+        result->data.s = new;
+        
+        free(y.data.s);
+        free(temp);
+    }
 }
 
 void sub(STACK *s) {
@@ -249,7 +261,10 @@ void mult(STACK *s) {
 
     STACK_ELEM result;
 
-    if (x.t == DOUBLE || y.t == DOUBLE) {
+    if (y.t == STRING || y.t == ARRAY) {
+        mult_structure(x, y, &result);
+    }
+    else if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) * get_double_arg(y);
     } 
@@ -262,35 +277,35 @@ void mult(STACK *s) {
         result.data.c = x.data.c * y.data.c;
     }
 
-    if (x.t == LONG || x.t == CHAR) {
-        if (y.t == STRING) {
-            int len = strlen(y.data.s) + 1;
-
-            char *new = malloc(len * x.data.l * sizeof(char));
-            strcpy(new, y.data.s);
-
-            for (int i = 0; i < x.data.l - 1; i++) {
-                strcat(new, y.data.s);
-            }
-
-            result.t = STRING;
-            result.data.s = new;
-
-            free(y.data.s);
-        }
-        else if (y.t == ARRAY) {
-            int len = y.data.a->sp;
-
-            for (int i = len; i < len * x.data.l; i++) {
-                push(y.data.a, y.data.a->stc[i % len]);
-            }
-
-            result.t = ARRAY;
-            result.data.a = y.data.a;
-        }
-    }
-
     push(s, result);
+}
+
+void mult_structure(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
+    if (y.t == STRING) {
+        int len = strlen(y.data.s) + 1;
+
+        char *new = malloc(len * x.data.l * sizeof(char));
+        strcpy(new, y.data.s);
+
+        for (int i = 0; i < x.data.l - 1; i++) {
+            strcat(new, y.data.s);
+        }
+
+        result->t = STRING;
+        result->data.s = new;
+
+        free(y.data.s);
+    }
+    else if (y.t == ARRAY) {
+        int len = y.data.a->sp;
+
+        for (int i = len; i < len * x.data.l; i++) {
+            push(y.data.a, y.data.a->stc[i % len]);
+        }
+
+        result->t = ARRAY;
+        result->data.a = y.data.a;
+    }
 }
 
 void divi(STACK *s) {
