@@ -42,7 +42,8 @@ char *get_operator(int i) {
         "e<",
         "e>",
         "?",
-        ","
+        ",",
+        "S/"
     };
 
     return operators[i];
@@ -102,7 +103,8 @@ void dispatch_table(STACK *s, char *operator) {
         e_menor,
         e_maior,
         if_then_else,
-        range
+        range,
+        split_string_by_whitespace
     }; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
 
     int index = get_index(operator);
@@ -343,31 +345,6 @@ void mult_structure(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     }
 }
 
-char *create_string(int size){
-    char *section = malloc (sizeof(char) * size);
-    return section;
-}
-
-void separate_by_subs(STACK_ELEM *main,STACK_ELEM *sub,STACK *new){
-    char *init = main->data.s;
-    char *current,*section;
-    STACK_ELEM temp;
-    temp.t = STRING;
-    int len = strlen(sub->data.s);
-    while((current = strstr(init,sub->data.s)) != NULL) {
-        section = create_string(current- init + 1);
-        strncpy(section,init,current - init);
-        temp.data.s = section;
-        assert(push(new,temp) == 0);
-        init = current + len;
-    }
-    section = create_string (strlen(init) + 1);
-    strcpy(section,init);
-    temp.data.s = section;
-    assert(push(new,temp) == 0);
-
-}
-
 void divi(STACK *s) {
     STACK_ELEM x, y;
 
@@ -379,8 +356,11 @@ void divi(STACK *s) {
     if (x.t == STRING && y.t == STRING) {
         result.t = ARRAY;
         STACK *new = create_stack();
-        separate_by_subs(&x,&y,new);
-        result.data.a=new;
+        
+        split_by_substring(&x, &y, new);
+        
+        result.data.a = new;
+        
         free(x.data.s);
         free(y.data.s);
     }
@@ -398,6 +378,39 @@ void divi(STACK *s) {
     }
 
     push(s, result);
+
+}
+
+char *create_string(int size) {
+    char *section = malloc(sizeof(char) * size);
+    
+    return section;
+}
+
+void split_by_substring(STACK_ELEM *main, STACK_ELEM *sub, STACK *new) {
+    char *init = main->data.s, *current, *section;
+    
+    STACK_ELEM temp;
+    temp.t = STRING;
+    
+    int len = strlen(sub->data.s);
+    
+    while((current = strstr(init, sub->data.s)) != NULL) {
+        section = create_string(current - init + 1);
+        
+        strncpy(section, init, current - init);
+        temp.data.s = section;
+        
+        assert(push(new, temp) == 0);
+        
+        init = current + len;
+    }
+
+    section = create_string(strlen(init) + 1);
+    strcpy(section, init);
+    temp.data.s = section;
+    
+    assert(push(new,temp) == 0);
 
 }
 
@@ -421,27 +434,6 @@ void rem(STACK *s) {
     push(s, result);
 }
 
-void find_substring_index(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
-    result->t = LONG;
-    char *temp;
-    
-    if (strlen(x.data.s) > strlen(y.data.s)) {
-        if ((temp = (strstr(x.data.s, y.data.s))) == NULL) {
-            result->data.l = -1;
-        }
-        else {
-            result->data.l = temp - x.data.s;
-        }
-    }
-    else {
-        if ((temp = (strstr(y.data.s, x.data.s))) == NULL) {
-            result->data.l = -1;
-        }
-        else {
-            result->data.l = temp - y.data.s;
-        }
-    }
-}
 
 void power(STACK *s) {
     STACK_ELEM x, y;
@@ -468,6 +460,28 @@ void power(STACK *s) {
     }
 
     push(s, result);
+}
+
+void find_substring_index(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
+    result->t = LONG;
+    char *temp;
+    
+    if (strlen(x.data.s) > strlen(y.data.s)) {
+        if ((temp = (strstr(x.data.s, y.data.s))) == NULL) {
+            result->data.l = -1;
+        }
+        else {
+            result->data.l = temp - x.data.s;
+        }
+    }
+    else {
+        if ((temp = (strstr(y.data.s, x.data.s))) == NULL) {
+            result->data.l = -1;
+        }
+        else {
+            result->data.l = temp - y.data.s;
+        }
+    }
 }
 
 void bw_xor(STACK *s) {
@@ -1032,4 +1046,30 @@ void range(STACK *s) {
     }
 
     push(s, result);
+}
+
+void split_string_by_whitespace(STACK *s) {
+    STACK_ELEM x;
+
+    assert(pop(s, &x) == 0);
+
+    STACK_ELEM result;
+    result.t = ARRAY;
+
+    if (x.t == STRING) {
+        STACK *arr = create_stack();
+        
+        STACK_ELEM to_push;
+        to_push.t = STRING;
+
+        char *token = strtok(x.data.s, " ");
+        to_push.data.s = token;
+
+        while (token != NULL) {
+            push(arr, to_push);
+            token = strtok(NULL, " ");
+        }
+        
+        push(s, result);
+    }
 }

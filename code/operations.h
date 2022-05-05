@@ -2,7 +2,7 @@
  * @brief Macro que define o número de operadores implementados na stack
  *
  */
-#define N_OPERATORS 32
+#define N_OPERATORS 33
 
 /**
  * @brief Função que retorna o operador associado ao índice dado
@@ -71,7 +71,7 @@ void sum(STACK *s);
  * @param x elemento a adicionar
  * @param result array final
  */
-void sum_array(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
+void sum_array(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result, int order);
 
 /**
  * @brief Funçao que invoca a funçao append_string_aux com os argumentos corretos
@@ -89,7 +89,7 @@ void append_string(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
  * @param x argumento
  * @param result resltado final
  */
-void append_string_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
+void append_string_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result, int order);
 
 /**
  * @brief Retira os dois elementos do topo da stack e coloca no topo a subtração do penúltimo pelo último
@@ -120,6 +120,10 @@ void mult_structure(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
  * @param s Apontador para a stack
  */
 void divi(STACK *s);
+
+char *create_string(int size);
+
+void split_by_substring(STACK_ELEM *main, STACK_ELEM *sub, STACK *new);
 
 /**
  * @brief Retira os dois elementos do topo da stack e coloca no topo o resto da divisão do penúltimo pelo último
@@ -335,3 +339,5 @@ void if_then_else(STACK *s);
  * @param s Apontador para a stack
  */
 void range(STACK *s);
+
+void split_string_by_whitespace(STACK *s);
