@@ -41,7 +41,8 @@ char *get_operator(int i) {
         "e|",
         "e<",
         "e>",
-        "?"
+        "?",
+        ","
     };
 
     return operators[i];
@@ -100,10 +101,12 @@ void dispatch_table(STACK *s, char *operator) {
         ou_shortcut,
         e_menor,
         e_maior,
-        if_then_else
+        if_then_else,
+        range
     }; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
 
     int index = get_index(operator);
+    assert(index != -1);
 
     // Chama o function pointer
     table[index](s);
@@ -174,10 +177,11 @@ void n_append_string (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result,int order){ /
         }
         result->t = STRING;
         result->data.s = new;
+        
         free(y.data.s);
         free(x.data.s);
     }
-    else if(x.t == CHAR){
+    else if (x.t == CHAR) {
         int len = strlen(y.data.s);
         char *new = malloc(len + 2);
         if(order){
@@ -192,6 +196,7 @@ void n_append_string (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result,int order){ /
         new[len + 1 ] = '\0';
         result->t = STRING;
         result->data.s = new;
+        
         free(y.data.s);
     }
     else{
@@ -208,6 +213,7 @@ void n_append_string (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result,int order){ /
         }
         result->t = STRING;
         result->data.s = new;
+        
         free(y.data.s);
         free(temp);
     }
@@ -278,7 +284,10 @@ void mult(STACK *s) {
 
     STACK_ELEM result;
 
-    if (x.t == DOUBLE || y.t == DOUBLE) {
+    if (y.t == STRING || y.t == ARRAY) {
+        mult_structure(x, y, &result);
+    }
+    else if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) * get_double_arg(y);
     } 
@@ -291,35 +300,35 @@ void mult(STACK *s) {
         result.data.c = x.data.c * y.data.c;
     }
 
-    if (x.t == LONG || x.t == CHAR) {
-        if (y.t == STRING) {
-            int len = strlen(y.data.s) + 1;
-
-            char *new = malloc(len * x.data.l * sizeof(char));
-            strcpy(new, y.data.s);
-
-            for (int i = 0; i < x.data.l - 1; i++) {
-                strcat(new, y.data.s);
-            }
-
-            result.t = STRING;
-            result.data.s = new;
-
-            free(y.data.s);
-        }
-        else if (y.t == ARRAY) {
-            int len = y.data.a->sp;
-
-            for (int i = len; i < len * x.data.l; i++) {
-                push(y.data.a, y.data.a->stc[i % len]);
-            }
-
-            result.t = ARRAY;
-            result.data.a = y.data.a;
-        }
-    }
-
     push(s, result);
+}
+
+void mult_structure(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
+    if (y.t == STRING) {
+        int len = strlen(y.data.s) + 1;
+
+        char *new = malloc(len * x.data.l * sizeof(char));
+        strcpy(new, y.data.s);
+
+        for (int i = 0; i < x.data.l - 1; i++) {
+            strcat(new, y.data.s);
+        }
+
+        result->t = STRING;
+        result->data.s = new;
+
+        free(y.data.s);
+    }
+    else if (y.t == ARRAY) {
+        int len = y.data.a->sp;
+
+        for (int i = len; i < len * x.data.l; i++) {
+            push(y.data.a, y.data.a->stc[i % len]);
+        }
+
+        result->t = ARRAY;
+        result->data.a = y.data.a;
+    }
 }
 
 char *create_string(int size){
@@ -400,23 +409,24 @@ void rem(STACK *s) {
     push(s, result);
 }
 
-void find_substring_index(STACK_ELEM x,STACK_ELEM y,STACK_ELEM *result){
+void find_substring_index(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     result->t = LONG;
     char *temp;
-    if(strlen(x.data.s)>strlen(y.data.s)){
-        if ((temp = (strstr(x.data.s,y.data.s))) == NULL){
-            result->data.l=-1;
+    
+    if (strlen(x.data.s) > strlen(y.data.s)) {
+        if ((temp = (strstr(x.data.s, y.data.s))) == NULL) {
+            result->data.l = -1;
         }
-        else{
-            result->data.l=temp-x.data.s;
+        else {
+            result->data.l = temp - x.data.s;
         }
     }
-    else{
-        if ((temp = (strstr(y.data.s,x.data.s))) == NULL){
-            result->data.l=-1;
+    else {
+        if ((temp = (strstr(y.data.s, x.data.s))) == NULL) {
+            result->data.l = -1;
         }
-        else{
-            result->data.l=temp-y.data.s;
+        else {
+            result->data.l = temp - y.data.s;
         }
     }
 }
@@ -760,6 +770,10 @@ STACK_ELEM get_global(STACK *s, char value) {
         new.t = STRING;
         new.data.s = current.data.s;
     }
+    else if (current.t == ARRAY) {
+        new.t = ARRAY;
+        new.data.a = current.data.a;
+    }
     else {
         new.t = CHAR;
         new.data.c = current.data.c;
@@ -777,14 +791,26 @@ void igual(STACK *s) {
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
 
-    if (y.t == ARRAY){
+    if (y.t == ARRAY) {
         long pos = get_long_arg(x);
-        assert (nth_element(y.data.a, &result, (y.data.a->sp) - pos -1) == 0);
+        assert(nth_element(y.data.a, &result, (y.data.a->sp) - pos - 1) == 0);
+        push(s, result);
+        
+        return;
+    }
+    else if (x.t == STRING && y.t == STRING) {
+        result.t = LONG;
+        result.data.l = strcmp(x.data.s, y.data.s) == 0 ? 1 : to_push;
         push(s, result);
     }
-    else if(get_double_arg(x) == get_double_arg (y)){
+    else if (get_double_arg(x) == get_double_arg(y)) {
         result.t = LONG;
         to_push = 1;
+        result.data.l = to_push;
+        push(s, result);
+    }
+    else {
+        result.t = LONG;
         result.data.l = to_push;
         push(s, result);
     }
@@ -799,19 +825,27 @@ void menor(STACK *s) {
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
 
-    if (x.t == ARRAY){
+    if (x.t == ARRAY) {
         long num = get_long_arg(y);
-        for (int i = 0; i<num; i++){
-            assert (nth_element(x.data.a, &result, (x.data.a->sp) - i-1) == 0); // Elemento é copiado do array
-            assert (push(s,result) == 0); // Elemento é colocado na stack
+        for (int i = 0; i < num; i++) {
+            assert(nth_element(x.data.a, &result, (x.data.a->sp) - i - 1) == 0);
+            assert(push(s, result) == 0);
         }
+        
+        return;
     }
-    else if(get_double_arg(x) < get_double_arg (y)){
+    else if (get_double_arg(x) < get_double_arg(y)) {
         result.t = LONG;
         to_push = 1;
         result.data.l = to_push;
         push(s, result);
     }
+    else {
+        result.t = LONG;
+        result.data.l = to_push;
+        push(s, result);
+    }
+    
 }
 
 void maior(STACK *s) {
@@ -823,19 +857,27 @@ void maior(STACK *s) {
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);   
 
-    if (x.t == ARRAY){
+    if (x.t == ARRAY) {
         long num = get_long_arg(y);
-        for (int i = num-1; i>=0; i--){
-            assert (nth_element(x.data.a, &result, i) == 0); // Elemento é copiado do array
-            assert (push(s,result) == 0); // Elemento é colocado na stack
+        for (int i = num - 1; i >= 0 ; i--) {
+            assert(nth_element(x.data.a, &result, i) == 0);
+            assert(push(s, result) == 0);
         }
+        
+        return;
     }
-    else if(get_double_arg(x) > get_double_arg(y)){
+    else if (get_double_arg(x) > get_double_arg(y)) {
         result.t = LONG;
         to_push = 1;
         result.data.l = to_push;
         push(s, result);
     }
+    else {
+        result.t = LONG;
+        result.data.l = to_push;
+        push(s, result);
+    }
+    
 }
 
 void negacao(STACK *s) {
@@ -932,6 +974,37 @@ void if_then_else(STACK *s) {
     }
     else if (x.t == DOUBLE && x.data.d == 0.0) {
         result = y;
+    }
+
+    push(s, result);
+}
+
+void range(STACK *s) {
+    STACK_ELEM x;
+
+    assert(pop(s, &x) == 0);
+
+    STACK_ELEM result;
+    result.t = LONG;
+
+    if (x.t == STRING) {
+        result.data.l = strlen(x.data.s);
+    }
+    else if (x.t == ARRAY) {
+        result.data.l = x.data.a->sp;
+    }
+    else if (x.t == LONG) {
+        STACK *arr = create_stack();
+        
+        for (int i = 0; i < x.data.l; i++) {
+            STACK_ELEM to_push = { .t = LONG };
+            to_push.data.l = i;
+            
+            push(arr, to_push);
+        }
+
+        result.t = ARRAY;
+        result.data.a = arr;
     }
 
     push(s, result);
