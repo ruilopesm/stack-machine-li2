@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -pedantic-errors -g
+CFLAGS = -Wall -Wextra -pedantic-errors -O2
 LIBS = -lm
 OBJS = main.o stack.o operations.o parser.o
 TARGET = main
