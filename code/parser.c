@@ -196,7 +196,6 @@ int find_char(char *line, char c, int parsed) {
     return i - parsed;
 }
 
-// Encontra o tamanho total do array
 int get_array_length(char *line, int parsed) {
     int i, array_number = 0;
     
@@ -227,7 +226,6 @@ void copy(char *token, char *line, int len, int parsed) {
     token[i] = '\0';
 }
 
-// Remove o '\n' da string (retorna ainda se o \n existia na string ou não)
 int remove_slashn(char *token) {
     int len = strlen(token);
     
