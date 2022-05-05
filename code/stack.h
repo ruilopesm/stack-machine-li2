@@ -59,6 +59,11 @@ int increase_stack(STACK *s);
  */
 void print_stack(STACK *s);
 
+/**
+ * @brief Funçao que imprime os elementos na STACK
+ * 
+ * @param s Apontador para a stack
+ */
 void print_elems (STACK *s);
 
 /**
