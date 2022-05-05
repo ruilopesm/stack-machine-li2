@@ -129,6 +129,13 @@ void divi(STACK *s);
 void rem(STACK *s);
 
 /**
+ * @brief Função que calcula a exponenciação de dois elementos da stack
+ *
+ * @param s Apontador para a stack
+ */
+void power(STACK *s);
+
+/**
  * @brief Funçao que calcula em que indice ocorre uma substring numa string maior
  * 
  * @param x string
@@ -136,13 +143,6 @@ void rem(STACK *s);
  * @param result indice
  */
 void find_substring_index(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
-
-/**
- * @brief Função que calcula a exponenciação de dois elementos da stack
- *
- * @param s Apontador para a stack
- */
-void power(STACK *s);
 
 /**
  * @brief Retira os dois elementos do topo da stack e retorna o resultado da operação XOR ("ou exclusivo" ao nível dos bits)
