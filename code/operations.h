@@ -64,9 +64,9 @@ typedef void (*function)(STACK *s);
  */
 void sum(STACK *s);
 
-void sum_array(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
+void sum_array(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result, int order);
 void append_string(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
-void append_string_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
+void append_string_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result, int order);
 
 /**
  * @brief Retira os dois elementos do topo da stack e coloca no topo a subtração do penúltimo pelo último
@@ -98,14 +98,14 @@ void divi(STACK *s);
  */
 void rem(STACK *s);
 
-void find_substring_index(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
-
 /**
  * @brief Função que calcula a exponenciação de dois elementos da stack
  *
  * @param s
  */
 void power(STACK *s);
+
+void find_substring_index(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
  * @brief Retira os dois elementos do topo da stack e retorna o resultado da operação XOR ("ou exclusivo" ao nível dos bits)
@@ -292,9 +292,4 @@ void e_maior(STACK *s);
  */
 void if_then_else(STACK *s);
 
-void sumarray (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result,int order);
-void append_string(STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result);
-void n_append_string (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result,int order);
-void find_substring_index(STACK_ELEM x,STACK_ELEM y,STACK_ELEM *result);
-void rem(STACK *s);
-void find_substring_index(STACK_ELEM x,STACK_ELEM y,STACK_ELEM *result);
+void range(STACK *s);
