@@ -149,7 +149,7 @@ void sum(STACK *s) {
     }
     else if (y.t == STRING || x.t == STRING) {
         append_string(y, x, &result);
-    }    
+    }  
     else if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) + get_double_arg(y);
@@ -354,23 +354,24 @@ void rem(STACK *s) {
     push(s, result);
 }
 
-void find_substring_index(STACK_ELEM x,STACK_ELEM y,STACK_ELEM *result){
+void find_substring_index(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     result->t = LONG;
     char *temp;
-    if(strlen(x.data.s)>strlen(y.data.s)){
-        if ((temp = (strstr(x.data.s,y.data.s))) == NULL){
-            result->data.l=-1;
+    
+    if (strlen(x.data.s) > strlen(y.data.s)) {
+        if ((temp = (strstr(x.data.s, y.data.s))) == NULL) {
+            result->data.l = -1;
         }
-        else{
-            result->data.l=temp-x.data.s;
+        else {
+            result->data.l = temp - x.data.s;
         }
     }
-    else{
-        if ((temp = (strstr(y.data.s,x.data.s))) == NULL){
-            result->data.l=-1;
+    else {
+        if ((temp = (strstr(y.data.s, x.data.s))) == NULL) {
+            result->data.l = -1;
         }
-        else{
-            result->data.l=temp-y.data.s;
+        else {
+            result->data.l = temp - y.data.s;
         }
     }
 }
@@ -713,6 +714,10 @@ STACK_ELEM get_global(STACK *s, char value) {
     else if (current.t == STRING) {
         new.t = STRING;
         new.data.s = current.data.s;
+    }
+    else if (current.t == ARRAY) {
+        new.t = ARRAY;
+        new.data.a = current.data.a;
     }
     else {
         new.t = CHAR;

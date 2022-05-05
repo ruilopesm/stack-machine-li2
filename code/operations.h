@@ -67,7 +67,6 @@ void sum(STACK *s);
 void sum_array(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
 void append_string(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
 void append_string_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
-void find_substring_index(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
  * @brief Retira os dois elementos do topo da stack e coloca no topo a subtração do penúltimo pelo último
@@ -98,6 +97,8 @@ void divi(STACK *s);
  * @param s Apontador para a stack
  */
 void rem(STACK *s);
+
+void find_substring_index(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
  * @brief Função que calcula a exponenciação de dois elementos da stack
