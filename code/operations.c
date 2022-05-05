@@ -322,6 +322,31 @@ void mult(STACK *s) {
     push(s, result);
 }
 
+char *create_string(int size){
+    char *section = malloc (sizeof(char) * size);
+    return section;
+}
+
+void separate_by_subs(STACK_ELEM *main,STACK_ELEM *sub,STACK *new){
+    char *init = main->data.s;
+    char *current,*section;
+    STACK_ELEM temp;
+    temp.t = STRING;
+    int len = strlen(sub->data.s);
+    while((current = strstr(init,sub->data.s)) != NULL) {
+        section = create_string(current- init + 1);
+        strncpy(section,init,current - init);
+        temp.data.s = section;
+        assert(push(new,temp) == 0);
+        init = current + len;
+    }
+    section = create_string (strlen(init) + 1);
+    strcpy(section,init);
+    temp.data.s = section;
+    assert(push(new,temp) == 0);
+
+}
+
 void divi(STACK *s) {
     STACK_ELEM x, y;
 
@@ -330,7 +355,15 @@ void divi(STACK *s) {
 
     STACK_ELEM result;
 
-    if (x.t == DOUBLE || y.t == DOUBLE) {
+    if (x.t == STRING && y.t == STRING) {
+        result.t = ARRAY;
+        STACK *new = create_stack();
+        separate_by_subs(&x,&y,new);
+        result.data.a=new;
+        free(x.data.s);
+        free(y.data.s);
+    }
+    else if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) / get_double_arg(y);
     } 
@@ -344,6 +377,7 @@ void divi(STACK *s) {
     }
 
     push(s, result);
+
 }
 
 void rem(STACK *s) {
