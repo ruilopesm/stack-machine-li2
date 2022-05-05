@@ -130,32 +130,48 @@ long get_long_arg(STACK_ELEM x) {
     }
 }
 
-void sumarray (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result){
+void sumarray (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result, int order){ //Order indica se deve ser adicionado ao início ou ao fim do array (1 para fim, 0 para início)
     if(x.t == ARRAY){
-            for (int i = 0 ; i<x.data.a->sp;i++){
-                assert(push(y.data.a,x.data.a->stc[i]) == 0);
-            }
-            *result = y;
+        for (int i = 0 ; i<x.data.a->sp;i++){
+            assert(push(y.data.a,x.data.a->stc[i]) == 0);
         }
-    else {
+        *result = y;
+    }
+    else if (order){
         assert(push(y.data.a,x) == 0);
         *result = y;
+    }
+    else{
+        STACK *s = create_stack();
+        assert(push(s,x) == 0);
+        for(int i = 0; i<y.data.a->sp;i++){
+            assert(push(s,y.data.a->stc[i]) == 0);
+        }
+        result->t = ARRAY;
+        result->data.a = s;
+
     }
 }
 void append_string(STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result){
     if (y.t == STRING){
-        n_append_string(y,x,result);
+        n_append_string(y,x,result,1);
     }
     else{
-        n_append_string(x,y,result);
+        n_append_string(x,y,result,0);
     }
 }
 
-void n_append_string (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result){
+void n_append_string (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result,int order){ //Order indica se deve ser adicionado ao início ou ao fim da string (1 para fim, 0 para início)
     if (x.t == STRING){
         char *new = malloc(strlen(y.data.s) + strlen(x.data.s) + 1);
-        strcpy(new,y.data.s);
-        strcat(new,x.data.s);
+        if(order){
+            strcpy(new,y.data.s);
+            strcat(new,x.data.s);
+        }
+        else{
+            strcpy(new,x.data.s);
+            strcat(new,y.data.s);
+        }
         result->t = STRING;
         result->data.s = new;
         free(y.data.s);
@@ -164,8 +180,15 @@ void n_append_string (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result){
     else if(x.t == CHAR){
         int len = strlen(y.data.s);
         char *new = malloc(len + 2);
-        strcpy(new,y.data.s);
-        new[len] = x.data.c;
+        if(order){
+            strcpy(new,y.data.s);
+            new[len] = x.data.c;
+        }
+        else{
+            new[0] = x.data.c;
+            new[1] = '\0';
+            strcat(new,y.data.s);
+        }
         new[len + 1 ] = '\0';
         result->t = STRING;
         result->data.s = new;
@@ -175,8 +198,14 @@ void n_append_string (STACK_ELEM y,STACK_ELEM x,STACK_ELEM *result){
         char *temp = malloc(sizeof(char) * 700);
         char *new = malloc(sizeof(char) * 700 + strlen(y.data.s) +1);
         snprintf(temp, 700, "%g", get_double_arg(x));
-        strcpy(new,y.data.s);
-        strcat(new,temp);
+        if(order){
+            strcpy(new,y.data.s);
+            strcat(new,temp);
+        }
+        else{
+            strcpy(new,temp);
+            strcat(new,y.data.s);
+        }
         result->t = STRING;
         result->data.s = new;
         free(y.data.s);
@@ -193,10 +222,10 @@ void sum(STACK *s) {
     STACK_ELEM result;
 
     if (y.t == ARRAY){
-        sumarray(y,x,&result);
+        sumarray(y,x,&result,1);
     }
     else if (x.t == ARRAY){
-        sumarray(x,y,&result);
+        sumarray(x,y,&result,0);
     }
     else if (y.t == STRING || x.t == STRING){
         append_string(y,x,&result);
