@@ -805,9 +805,21 @@ void igual(STACK *s) {
 
     if (y.t == ARRAY) {
         long pos = get_long_arg(x);
+        
         assert(nth_element(y.data.a, &result, (y.data.a->sp) - pos - 1) == 0);
+        
         push(s, result);
         
+        return;
+    }
+    else if (x.t != STRING && y.t == STRING) {
+        long pos = get_long_arg(x);
+
+        result.t = CHAR;        
+        result.data.c = y.data.s[pos];
+        
+        push(s, result);
+
         return;
     }
     else if (x.t == STRING && y.t == STRING) {
