@@ -48,24 +48,55 @@ int is_array(char *token);
  * @brief Verifica se o token é uma "vaiável global"
  * 
  * @param token 
- * @return int 
  */
 int is_global(char *token);
 
+/**
+ * @brief Funçao que altera o valor da variável global
+ * 
+ * @param token 
+ * @return int 
+ */
 int is_readress_global(char *token);
 
+/**
+ * @brief Funçao que encontra o indice do char c
+ * 
+ * @param line array
+ * @param c char que se quer encontar
+ * @param parsed indice onde se começa a procura
+ */
 int find_char(char *line, char c, int parsed);
 
+/**
+ * @brief Funçao que encontra o tamanho total do aray
+ * 
+ * @param line array
+ * @param parsed indice do incio do array
+ */
 int get_array_length(char *line, int parsed);
 
+/**
+ * @brief Funçao que copia o line para o token a partir da posição parsed até que tenha um tamanho de len
+ * 
+ * @param token 
+ * @param line 
+ * @param len tamanho do token
+ * @param parsed posiçao de inicío do token
+ */
 void copy(char *token, char *line, int len, int parsed);
 
+/**
+ * @brief Funçao que retira "\n" do string, mesmo que esta não possuia
+ * 
+ * @param token 
+ */
 int remove_slashn (char *token);
 
 /**
  * @brief Remove o caracter na posição indicada por 'p'
  * 
- * @param s 
+ * @param s Apontador para a stack
  * @param p 
  */
 void remove_char(char *s, int p);
