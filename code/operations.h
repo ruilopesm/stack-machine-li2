@@ -64,8 +64,31 @@ typedef void (*function)(STACK *s);
  */
 void sum(STACK *s);
 
+/**
+ * @brief Funçao que concatena uma string e um elemento 
+ * 
+ * @param y array
+ * @param x elemento a adicionar
+ * @param result array final
+ */
 void sum_array(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
+
+/**
+ * @brief Funçao que invoca a funçao append_string_aux com os argumentos corretos
+ * 
+ * @param y string ou argumento
+ * @param x string ou argumento
+ * @param result string final
+ */
 void append_string(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
+
+/**
+ * @brief Funçao que concatena os argumentos
+ * 
+ * @param y string
+ * @param x argumento
+ * @param result resltado final
+ */
 void append_string_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
 
 /**
@@ -82,6 +105,13 @@ void sub(STACK *s);
  */
 void mult(STACK *s);
 
+/**
+ * @brief Funçao que concatena multiplas vezes um array ou uma string
+ * 
+ * @param x número de vezes que se concatena a string ou o array
+ * @param y array ou string
+ * @param result 
+ */
 void mult_structure(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
@@ -98,12 +128,19 @@ void divi(STACK *s);
  */
 void rem(STACK *s);
 
+/**
+ * @brief Funçao que calcula em que indice ocorre uma substring numa string maior
+ * 
+ * @param x string
+ * @param y substring que se procura
+ * @param result indice
+ */
 void find_substring_index(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
  * @brief Função que calcula a exponenciação de dois elementos da stack
  *
- * @param s
+ * @param s Apontador para a stack
  */
 void power(STACK *s);
 
@@ -292,4 +329,9 @@ void e_maior(STACK *s);
  */
 void if_then_else(STACK *s);
 
+/**
+ * @brief Funçao que calcula o comprimento/range de um argumento.
+ * 
+ * @param s Apontador para a stack
+ */
 void range(STACK *s);
