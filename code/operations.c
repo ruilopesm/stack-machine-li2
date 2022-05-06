@@ -1115,18 +1115,18 @@ void range(STACK *s) {
     else if (x.t == ARRAY) {
         result.data.l = x.data.a->sp;
     }
-    else if (x.t == LONG) {
-        STACK *arr = create_stack();
+    else if (x.t == LONG || x.t == CHAR) {
+        STACK *new = create_stack();
         
         for (int i = 0; i < x.data.l; i++) {
             STACK_ELEM to_push = { .t = LONG };
             to_push.data.l = i;
             
-            push(arr, to_push);
+            push(new, to_push);
         }
 
         result.t = ARRAY;
-        result.data.a = arr;
+        result.data.a = new;
     }
 
     push(s, result);
