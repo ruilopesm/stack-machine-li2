@@ -43,7 +43,8 @@ char *get_operator(int i) {
         "e>",
         "?",
         ",",
-        "S/"
+        "S/",
+        "N/"
     };
 
     return operators[i];
@@ -104,7 +105,8 @@ void dispatch_table(STACK *s, char *operator) {
         e_maior,
         if_then_else,
         range,
-        split_string_by_whitespace
+        split_string_by_whitespace,
+        split_string_by_slashn
     }; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
 
     int index = get_index(operator);
@@ -574,7 +576,43 @@ void decrement(STACK *s) {
 
     STACK_ELEM result;
 
-    if (x.t == DOUBLE) {
+    if (x.t == STRING) {
+        result.t = STRING;
+
+        STACK_ELEM to_push = {
+            .t = CHAR,
+            .data.c = x.data.s[0]
+        };
+
+        char *token = x.data.s + 1;
+        
+        result.data.s = strdup(token);
+
+        push(s, result);
+        push(s, to_push);
+
+        free(x.data.s);
+
+        return;
+    }
+    else if (x.t == ARRAY) {
+        STACK *new = create_stack();
+
+        STACK_ELEM to_push = x.data.a->stc[0];
+
+        for (int i = 1; i < x.data.a->sp; i++) {
+            push(new, x.data.a->stc[i]);
+        }
+
+        result.t = ARRAY;
+        result.data.a = new;
+
+        push(s, result);
+        push(s, to_push);
+
+        return;
+    }
+    else if (x.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = --x.data.d;
     } 
@@ -865,6 +903,7 @@ void menor(STACK *s) {
 
     if (x.t == ARRAY) {
         long num = get_long_arg(y);
+        
         for (int i = 0; i < num; i++) {
             assert(nth_element(x.data.a, &result, (x.data.a->sp) - i - 1) == 0);
             assert(push(s, result) == 0);
@@ -1062,6 +1101,36 @@ void split_string_by_whitespace(STACK *s) {
         char *token, *rest = x.data.s;
 
         while ((token = strtok_r(rest, " ", &rest))) {
+            STACK_ELEM to_push = {
+                .t = STRING,
+                .data.s = strdup(token)
+            };
+            
+            push(result.data.a, to_push);
+        }
+        
+        push(s, result);
+        
+        free(token);
+    }
+
+    free(x.data.s);
+}
+
+void split_string_by_slashn(STACK *s) {
+    STACK_ELEM x;
+    
+    assert(pop(s, &x) == 0);
+
+    STACK_ELEM result = {
+        .t = ARRAY,
+        .data.a = create_stack()
+    };
+
+    if (x.t == STRING) {
+        char *token, *rest = x.data.s;
+
+        while ((token = strtok_r(rest, "\\n", &rest))) {
             STACK_ELEM to_push = {
                 .t = STRING,
                 .data.s = strdup(token)
