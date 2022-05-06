@@ -12,8 +12,9 @@
  */
 int main() {
     STACK *s = create_stack();
+    GLOBALS *g = init_globals();
 
-    get_line(s);
+    get_line(s, g);
 
     print_stack(s);
     

@@ -9,17 +9,17 @@
 #include <assert.h>
 #include <regex.h>
 
-int get_line(STACK *s) {
+int get_line(STACK *s, GLOBALS *g) {
     char line[BUFSIZ];
     
     if (fgets(line, BUFSIZ, stdin) != NULL) {
-        parse_line(s, line);
+        parse_line(s, line, g);
     }
     
     return 0;
 }
     
-void parse_line(STACK *s, char *line) {
+void parse_line(STACK *s, char *line, GLOBALS *g) {
     char token[BUFSIZ];
     int parsed = 0;
     
@@ -43,11 +43,11 @@ void parse_line(STACK *s, char *line) {
         }
         
         parsed += (int) strlen(token);
-        handle_token(s, token);
+        handle_token(s, token, g);
     }
 }
 
-void handle_token(STACK *s, char *token) {
+void handle_token(STACK *s, char *token, GLOBALS *g) {
     if (is_long(token)) {
         long value;
         sscanf(token, "%ld", &value);
@@ -80,7 +80,7 @@ void handle_token(STACK *s, char *token) {
         remove_char(token, 0);
         
         STACK *array = create_stack();
-        parse_line(array,token);
+        parse_line(array, token, g);
         
         STACK_ELEM new = {
             .t = ARRAY,
@@ -108,7 +108,7 @@ void handle_token(STACK *s, char *token) {
         char value;
         sscanf(token, "%c", &value);
         
-        STACK_ELEM new = get_global(s, value);
+        STACK_ELEM new = get_global(value, g);
         
         assert(push(s, new) == 0);
     }
@@ -118,7 +118,10 @@ void handle_token(STACK *s, char *token) {
         assert(peek(s, &top) == 0);
         
         char value = token[1];
-        s->globals[value - 65] = top;
+        g->globals[value - 65] = top;
+    }
+    else if (strcmp(token, "l") == 0) {
+        read_line(s, g);
     }
     else if (is_operator(token)) {
         dispatch_table(s, token);
