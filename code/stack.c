@@ -9,23 +9,28 @@ STACK *create_stack() {
     s->size = 100;
     s->stc = calloc(sizeof(STACK_ELEM), s->size);
 
-    // Inicializar variáveis "globais"
+    return s;
+}
+
+GLOBALS *init_globals() {
+    GLOBALS *g = malloc(sizeof(GLOBALS));
+
     for (int i = 0; i < 6; i++) {
-        s->globals[i].t = LONG;
-        s->globals[i].data.l = i + 10;
+        g->globals[i].t = LONG;
+        g->globals[i].data.l = i + 10;
     }
     
-    s->globals[13].t = CHAR;
-    s->globals[13].data.c = '\n';
-    s->globals[18].t = CHAR;
-    s->globals[18].data.c = ' ';
+    g->globals[13].t = CHAR;
+    g->globals[13].data.c = '\n';
+    g->globals[18].t = CHAR;
+    g->globals[18].data.c = ' ';
     
     for (int i = 0; i < 3; i++) {
-        s->globals[i + 23].t = LONG;
-        s->globals[i + 23].data.l = i;
+        g->globals[i + 23].t = LONG;
+        g->globals[i + 23].data.l = i;
     }
 
-    return s;
+    return g;
 }
 
 int increase_stack(STACK *s) {

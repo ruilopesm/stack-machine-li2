@@ -1,4 +1,5 @@
 typedef struct STACK STACK;
+
 /**
  * @brief Enum que guarda os tipos implementados na stack
  * 
@@ -34,8 +35,15 @@ typedef struct STACK {
     int sp; /**< O stack pointer */
     int size; /**< O tamanho total da stack */
     STACK_ELEM *stc; /**< O conteúdo da stack */
-    STACK_ELEM globals[26]; /**< Variáveis "globais" */
 } STACK;
+
+/**
+ * @brief A estrutura onde constam as variáveis "globais" do programa
+ * 
+ */
+typedef struct {
+    STACK_ELEM globals[26]; /**< Variáveis "globais" */
+} GLOBALS;
 
 /**
  * @brief Inicializa uma stack com 100 posições
@@ -43,6 +51,13 @@ typedef struct STACK {
  * @return STACK* 
  */
 STACK *create_stack();
+
+/**
+ * @brief Inicializa as variáveis "globais"
+ * 
+ * @return GLOBALS* 
+ */
+GLOBALS *init_globals();
 
 /**
  * @brief Aumenta o tamanho da stack (para o dobro), se possível

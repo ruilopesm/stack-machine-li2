@@ -32,7 +32,6 @@ char *get_operator(int i) {
         "\\",
         "@",
         "$",
-        "l",
         "=",
         "<",
         ">",
@@ -94,7 +93,6 @@ void dispatch_table(STACK *s, char *operator) {
         swap,
         rotate,
         copy_nth,
-        read_line,
         igual,
         menor,
         maior,
@@ -848,13 +846,12 @@ void copy_nth(STACK *s) {
     assert(push(s, result) == 0);
 }
 
-void read_line(STACK *s) {
-    get_line(s);
+void read_line(STACK *s, GLOBALS *g) {
+    get_line(s, g);
 }
 
-STACK_ELEM get_global(STACK *s, char value) {
-    STACK_ELEM new;
-    STACK_ELEM current = s->globals[value -  65];
+STACK_ELEM get_global(char value, GLOBALS *g) {
+    STACK_ELEM new, current = g->globals[value -  65];
     
     if (current.t == DOUBLE) {
         new.t = DOUBLE;
