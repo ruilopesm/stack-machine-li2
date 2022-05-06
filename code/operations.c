@@ -399,6 +399,7 @@ void split_by_substring(STACK_ELEM *main, STACK_ELEM *sub, STACK *new) {
         section = create_string(current - init + 1);
         
         strncpy(section, init, current - init);
+        section[current-init]='\0';
         temp.data.s = section;
         
         assert(push(new, temp) == 0);
@@ -864,12 +865,29 @@ void menor(STACK *s) {
     assert(pop(s, &x) == 0);
 
     if (x.t == ARRAY) {
-        long num = get_long_arg(y);
-        for (int i = 0; i < num; i++) {
+        long len = x.data.a->sp,extract = get_long_arg(y);
+        if(extract > len){
+            extract = len; // Se for pedido para extrair mais elementos do que aqueles que existem no array, será apenas extraído o array todo (é impossivel estrair mais elementos do que aqueles que existem)
+        }
+        for (int i = 0; i < extract; i++) {
             assert(nth_element(x.data.a, &result, (x.data.a->sp) - i - 1) == 0);
             assert(push(s, result) == 0);
         }
         
+        return;
+    }
+    else if (x.t == STRING){
+        int len = strlen(x.data.s),extract = get_long_arg(y);
+        if(extract>len){
+            extract = len; // Se for pedido para extrair mais caracteres do que aqueles que existem na string, será apenas extraída a string toda
+        }
+        char *new = malloc(sizeof(char) * (extract + 1));
+        strncpy(new,x.data.s,extract);
+        new[extract] = '\0';
+        result.t = STRING;
+        result.data.s = new;
+        assert(push(s,result) == 0);
+        free(x.data.s);
         return;
     }
     else if (get_double_arg(x) < get_double_arg(y)) {
@@ -896,12 +914,29 @@ void maior(STACK *s) {
     assert(pop(s, &x) == 0);   
 
     if (x.t == ARRAY) {
-        long num = get_long_arg(y);
-        for (int i = num - 1; i >= 0 ; i--) {
+         long len = x.data.a->sp,extract = get_long_arg(y);
+        if(extract > len){
+            extract = len; // Se for pedido para extrair mais elementos do que aqueles que existem no array, será apenas extraído o array todo (é impossivel estrair mais elementos do que aqueles que existem)
+        }
+        for (int i = extract - 1; i >= 0 ; i--) {
             assert(nth_element(x.data.a, &result, i) == 0);
             assert(push(s, result) == 0);
         }
         
+        return;
+    }
+    else if (x.t == STRING){
+        int len = strlen(x.data.s),extract = get_long_arg(y);
+        if(extract>len){
+            extract = len; // Se for pedido para extrair mais caracteres do que aqueles que existem na string, será apenas extraída a string toda
+        }
+        char *new = malloc(sizeof(char) * (extract + 1));
+        strncpy(new,x.data.s+len-extract,extract);
+        new[extract] = '\0';
+        result.t = STRING;
+        result.data.s = new;
+        assert(push(s,result) == 0);
+        free(x.data.s);
         return;
     }
     else if (get_double_arg(x) > get_double_arg(y)) {
