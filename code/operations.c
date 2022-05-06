@@ -1112,8 +1112,7 @@ void e_menor(STACK *s) {
             result = x;
         }
     }
-
-    if (get_double_arg(x) < get_double_arg(y)) {
+    else if (get_double_arg(x) < get_double_arg(y)) {
         result = x;
     }
     
@@ -1133,8 +1132,7 @@ void e_maior(STACK *s) {
             result = x;
         }
     }
-
-    if (get_double_arg(x) > get_double_arg(y)) {
+    else if (get_double_arg(x) > get_double_arg(y)) {
         result = x;
     }
     
