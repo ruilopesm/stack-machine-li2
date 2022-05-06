@@ -48,7 +48,7 @@ void print_stack(STACK *s) {
     putchar('\n');
 }
 
-void print_elems(STACK *s){
+void print_elems(STACK *s) {
     for (int i = 0; i < s->sp; i++) {
         STACK_ELEM current = s->stc[i];
 
