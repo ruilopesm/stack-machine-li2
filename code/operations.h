@@ -2,7 +2,7 @@
  * @brief Macro que define o número de operadores implementados na stack
  *
  */
-#define N_OPERATORS 33
+#define N_OPERATORS 34
 
 /**
  * @brief Função que retorna o operador associado ao índice dado
@@ -341,3 +341,5 @@ void if_then_else(STACK *s);
 void range(STACK *s);
 
 void split_string_by_whitespace(STACK *s);
+
+void split_string_by_slashn(STACK *s);

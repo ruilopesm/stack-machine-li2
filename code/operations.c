@@ -43,7 +43,8 @@ char *get_operator(int i) {
         "e>",
         "?",
         ",",
-        "S/"
+        "S/",
+        "N/"
     };
 
     return operators[i];
@@ -104,7 +105,8 @@ void dispatch_table(STACK *s, char *operator) {
         e_maior,
         if_then_else,
         range,
-        split_string_by_whitespace
+        split_string_by_whitespace,
+        split_string_by_slashn
     }; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
 
     int index = get_index(operator);
@@ -169,7 +171,7 @@ void sum(STACK *s) {
 }
 
 void sum_array(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result, int order) {
-    if(x.t == ARRAY) {
+    if (x.t == ARRAY) {
         for (int i = 0 ; i < x.data.a->sp; i++) {
             assert(push(y.data.a, x.data.a->stc[i]) == 0);
         }
@@ -245,7 +247,7 @@ void append_string_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result, int order
     }
     else {
         char *temp = malloc(sizeof(char) * BUFSIZ);
-        char *new = malloc(sizeof(char) * BUFSIZ + strlen(y.data.s) +1);
+        char *new = malloc(sizeof(char) * BUFSIZ + strlen(y.data.s) + 1);
         
         snprintf(temp, BUFSIZ, "%g", get_double_arg(x));
         
@@ -552,7 +554,40 @@ void increment(STACK *s) {
 
     STACK_ELEM result;
 
-    if (x.t == DOUBLE) {
+    if (x.t == STRING) {
+        result.t = STRING;
+
+        int len = strlen(x.data.s);
+
+        STACK_ELEM to_push = {
+            .t = CHAR,
+            .data.c = x.data.s[len - 1]
+        };
+
+        x.data.s[len - 1] = '\0';
+
+        char *token = x.data.s;
+
+        result.data.s = strdup(token);
+
+        push(s, result);
+        push(s, to_push);
+
+        free(token);
+
+        return;
+    }
+    else if (x.t == ARRAY) {
+        result.t = ARRAY;
+
+        assert(pop(x.data.a, &result) == 0);
+
+        push(s, x);
+        push(s, result);
+
+        return;
+    }
+    else if (x.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = ++x.data.d;
     } 
@@ -564,9 +599,9 @@ void increment(STACK *s) {
         result.t = CHAR;
         result.data.c = ++x.data.c;
     }
-
     push(s, result);
-}
+    
+}   
 
 void decrement(STACK *s) {
     STACK_ELEM x;
@@ -575,7 +610,43 @@ void decrement(STACK *s) {
 
     STACK_ELEM result;
 
-    if (x.t == DOUBLE) {
+    if (x.t == STRING) {
+        result.t = STRING;
+
+        STACK_ELEM to_push = {
+            .t = CHAR,
+            .data.c = x.data.s[0]
+        };
+
+        char *token = x.data.s + 1;
+        
+        result.data.s = strdup(token);
+
+        push(s, result);
+        push(s, to_push);
+
+        free(x.data.s);
+
+        return;
+    }
+    else if (x.t == ARRAY) {
+        STACK *new = create_stack();
+
+        STACK_ELEM to_push = x.data.a->stc[0];
+
+        for (int i = 1; i < x.data.a->sp; i++) {
+            push(new, x.data.a->stc[i]);
+        }
+
+        result.t = ARRAY;
+        result.data.a = new;
+
+        push(s, result);
+        push(s, to_push);
+
+        return;
+    }
+    else if (x.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = --x.data.d;
     } 
@@ -866,9 +937,11 @@ void menor(STACK *s) {
 
     if (x.t == ARRAY) {
         long len = x.data.a->sp,extract = get_long_arg(y);
-        if(extract > len){
+        
+        if (extract > len) {
             extract = len; // Se for pedido para extrair mais elementos do que aqueles que existem no array, será apenas extraído o array todo (é impossivel estrair mais elementos do que aqueles que existem)
         }
+        
         for (int i = 0; i < extract; i++) {
             assert(nth_element(x.data.a, &result, (x.data.a->sp) - i - 1) == 0);
             assert(push(s, result) == 0);
@@ -876,18 +949,25 @@ void menor(STACK *s) {
         
         return;
     }
-    else if (x.t == STRING){
-        int len = strlen(x.data.s),extract = get_long_arg(y);
-        if(extract>len){
+    else if (x.t == STRING) {
+        int len = strlen(x.data.s), extract = get_long_arg(y);
+        
+        if (extract >len) {
             extract = len; // Se for pedido para extrair mais caracteres do que aqueles que existem na string, será apenas extraída a string toda
         }
+        
         char *new = malloc(sizeof(char) * (extract + 1));
-        strncpy(new,x.data.s,extract);
+        
+        strncpy(new, x.data.s, extract);
         new[extract] = '\0';
+        
         result.t = STRING;
         result.data.s = new;
+        
         assert(push(s,result) == 0);
+        
         free(x.data.s);
+        
         return;
     }
     else if (get_double_arg(x) < get_double_arg(y)) {
@@ -914,29 +994,38 @@ void maior(STACK *s) {
     assert(pop(s, &x) == 0);   
 
     if (x.t == ARRAY) {
-         long len = x.data.a->sp,extract = get_long_arg(y);
-        if(extract > len){
-            extract = len; // Se for pedido para extrair mais elementos do que aqueles que existem no array, será apenas extraído o array todo (é impossivel estrair mais elementos do que aqueles que existem)
-        }
-        for (int i = extract - 1; i >= 0 ; i--) {
-            assert(nth_element(x.data.a, &result, i) == 0);
-            assert(push(s, result) == 0);
-        }
+      long len = x.data.a->sp,extract = get_long_arg(y);
+      
+      if (extract > len) {
+          extract = len; // Se for pedido para extrair mais elementos do que aqueles que existem no array, será apenas extraído o array todo (é impossivel estrair mais elementos do que aqueles que existem)
+      }
         
-        return;
+      for (int i = extract - 1; i >= 0 ; i--) {
+          assert(nth_element(x.data.a, &result, i) == 0);
+          assert(push(s, result) == 0);
+      }
+        
+      return;
     }
-    else if (x.t == STRING){
-        int len = strlen(x.data.s),extract = get_long_arg(y);
-        if(extract>len){
+    else if (x.t == STRING) {
+        int len = strlen(x.data.s), extract = get_long_arg(y);
+        
+        if (extract > len) {
             extract = len; // Se for pedido para extrair mais caracteres do que aqueles que existem na string, será apenas extraída a string toda
         }
+        
         char *new = malloc(sizeof(char) * (extract + 1));
-        strncpy(new,x.data.s+len-extract,extract);
+        
+        strncpy(new, x.data.s + len - extract, extract);
         new[extract] = '\0';
+        
         result.t = STRING;
         result.data.s = new;
+        
         assert(push(s,result) == 0);
+        
         free(x.data.s);
+        
         return;
     }
     else if (get_double_arg(x) > get_double_arg(y)) {
@@ -1066,18 +1155,18 @@ void range(STACK *s) {
     else if (x.t == ARRAY) {
         result.data.l = x.data.a->sp;
     }
-    else if (x.t == LONG) {
-        STACK *arr = create_stack();
+    else if (x.t == LONG || x.t == CHAR) {
+        STACK *new = create_stack();
         
         for (int i = 0; i < x.data.l; i++) {
             STACK_ELEM to_push = { .t = LONG };
             to_push.data.l = i;
             
-            push(arr, to_push);
+            push(new, to_push);
         }
 
         result.t = ARRAY;
-        result.data.a = arr;
+        result.data.a = new;
     }
 
     push(s, result);
@@ -1097,6 +1186,36 @@ void split_string_by_whitespace(STACK *s) {
         char *token, *rest = x.data.s;
 
         while ((token = strtok_r(rest, " ", &rest))) {
+            STACK_ELEM to_push = {
+                .t = STRING,
+                .data.s = strdup(token)
+            };
+            
+            push(result.data.a, to_push);
+        }
+        
+        push(s, result);
+        
+        free(token);
+    }
+
+    free(x.data.s);
+}
+
+void split_string_by_slashn(STACK *s) {
+    STACK_ELEM x;
+    
+    assert(pop(s, &x) == 0);
+
+    STACK_ELEM result = {
+        .t = ARRAY,
+        .data.a = create_stack()
+    };
+
+    if (x.t == STRING) {
+        char *token, *rest = x.data.s;
+
+        while ((token = strtok_r(rest, "\\n", &rest))) {
             STACK_ELEM to_push = {
                 .t = STRING,
                 .data.s = strdup(token)
