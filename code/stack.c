@@ -66,15 +66,13 @@ void print_elems(STACK *s){
 }
 
 void free_stack(STACK *s) {
-    //Procura-se por arrays dentro da stack para libertar
-    for (int i = 0; i < s->sp; i++){
-        if (s->stc[i].t == ARRAY){
+    // Procura-se por arrays dentro da stack para libertar
+    for (int i = 0; i < s->sp; i++) {
+        if (s->stc[i].t == ARRAY) {
             free_stack(s->stc[i].data.a);
         }
-        if (s->stc[i].t == STRING){
-            free(s->stc[i].data.s);
-        }
     }
+
     // De seguida liberta-se o outro conteúdo da stack
     free(s->stc);
     

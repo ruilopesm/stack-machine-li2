@@ -1050,26 +1050,30 @@ void range(STACK *s) {
 
 void split_string_by_whitespace(STACK *s) {
     STACK_ELEM x;
-
+    
     assert(pop(s, &x) == 0);
 
-    STACK_ELEM result;
-    result.t = ARRAY;
+    STACK_ELEM result = {
+        .t = ARRAY,
+        .data.a = create_stack()
+    };
 
     if (x.t == STRING) {
-        STACK *arr = create_stack();
-        
-        STACK_ELEM to_push;
-        to_push.t = STRING;
+        char *token, *rest = x.data.s;
 
-        char *token = strtok(x.data.s, " ");
-        to_push.data.s = token;
-
-        while (token != NULL) {
-            push(arr, to_push);
-            token = strtok(NULL, " ");
+        while ((token = strtok_r(rest, " ", &rest))) {
+            STACK_ELEM to_push = {
+                .t = STRING,
+                .data.s = strdup(token)
+            };
+            
+            push(result.data.a, to_push);
         }
         
         push(s, result);
+        
+        free(token);
     }
+
+    free(x.data.s);
 }
