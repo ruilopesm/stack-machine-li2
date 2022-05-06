@@ -946,10 +946,15 @@ void menor(STACK *s) {
         
         return;
     }
+    else if (x.t == STRING && y.t == STRING) {
+        result.t = LONG;
+        result.data.l = strcmp(x.data.s, y.data.s) < 0 ? 1 : to_push;
+        push(s, result);
+    }
     else if (x.t == STRING) {
         int len = strlen(x.data.s), extract = get_long_arg(y);
         
-        if (extract >len) {
+        if (extract > len) {
             extract = len; // Se for pedido para extrair mais caracteres do que aqueles que existem na string, será apenas extraída a string toda
         }
         
@@ -991,18 +996,23 @@ void maior(STACK *s) {
     assert(pop(s, &x) == 0);   
 
     if (x.t == ARRAY) {
-      long len = x.data.a->sp,extract = get_long_arg(y);
-      
-      if (extract > len) {
-          extract = len; // Se for pedido para extrair mais elementos do que aqueles que existem no array, será apenas extraído o array todo (é impossivel estrair mais elementos do que aqueles que existem)
-      }
+        long len = x.data.a->sp,extract = get_long_arg(y);
         
-      for (int i = extract - 1; i >= 0 ; i--) {
-          assert(nth_element(x.data.a, &result, i) == 0);
-          assert(push(s, result) == 0);
-      }
+        if (extract > len) {
+            extract = len; // Se for pedido para extrair mais elementos do que aqueles que existem no array, será apenas extraído o array todo (é impossivel estrair mais elementos do que aqueles que existem)
+        }
+          
+        for (int i = extract - 1; i >= 0 ; i--) {
+            assert(nth_element(x.data.a, &result, i) == 0);
+            assert(push(s, result) == 0);
+        }
         
       return;
+    }
+    else if (x.t == STRING && y.t == STRING) {
+        result.t = LONG;
+        result.data.l = strcmp(x.data.s, y.data.s) > 0 ? 1 : to_push;
+        push(s, result);
     }
     else if (x.t == STRING) {
         int len = strlen(x.data.s), extract = get_long_arg(y);
