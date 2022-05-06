@@ -30,12 +30,12 @@ typedef struct {
  * @brief A estrutura onde constam os parâmetros da stack
  * 
  */
-struct STACK {
+typedef struct STACK {
     int sp; /**< O stack pointer */
     int size; /**< O tamanho total da stack */
     STACK_ELEM *stc; /**< O conteúdo da stack */
     STACK_ELEM globals[26]; /**< Variáveis "globais" */
-};
+} STACK;
 
 /**
  * @brief Inicializa uma stack com 100 posições
