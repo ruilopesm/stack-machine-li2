@@ -1097,6 +1097,12 @@ void e_menor(STACK *s) {
 
     STACK_ELEM result = y;
 
+    if (x.t == STRING && y.t == STRING) {
+        if (strcmp(x.data.s, y.data.s) < 0) {
+            result = x;
+        }
+    }
+
     if (get_double_arg(x) < get_double_arg(y)) {
         result = x;
     }
@@ -1111,6 +1117,12 @@ void e_maior(STACK *s) {
     assert(pop(s, &x) == 0);
 
     STACK_ELEM result = y;
+
+    if (x.t == STRING && y.t == STRING) {
+        if (strcmp(x.data.s, y.data.s) > 0) {
+            result = x;
+        }
+    }
 
     if (get_double_arg(x) > get_double_arg(y)) {
         result = x;
