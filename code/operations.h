@@ -2,7 +2,7 @@
  * @brief Macro que define o número de operadores implementados na stack
  *
  */
-#define N_OPERATORS 34
+#define N_OPERATORS 33
 
 /**
  * @brief Função que retorna o operador associado ao índice dado
@@ -209,7 +209,7 @@ void conv_double(STACK *s);
  * 
  * 
  * @param s Apontador para a stack
- */
+ */        
 void conv_char(STACK *s);
 
 /**
@@ -259,7 +259,7 @@ void copy_nth(STACK *s);
  * 
  * @param s Apontador para a stack
  */
-void read_line(STACK *s);
+void read_line(STACK *s, GLOBALS *g);
 
 /**
  * @brief Coloca o valor atual da variável global na stack
@@ -268,7 +268,7 @@ void read_line(STACK *s);
  * @param value letra que se encontra na variável global
  * @return STACK_ELEM 
  */
-STACK_ELEM get_global(STACK *s, char value);
+STACK_ELEM get_global(char value, GLOBALS *g);
 
 /**
  * @brief Função que compara se os dois elementos do topo da stack são iguais

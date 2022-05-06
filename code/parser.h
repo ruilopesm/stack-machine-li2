@@ -1,6 +1,6 @@
 #include <stddef.h>
 
-int get_line(STACK *s);
+int get_line(STACK *s, GLOBALS *g);
 
 /**
  * @brief Lê o input do utilizador e realiza as operações pretendidas pelo mesmo
@@ -8,7 +8,7 @@ int get_line(STACK *s);
  * @param s Um apontador para a stack
  * @return int 
  */
-void parse_line(STACK *s,char *line);
+void parse_line(STACK *s, char *line, GLOBALS *g);
 
 /**
  * @brief Realiza a operação pretendida pelo utilizador conforme o símbolo lido
@@ -16,7 +16,7 @@ void parse_line(STACK *s,char *line);
  * @param s Um apontador para a stack
  * @param token Símbolo lido
  */
-void handle_token(STACK *s, char *token);
+void handle_token(STACK *s, char *token, GLOBALS *g);
 
 /**
  * @brief Verifica se a string contém apenas algarismos
