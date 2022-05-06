@@ -171,7 +171,7 @@ void sum(STACK *s) {
 }
 
 void sum_array(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result, int order) {
-    if(x.t == ARRAY) {
+    if (x.t == ARRAY) {
         for (int i = 0 ; i < x.data.a->sp; i++) {
             assert(push(y.data.a, x.data.a->stc[i]) == 0);
         }
@@ -247,7 +247,7 @@ void append_string_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result, int order
     }
     else {
         char *temp = malloc(sizeof(char) * BUFSIZ);
-        char *new = malloc(sizeof(char) * BUFSIZ + strlen(y.data.s) +1);
+        char *new = malloc(sizeof(char) * BUFSIZ + strlen(y.data.s) + 1);
         
         snprintf(temp, BUFSIZ, "%g", get_double_arg(x));
         
@@ -553,7 +553,30 @@ void increment(STACK *s) {
 
     STACK_ELEM result;
 
-    if (x.t == DOUBLE) {
+    if (x.t == STRING) {
+        result.t = STRING;
+
+        int len = strlen(x.data.s);
+
+        STACK_ELEM to_push = {
+            .t = CHAR,
+            .data.c = x.data.s[len - 1]
+        };
+
+        x.data.s[len - 1] = '\0';
+
+        char *token = x.data.s;
+
+        result.data.s = strdup(token);
+
+        push(s, result);
+        push(s, to_push);
+
+        free(token);
+
+        return;
+    }
+    else if (x.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = ++x.data.d;
     } 
