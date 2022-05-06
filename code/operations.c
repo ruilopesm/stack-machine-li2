@@ -576,6 +576,28 @@ void increment(STACK *s) {
 
         return;
     }
+    else if (x.t == ARRAY) {
+        STACK *new = create_stack();
+
+        int i;
+
+        STACK_ELEM to_push = x.data.a->stc[0];
+
+
+        for (i = 0; i < x.data.a->sp - 1 ; i++) {
+            push(new, x.data.a->stc[i]);
+        }
+
+        to_push = x.data.a->stc[i];
+
+        result.t = ARRAY;
+        result.data.a = new;
+
+        push(s, result);
+        push(s, to_push);
+
+        return;
+    }
     else if (x.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = ++x.data.d;
@@ -588,9 +610,9 @@ void increment(STACK *s) {
         result.t = CHAR;
         result.data.c = ++x.data.c;
     }
-
     push(s, result);
-}
+    
+}   
 
 void decrement(STACK *s) {
     STACK_ELEM x;
