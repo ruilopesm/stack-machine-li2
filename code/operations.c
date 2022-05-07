@@ -390,7 +390,6 @@ char *create_string(int size) {
     
     return section;
 }
-
 void split_by_substring(STACK_ELEM *main, STACK_ELEM *sub, STACK *new) {
     char *init = main->data.s, *current, *section;
     
@@ -399,11 +398,11 @@ void split_by_substring(STACK_ELEM *main, STACK_ELEM *sub, STACK *new) {
     
     int len = strlen(sub->data.s);
     
-    while((current = strstr(init, sub->data.s)) != NULL) {
+    while ((current = strstr(init, sub->data.s)) != NULL) {
         section = create_string(current - init + 1);
         
         strncpy(section, init, current - init);
-        section[current-init]='\0';
+        section[current - init] = '\0';
         temp.data.s = section;
         
         assert(push(new, temp) == 0);
@@ -411,12 +410,13 @@ void split_by_substring(STACK_ELEM *main, STACK_ELEM *sub, STACK *new) {
         init = current + len;
     }
 
-    section = create_string(strlen(init) + 1);
-    strcpy(section, init);
-    temp.data.s = section;
-    
-    assert(push(new,temp) == 0);
-
+    if (strlen(init) >= 2 || (strlen(init) == 1 && init[0] != '\n')) {
+        section = create_string(strlen(init) + 1);
+        strcpy(section, init);
+        temp.data.s = section;
+        
+        assert(push(new,temp) == 0);
+    }
 }
 
 void rem(STACK *s) {
@@ -1205,6 +1205,7 @@ void range(STACK *s) {
             push(new, to_push);
         }
 
+        // t :T N/ , S  T S/ , S T 
         result.t = ARRAY;
         result.data.a = new;
     }
@@ -1238,8 +1239,6 @@ void split_string_by_whitespace(STACK *s) {
         
         free(token);
     }
-
-    free(x.data.s);
 }
 
 void split_string_by_slashn(STACK *s) {
@@ -1268,8 +1267,6 @@ void split_string_by_slashn(STACK *s) {
         
         free(token);
     }
-
-    free(x.data.s);
 }
 
 void convert_lines_to_string(STACK *s) {
