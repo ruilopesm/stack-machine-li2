@@ -87,13 +87,6 @@ int get_array_length(char *line, int parsed);
 void copy(char *token, char *line, int len, int parsed);
 
 /**
- * @brief Funçao que retira "\n" do string, mesmo que esta não possuia
- * 
- * @param token 
- */
-int remove_slashn (char *token);
-
-/**
  * @brief Remove o caracter na posição indicada por 'p'
  * 
  * @param s Apontador para a stack
