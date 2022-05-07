@@ -1175,10 +1175,10 @@ void if_then_else(STACK *s) {
 
     STACK_ELEM result = z;
 
-    if (x.t == LONG && x.data.l == 0) {
+    if (x.t == LONG && x.data.l != 0) {
         result = y;
     }
-    else if (x.t == DOUBLE && x.data.d == 0.0) {
+    else if (x.t == DOUBLE && x.data.d != 0.0) {
         result = y;
     }
     else if (x.t == ARRAY && x.data.a->sp != 0) {
