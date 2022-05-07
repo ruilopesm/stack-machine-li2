@@ -62,7 +62,9 @@ void print_elems(STACK *s) {
             printf("%lg", current.data.d);
         }
         else if (current.t == STRING) {
+            printf("\"");
             printf("%s", current.data.s);
+            printf("\"");
         }
         else if (current.t == ARRAY) {
             print_elems(current.data.a);

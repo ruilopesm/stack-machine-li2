@@ -115,12 +115,29 @@ void handle_token(STACK *s, char *token, GLOBALS *g) {
         assert(push(s, new) == 0);
     }
     else if (is_readress_global(token)) {
-        STACK_ELEM top;
+        STACK_ELEM top,new,temp;
         
         assert(peek(s, &top) == 0);
-        
+        new = top;
+        if(top.t == STRING){
+            int len = strlen(top.data.s);
+            char *copy = malloc(sizeof(char) * len + 1);
+            strcpy(copy,top.data.s);
+            copy[len] = '\0'; // Assegurar que a string é finalizada corretamente
+            new.t = STRING;
+            new.data.s = copy;
+        }
+        else if (top.t == ARRAY){
+            STACK *cpy_array = create_stack();
+            for(int i = top.data.a->sp -1;i>=0;i--){
+                nth_element(top.data.a,&temp,i);
+                assert(push(cpy_array,temp) == 0);
+            }
+            new.t= ARRAY;
+            new.data.a=cpy_array;
+        }
         char value = token[1];
-        g->globals[value - 65] = top;
+        g->globals[value - 65] = new;
     }
     else if (is_operator(token)) {
         dispatch_table(s, token);
