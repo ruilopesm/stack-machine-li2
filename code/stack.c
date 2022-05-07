@@ -6,7 +6,7 @@
 STACK *create_stack() {
     STACK *s = malloc(sizeof(STACK));
     s->sp = 0;
-    s->size = 10000;
+    s->size = 15000;
     s->stc = calloc(sizeof(STACK_ELEM), s->size);
 
     return s;
