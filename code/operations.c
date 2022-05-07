@@ -44,7 +44,8 @@ char *get_operator(int i) {
         "?",
         ",",
         "S/",
-        "N/"
+        "N/",
+        "t"
     };
 
     return operators[i];
@@ -106,7 +107,8 @@ void dispatch_table(STACK *s, char *operator) {
         if_then_else,
         range,
         split_string_by_whitespace,
-        split_string_by_slashn
+        split_string_by_slashn,
+        convert_lines_to_string
     }; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
 
     int index = get_index(operator);
@@ -853,16 +855,16 @@ void copy_nth(STACK *s) {
 void read_line(STACK *s) {
     char *line = malloc(sizeof(char) * BUFSIZ);
 
-    fgets(line, BUFSIZ, stdin);
+    if (fgets(line, BUFSIZ, stdin) != NULL) {
+        line[strlen(line) - 1] = '\0';
 
-    line[strlen(line) - 1] = '\0';
+        STACK_ELEM result = {
+            .t = STRING,
+            .data.s = strdup(line)
+        };
 
-    STACK_ELEM result = {
-        .t = STRING,
-        .data.s = strdup(line)
-    };
-
-    assert(push(s, result) == 0);
+        assert(push(s, result) == 0);
+    }
 }
 
 STACK_ELEM get_global(char value, GLOBALS *g) {
@@ -1253,7 +1255,7 @@ void split_string_by_slashn(STACK *s) {
     if (x.t == STRING) {
         char *token, *rest = x.data.s;
 
-        while ((token = strtok_r(rest, "\\n", &rest))) {
+        while ((token = strtok_r(rest, "\n", &rest))) {
             STACK_ELEM to_push = {
                 .t = STRING,
                 .data.s = strdup(token)
@@ -1268,4 +1270,23 @@ void split_string_by_slashn(STACK *s) {
     }
 
     free(x.data.s);
+}
+
+void convert_lines_to_string(STACK *s) {
+    char *line = malloc(sizeof(char) * BUFSIZ), *total = line;
+    int len = 0;
+
+    while (fgets(line, BUFSIZ, stdin) != NULL) {
+        len = strlen(line);
+        line += len;
+    }
+
+    STACK_ELEM result = {
+        .t = STRING,
+        .data.s = strdup(total)
+    };
+
+    line[strlen(line) - 1] = '\0';
+
+    assert(push(s, result) == 0);
 }

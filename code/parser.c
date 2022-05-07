@@ -11,17 +11,20 @@
 #include <errno.h>
 
 int get_line(STACK *s, GLOBALS *g) {
-    char line[BUFSIZ];
+    char *line = malloc(sizeof(char) * BUFSIZ);
     
     if (fgets(line, BUFSIZ, stdin) != NULL) {
+        line[strlen(line) - 1] = '\0';
+
         parse_line(s, line, g);
     }
     
+    free(line);
     return 0;
 }
     
 void parse_line(STACK *s, char *line, GLOBALS *g) {
-    char token[BUFSIZ];
+    char *token = malloc(sizeof(char) * BUFSIZ);
     int parsed = 0;
     
     while ((int) strlen(line) != parsed) {
@@ -42,6 +45,8 @@ void parse_line(STACK *s, char *line, GLOBALS *g) {
         parsed += (int) strlen(token);
         handle_token(s, token, g);
     }
+
+    free(token);
 }
 
 void handle_token(STACK *s, char *token, GLOBALS *g) {
