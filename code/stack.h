@@ -24,6 +24,7 @@ typedef struct {
         char c;
         double d;
         char *s;
+        char *b;
         STACK *a;
     } data; /**< Conteúdo do elemento */
 } STACK_ELEM;

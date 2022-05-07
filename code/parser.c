@@ -92,20 +92,14 @@ void handle_token(STACK *s, char *token, GLOBALS *g) {
         assert(push(s, new) == 0);
     }
     else if (is_block(token)) {
-        int len = strlen(token);
-
-        // Remove os {} do bloco (e espaços entre esses e os elementos do bloco)
-        remove_char(token, len - 2);
-        remove_char(token, len - 2);
-        remove_char(token, 0);
-        remove_char(token, 0);
+        char *heap_token = strdup(token);
         
         STACK *block = create_stack();
-        parse_line(block,token);
+        parse_line(block,token, g);
         
         STACK_ELEM new = {
             .t = BLOCK,
-            .data= { .a = block}
+            .data= { .b = heap_token}
         };
         
         assert(push(s, new) == 0);
