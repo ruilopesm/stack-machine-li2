@@ -6,8 +6,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <ctype.h>
 #include <assert.h>
-#include <regex.h>
+#include <errno.h>
 
 int get_line(STACK *s, GLOBALS *g) {
     char line[BUFSIZ];
@@ -36,10 +37,6 @@ void parse_line(STACK *s, char *line, GLOBALS *g) {
         }
         else {
             copy(token, line, find_char(line, ' ', parsed), parsed);
-        }
-        
-        if (remove_slashn(token)) {
-            parsed++;
         }
         
         parsed += (int) strlen(token);
@@ -128,41 +125,26 @@ void handle_token(STACK *s, char *token, GLOBALS *g) {
     }
 }
 
-// Verifica se a string contém apenas algarismos
 int is_long(char *token) {
-    static bool flag = false;
-    static regex_t regex;
+    char *end_ptr;
+    errno = 0;
 
-    if (!flag) {
-        assert(regcomp(&regex, "^-?[0-9]+$", REG_EXTENDED) == 0);
-        flag = true;
-    }
-
-    return regexec(&regex, token, 0, NULL, 0) == 0;
+    strtol(token, &end_ptr, 0);
+    
+    return errno == 0 && *end_ptr == '\0';
 }
 
-// Verifica se a string contém apenas algarismos e um ponto (.)
 int is_double(char *token) {
-    static bool flag = false;
-    static regex_t regex;
+    char *end_ptr;
+    errno = 0;
 
-    if (!flag) {
-        assert(regcomp(&regex, "^-?[0-9]+\\.[0-9]+$", REG_EXTENDED) == 0);
-        flag = true;
-    }
+    strtod(token, &end_ptr);
 
-    return regexec(&regex, token, 0, NULL, 0) == 0;
+    return errno == 0 && *end_ptr == '\0';
 }
 
 int is_string(char *token) {
-    static bool flag = false;
-    static regex_t regex;
-
-    if (!flag) {
-        assert(regcomp(&regex, "^\".*\"$", REG_EXTENDED) == 0);
-    }
-
-    return regexec(&regex, token, 0, NULL, 0) == 0;
+    return token[0] == '"' && token[strlen(token) - 1] == '"';
 }
 
 int is_array(char *token) {
@@ -170,25 +152,11 @@ int is_array(char *token) {
 }
 
 int is_global(char *token) {
-    static bool flag = false;
-    static regex_t regex;
-
-    if (!flag) {
-        assert(regcomp(&regex, "^[A-Z]$", REG_EXTENDED) == 0);
-    }
-    
-    return regexec(&regex, token, 0, NULL, 0) == 0;
+    return token[0] >= 'A' && token[0] <= 'Z' && strlen(token) == 1;
 }
 
 int is_readress_global(char *token) {
-    static bool flag = false;
-    static regex_t regex;
-
-    if (!flag) {
-        assert(regcomp(&regex, "^:[A-Z]$", REG_EXTENDED) == 0);
-    }
-    
-    return regexec(&regex, token, 0, NULL, 0) == 0;
+    return token[0] == ':' && token[1] >= 'A' && token[1] <= 'Z' && strlen(token) == 2;
 }
 
 int find_char(char *line, char c, int parsed) {
@@ -227,17 +195,6 @@ void copy(char *token, char *line, int len, int parsed) {
         token[i] = line[i + parsed];
     }
     token[i] = '\0';
-}
-
-int remove_slashn(char *token) {
-    int len = strlen(token);
-    
-    if (token[len - 1] == '\n'){
-        remove_char(token, len - 1);
-        return 1;
-    }
-    
-    return 0;
 }
 
 // Remove o caracter na posição indicada por 'p'
