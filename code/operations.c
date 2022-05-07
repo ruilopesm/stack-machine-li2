@@ -1148,10 +1148,16 @@ void if_then_else(STACK *s) {
 
     STACK_ELEM result = z;
 
-    if (x.t == LONG && x.data.l) {
+    if (x.t == LONG && x.data.l == 0) {
         result = y;
     }
     else if (x.t == DOUBLE && x.data.d == 0.0) {
+        result = y;
+    }
+    else if (x.t == ARRAY && x.data.a->sp != 0) {
+        result = y;
+    }
+    else if (x.t == STRING && strlen(x.data.s) != 0) {
         result = y;
     }
 
