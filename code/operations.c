@@ -32,6 +32,7 @@ char *get_operator(int i) {
         "\\",
         "@",
         "$",
+        "l",
         "=",
         "<",
         ">",
@@ -93,6 +94,7 @@ void dispatch_table(STACK *s, char *operator) {
         swap,
         rotate,
         copy_nth,
+        read_line,
         igual,
         menor,
         maior,
@@ -712,6 +714,7 @@ void conv_int(STACK *s) {
     else if (x.t == STRING) {
         result.t = LONG;
         sscanf(x.data.s, "%ld", &result.data.l);
+        push(s, result);
     }
     // Conversão redundante
     else {
@@ -739,6 +742,7 @@ void conv_double(STACK *s) {
     else if (x.t == STRING) {
         result.t = DOUBLE;
         sscanf(x.data.s, "%lg", &result.data.d);
+        push(s, result);
     }
     // Conversão redundante
     else {
@@ -846,8 +850,19 @@ void copy_nth(STACK *s) {
     assert(push(s, result) == 0);
 }
 
-void read_line(STACK *s, GLOBALS *g) {
-    get_line(s, g);
+void read_line(STACK *s) {
+    char *line = malloc(sizeof(char) * BUFSIZ);
+
+    fgets(line, BUFSIZ, stdin);
+
+    line[strlen(line) - 1] = '\0';
+
+    STACK_ELEM result = {
+        .t = STRING,
+        .data.s = strdup(line)
+    };
+
+    assert(push(s, result) == 0);
 }
 
 STACK_ELEM get_global(char value, GLOBALS *g) {

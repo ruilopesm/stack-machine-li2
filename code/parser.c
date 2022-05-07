@@ -117,9 +117,6 @@ void handle_token(STACK *s, char *token, GLOBALS *g) {
         char value = token[1];
         g->globals[value - 65] = top;
     }
-    else if (strcmp(token, "l") == 0) {
-        read_line(s, g);
-    }
     else if (is_operator(token)) {
         dispatch_table(s, token);
     }

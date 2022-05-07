@@ -2,7 +2,7 @@
  * @brief Macro que define o número de operadores implementados na stack
  *
  */
-#define N_OPERATORS 33
+#define N_OPERATORS 34
 
 /**
  * @brief Função que retorna o operador associado ao índice dado
@@ -259,7 +259,7 @@ void copy_nth(STACK *s);
  * 
  * @param s Apontador para a stack
  */
-void read_line(STACK *s, GLOBALS *g);
+void read_line(STACK *s);
 
 /**
  * @brief Coloca o valor atual da variável global na stack
