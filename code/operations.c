@@ -43,8 +43,8 @@ char *get_operator(int i) {
         "e>",
         "?",
         ",",
-        "S/"
-    };
+        "S/",
+        "t"};
 
     return operators[i];
 }
@@ -104,8 +104,8 @@ void dispatch_table(STACK *s, char *operator) {
         e_maior,
         if_then_else,
         range,
-        split_string_by_whitespace
-    }; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
+        split_string_by_whitespace,
+        convert_lines_to_string}; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
 
     int index = get_index(operator);
     assert(index != -1);
@@ -117,11 +117,9 @@ void dispatch_table(STACK *s, char *operator) {
 double get_double_arg(STACK_ELEM x) {
     if (x.t == DOUBLE) {
         return x.data.d;
-    } 
-    else if (x.t == LONG) {
+    } else if (x.t == LONG) {
         return x.data.l;
-    } 
-    else {
+    } else {
         return x.data.c;
     }
 }
@@ -129,8 +127,7 @@ double get_double_arg(STACK_ELEM x) {
 long get_long_arg(STACK_ELEM x) {
     if (x.t == LONG) {
         return x.data.l;
-    } 
-    else {
+    } else {
         return x.data.c;
     }
 }
@@ -143,24 +140,19 @@ void sum(STACK *s) {
 
     STACK_ELEM result;
 
-    if (y.t == ARRAY){
+    if (y.t == ARRAY) {
         sum_array(y, x, &result, 1);
-    }
-    else if (x.t == ARRAY){
+    } else if (x.t == ARRAY) {
         sum_array(x, y, &result, 0);
-    }
-    else if (y.t == STRING || x.t == STRING) {
+    } else if (y.t == STRING || x.t == STRING) {
         append_string(y, x, &result);
-    }    
-    else if (x.t == DOUBLE || y.t == DOUBLE) {
+    } else if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) + get_double_arg(y);
-    } 
-    else if (x.t == LONG || y.t == LONG) {
+    } else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) + get_long_arg(y);
-    }
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = x.data.c + y.data.c;
     }
@@ -169,36 +161,32 @@ void sum(STACK *s) {
 }
 
 void sum_array(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result, int order) {
-    if(x.t == ARRAY) {
-        for (int i = 0 ; i < x.data.a->sp; i++) {
+    if (x.t == ARRAY) {
+        for (int i = 0; i < x.data.a->sp; i++) {
             assert(push(y.data.a, x.data.a->stc[i]) == 0);
         }
 
         *result = y;
-    }
-    else if (order) {
+    } else if (order) {
         assert(push(y.data.a, x) == 0);
         *result = y;
-    }
-    else {
+    } else {
         STACK *s = create_stack();
         assert(push(s, x) == 0);
-        
-        for(int i = 0; i < y.data.a->sp; i++) {
+
+        for (int i = 0; i < y.data.a->sp; i++) {
             assert(push(s, y.data.a->stc[i]) == 0);
         }
-        
+
         result->t = ARRAY;
         result->data.a = s;
-
     }
 }
 
 void append_string(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result) {
     if (y.t == STRING) {
         append_string_aux(y, x, result, 1);
-    }
-    else {
+    } else {
         append_string_aux(x, y, result, 0);
     }
 }
@@ -206,61 +194,56 @@ void append_string(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result) {
 void append_string_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result, int order) {
     if (x.t == STRING) {
         char *new = malloc(strlen(y.data.s) + strlen(x.data.s) + 1);
-        
+
         if (order) {
             strcpy(new, y.data.s);
             strcat(new, x.data.s);
-        }
-        else {
+        } else {
             strcpy(new, x.data.s);
             strcat(new, y.data.s);
         }
-        
+
         result->t = STRING;
         result->data.s = new;
-        
+
         free(y.data.s);
         free(x.data.s);
-    }
-    else if (x.t == CHAR) {
+    } else if (x.t == CHAR) {
         int len = strlen(y.data.s);
         char *new = malloc(len + 2);
-        
+
         if (order) {
             strcpy(new, y.data.s);
             new[len] = x.data.c;
-        }
-        else {
+        } else {
             new[0] = x.data.c;
             new[1] = '\0';
-            
-            strcat(new,y.data.s);
+
+            strcat(new, y.data.s);
         }
-       
-        new[len + 1 ] = '\0';
+
+        new[len + 1] = '\0';
         result->t = STRING;
         result->data.s = new;
-        
+
         free(y.data.s);
-    }
-    else {
+    } else {
         char *temp = malloc(sizeof(char) * BUFSIZ);
-        char *new = malloc(sizeof(char) * BUFSIZ + strlen(y.data.s) +1);
-        
+        char *new = malloc(sizeof(char) * BUFSIZ + strlen(y.data.s) + 1);
+
         snprintf(temp, BUFSIZ, "%g", get_double_arg(x));
-        
+
         if (order) {
             strcpy(new, y.data.s);
             strcat(new, temp);
-        }
-        else {
+        } else {
             strcpy(new, temp);
             strcat(new, y.data.s);
         }
 
         result->t = STRING;
         result->data.s = new;
-        
+
         free(y.data.s);
         free(temp);
     }
@@ -277,12 +260,10 @@ void sub(STACK *s) {
     if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) - get_double_arg(y);
-    } 
-    else if (x.t == LONG || y.t == LONG) {
+    } else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) - get_long_arg(y);
-    } 
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = x.data.c - y.data.c;
     }
@@ -300,16 +281,13 @@ void mult(STACK *s) {
 
     if (y.t == STRING || y.t == ARRAY) {
         mult_structure(x, y, &result);
-    }
-    else if (x.t == DOUBLE || y.t == DOUBLE) {
+    } else if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) * get_double_arg(y);
-    } 
-    else if (x.t == LONG || y.t == LONG) {
+    } else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) * get_long_arg(y);
-    } 
-    else if (x.t == CHAR && y.t == CHAR) {
+    } else if (x.t == CHAR && y.t == CHAR) {
         result.t = CHAR;
         result.data.c = x.data.c * y.data.c;
     }
@@ -332,8 +310,7 @@ void mult_structure(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
         result->data.s = new;
 
         free(y.data.s);
-    }
-    else if (y.t == ARRAY) {
+    } else if (y.t == ARRAY) {
         int len = y.data.a->sp;
 
         for (int i = len; i < len * x.data.l; i++) {
@@ -356,62 +333,57 @@ void divi(STACK *s) {
     if (x.t == STRING && y.t == STRING) {
         result.t = ARRAY;
         STACK *new = create_stack();
-        
+
         split_by_substring(&x, &y, new);
-        
+
         result.data.a = new;
-        
+
         free(x.data.s);
         free(y.data.s);
-    }
-    else if (x.t == DOUBLE || y.t == DOUBLE) {
+    } else if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = get_double_arg(x) / get_double_arg(y);
-    } 
-    else if (x.t == LONG || y.t == LONG) {
+    } else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) / get_long_arg(y);
-    } 
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = x.data.c / y.data.c;
     }
 
     push(s, result);
-
 }
 
 char *create_string(int size) {
     char *section = malloc(sizeof(char) * size);
-    
+
     return section;
 }
 
 void split_by_substring(STACK_ELEM *main, STACK_ELEM *sub, STACK *new) {
     char *init = main->data.s, *current, *section;
-    
+
     STACK_ELEM temp;
     temp.t = STRING;
-    
+
     int len = strlen(sub->data.s);
-    
-    while((current = strstr(init, sub->data.s)) != NULL) {
+
+    while ((current = strstr(init, sub->data.s)) != NULL) {
         section = create_string(current - init + 1);
-        
+
         strncpy(section, init, current - init);
         temp.data.s = section;
-        
+
         assert(push(new, temp) == 0);
-        
+
         init = current + len;
     }
 
     section = create_string(strlen(init) + 1);
     strcpy(section, init);
     temp.data.s = section;
-    
-    assert(push(new,temp) == 0);
 
+    assert(push(new, temp) == 0);
 }
 
 void rem(STACK *s) {
@@ -425,15 +397,13 @@ void rem(STACK *s) {
     if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) % get_long_arg(y);
-    } 
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = x.data.c % y.data.c;
     }
 
     push(s, result);
 }
-
 
 void power(STACK *s) {
     STACK_ELEM x, y;
@@ -443,20 +413,17 @@ void power(STACK *s) {
 
     STACK_ELEM result;
 
-    if (x.t == STRING && y.t == STRING){
-        find_substring_index(x,y,&result);
-    }
-    else if (x.t == DOUBLE || y.t == DOUBLE) {
+    if (x.t == STRING && y.t == STRING) {
+        find_substring_index(x, y, &result);
+    } else if (x.t == DOUBLE || y.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = pow(get_double_arg(x), get_double_arg(y));
-    } 
-    else if (x.t == LONG || y.t == LONG) {
+    } else if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
-        result.data.l = (long int) pow(get_long_arg(x), get_long_arg(y));
-    } 
-    else {
+        result.data.l = (long int)pow(get_long_arg(x), get_long_arg(y));
+    } else {
         result.t = CHAR;
-        result.data.c = (char) pow(x.data.c, y.data.c);
+        result.data.c = (char)pow(x.data.c, y.data.c);
     }
 
     push(s, result);
@@ -465,20 +432,17 @@ void power(STACK *s) {
 void find_substring_index(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     result->t = LONG;
     char *temp;
-    
+
     if (strlen(x.data.s) > strlen(y.data.s)) {
         if ((temp = (strstr(x.data.s, y.data.s))) == NULL) {
             result->data.l = -1;
-        }
-        else {
+        } else {
             result->data.l = temp - x.data.s;
         }
-    }
-    else {
+    } else {
         if ((temp = (strstr(y.data.s, x.data.s))) == NULL) {
             result->data.l = -1;
-        }
-        else {
+        } else {
             result->data.l = temp - y.data.s;
         }
     }
@@ -495,8 +459,7 @@ void bw_xor(STACK *s) {
     if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) ^ get_long_arg(y);
-    } 
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = x.data.c ^ y.data.c;
     }
@@ -515,8 +478,7 @@ void bw_and(STACK *s) {
     if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) & get_long_arg(y);
-    } 
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = x.data.c & y.data.c;
     }
@@ -535,8 +497,7 @@ void bw_or(STACK *s) {
     if (x.t == LONG || y.t == LONG) {
         result.t = LONG;
         result.data.l = get_long_arg(x) | get_long_arg(y);
-    } 
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = x.data.c | y.data.c;
     }
@@ -554,12 +515,10 @@ void increment(STACK *s) {
     if (x.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = ++x.data.d;
-    } 
-    else if (x.t == LONG) {
+    } else if (x.t == LONG) {
         result.t = LONG;
         result.data.l = ++x.data.l;
-    } 
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = ++x.data.c;
     }
@@ -577,12 +536,10 @@ void decrement(STACK *s) {
     if (x.t == DOUBLE) {
         result.t = DOUBLE;
         result.data.d = --x.data.d;
-    } 
-    else if (x.t == LONG) {
+    } else if (x.t == LONG) {
         result.t = LONG;
         result.data.l = --x.data.l;
-    } 
-    else {
+    } else {
         result.t = CHAR;
         result.data.c = --x.data.c;
     }
@@ -590,8 +547,8 @@ void decrement(STACK *s) {
     push(s, result);
 }
 
-void not(STACK *s) {
-    
+void not(STACK * s) {
+
     STACK_ELEM x;
 
     assert(pop(s, &x) == 0);
@@ -599,47 +556,43 @@ void not(STACK *s) {
     if (x.t == ARRAY) {
         for (int i = x.data.a->sp - 1; i >= 0; i--) {
             STACK_ELEM new;
-            
+
             assert(nth_element(x.data.a, &new, i) == 0);
             assert(push(s, new) == 0);
         }
 
         free(x.data.a);
-    }
-    else {
+    } else {
         STACK_ELEM result;
-    
+
         if (x.t == LONG) {
             result.t = LONG;
             result.data.l = ~x.data.l;
-        } 
-        else {
+        } else {
             result.t = CHAR;
             result.data.c = ~x.data.c;
         }
-        
+
         push(s, result);
     }
 }
 
 void conv_int(STACK *s) {
     STACK_ELEM x;
-    
+
     assert(pop(s, &x) == 0);
-    
+
     STACK_ELEM result;
 
     if (x.t == DOUBLE) {
         result.t = LONG;
         result.data.l = x.data.d;
         push(s, result);
-    }
-    else if (x.t == CHAR) {
+    } else if (x.t == CHAR) {
         result.t = LONG;
         result.data.l = x.data.c;
         push(s, result);
-    }
-    else if (x.t == STRING) {
+    } else if (x.t == STRING) {
         result.t = LONG;
         sscanf(x.data.s, "%ld", &result.data.l);
     }
@@ -651,22 +604,20 @@ void conv_int(STACK *s) {
 
 void conv_double(STACK *s) {
     STACK_ELEM x;
-    
+
     assert(pop(s, &x) == 0);
-    
+
     STACK_ELEM result;
 
     if (x.t == LONG) {
         result.t = DOUBLE;
         result.data.d = x.data.l;
         push(s, result);
-    } 
-    else if (x.t == CHAR) {
+    } else if (x.t == CHAR) {
         result.t = DOUBLE;
         result.data.d = x.data.c;
         push(s, result);
-    } 
-    else if (x.t == STRING) {
+    } else if (x.t == STRING) {
         result.t = DOUBLE;
         sscanf(x.data.s, "%lg", &result.data.d);
     }
@@ -678,31 +629,29 @@ void conv_double(STACK *s) {
 
 void conv_char(STACK *s) {
     STACK_ELEM x;
-    
+
     assert(pop(s, &x) == 0);
-    
+
     STACK_ELEM result;
 
     if (x.t == LONG) {
         result.t = CHAR;
         result.data.c = x.data.l % 256;
         push(s, result);
-    } 
-    else if (x.t == STRING) {
+    } else if (x.t == STRING) {
         result.t = CHAR;
         result.data.c = x.data.s[0];
         push(s, result);
-    } 
-    else {
+    } else {
         push(s, x);
     }
 }
 
 void conv_str(STACK *s) {
     STACK_ELEM x;
-    
+
     assert(pop(s, &x) == 0);
-    
+
     STACK_ELEM result;
     result.data.s = malloc(sizeof(char) * BUFSIZ);
 
@@ -710,35 +659,32 @@ void conv_str(STACK *s) {
         result.t = STRING;
         snprintf(result.data.s, BUFSIZ, "%ld", x.data.l);
         push(s, result);
-    } 
-    else if (x.t == DOUBLE) {
+    } else if (x.t == DOUBLE) {
         result.t = STRING;
         snprintf(result.data.s, BUFSIZ, "%lg", x.data.d);
         push(s, result);
-    } 
-    else if (x.t == CHAR) {
+    } else if (x.t == CHAR) {
         result.t = STRING;
         result.data.s[0] = x.data.c;
         result.data.s[1] = '\0';
         push(s, result);
-    } 
-    else {
+    } else {
         push(s, x);
     }
 }
 
 void duplicate(STACK *s) {
     STACK_ELEM x;
-    
+
     assert(pop(s, &x) == 0);
-    
+
     assert(push(s, x) == 0);
     assert(push(s, x) == 0);
 }
 
 void other_pop(STACK *s) {
     STACK_ELEM x;
-    
+
     assert(pop(s, &x) == 0);
 }
 
@@ -761,7 +707,7 @@ void rotate(STACK *s) {
 
     assert(push(s, y) == 0);
     assert(push(s, x) == 0);
-    assert(push(s, z) == 0);   
+    assert(push(s, z) == 0);
 }
 
 void copy_nth(STACK *s) {
@@ -782,25 +728,21 @@ void read_line(STACK *s) {
 
 STACK_ELEM get_global(STACK *s, char value) {
     STACK_ELEM new;
-    STACK_ELEM current = s->globals[value -  65];
-    
+    STACK_ELEM current = s->globals[value - 65];
+
     if (current.t == DOUBLE) {
         new.t = DOUBLE;
         new.data.d = current.data.d;
-    }
-    else if (current.t == LONG) {
+    } else if (current.t == LONG) {
         new.t = LONG;
         new.data.l = current.data.l;
-    }
-    else if (current.t == STRING) {
+    } else if (current.t == STRING) {
         new.t = STRING;
         new.data.s = current.data.s;
-    }
-    else if (current.t == ARRAY) {
+    } else if (current.t == ARRAY) {
         new.t = ARRAY;
         new.data.a = current.data.a;
-    }
-    else {
+    } else {
         new.t = CHAR;
         new.data.c = current.data.c;
     }
@@ -819,35 +761,31 @@ void igual(STACK *s) {
 
     if (y.t == ARRAY) {
         long pos = get_long_arg(x);
-        
+
         assert(nth_element(y.data.a, &result, (y.data.a->sp) - pos - 1) == 0);
-        
+
         push(s, result);
-        
+
         return;
-    }
-    else if (x.t != STRING && y.t == STRING) {
+    } else if (x.t != STRING && y.t == STRING) {
         long pos = get_long_arg(x);
 
-        result.t = CHAR;        
+        result.t = CHAR;
         result.data.c = y.data.s[pos];
-        
+
         push(s, result);
 
         return;
-    }
-    else if (x.t == STRING && y.t == STRING) {
+    } else if (x.t == STRING && y.t == STRING) {
         result.t = LONG;
         result.data.l = strcmp(x.data.s, y.data.s) == 0 ? 1 : to_push;
         push(s, result);
-    }
-    else if (get_double_arg(x) == get_double_arg(y)) {
+    } else if (get_double_arg(x) == get_double_arg(y)) {
         result.t = LONG;
         to_push = 1;
         result.data.l = to_push;
         push(s, result);
-    }
-    else {
+    } else {
         result.t = LONG;
         result.data.l = to_push;
         push(s, result);
@@ -869,21 +807,18 @@ void menor(STACK *s) {
             assert(nth_element(x.data.a, &result, (x.data.a->sp) - i - 1) == 0);
             assert(push(s, result) == 0);
         }
-        
+
         return;
-    }
-    else if (get_double_arg(x) < get_double_arg(y)) {
+    } else if (get_double_arg(x) < get_double_arg(y)) {
         result.t = LONG;
         to_push = 1;
         result.data.l = to_push;
         push(s, result);
-    }
-    else {
+    } else {
         result.t = LONG;
         result.data.l = to_push;
         push(s, result);
     }
-    
 }
 
 void maior(STACK *s) {
@@ -893,29 +828,26 @@ void maior(STACK *s) {
     STACK_ELEM result;
 
     assert(pop(s, &y) == 0);
-    assert(pop(s, &x) == 0);   
+    assert(pop(s, &x) == 0);
 
     if (x.t == ARRAY) {
         long num = get_long_arg(y);
-        for (int i = num - 1; i >= 0 ; i--) {
+        for (int i = num - 1; i >= 0; i--) {
             assert(nth_element(x.data.a, &result, i) == 0);
             assert(push(s, result) == 0);
         }
-        
+
         return;
-    }
-    else if (get_double_arg(x) > get_double_arg(y)) {
+    } else if (get_double_arg(x) > get_double_arg(y)) {
         result.t = LONG;
         to_push = 1;
         result.data.l = to_push;
         push(s, result);
-    }
-    else {
+    } else {
         result.t = LONG;
         result.data.l = to_push;
         push(s, result);
     }
-    
 }
 
 void negacao(STACK *s) {
@@ -929,8 +861,7 @@ void negacao(STACK *s) {
 
     if ((x.t == LONG || x.t == CHAR) && x.data.l == 0) {
         to_push = 1;
-    }
-    else if (x.t == DOUBLE && x.data.d == 0.0) {
+    } else if (x.t == DOUBLE && x.data.d == 0.0) {
         to_push = 1;
     }
 
@@ -940,7 +871,7 @@ void negacao(STACK *s) {
 
 void e_shortcut(STACK *s) {
     STACK_ELEM x, y;
-    
+
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
 
@@ -955,7 +886,7 @@ void e_shortcut(STACK *s) {
 
 void ou_shortcut(STACK *s) {
     STACK_ELEM x, y;
-    
+
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
 
@@ -979,7 +910,7 @@ void e_menor(STACK *s) {
     if (get_double_arg(x) < get_double_arg(y)) {
         result = x;
     }
-    
+
     push(s, result);
 }
 
@@ -994,7 +925,7 @@ void e_maior(STACK *s) {
     if (get_double_arg(x) > get_double_arg(y)) {
         result = x;
     }
-    
+
     push(s, result);
 }
 
@@ -1009,8 +940,7 @@ void if_then_else(STACK *s) {
 
     if (x.t == LONG && x.data.l) {
         result = y;
-    }
-    else if (x.t == DOUBLE && x.data.d == 0.0) {
+    } else if (x.t == DOUBLE && x.data.d == 0.0) {
         result = y;
     }
 
@@ -1027,17 +957,15 @@ void range(STACK *s) {
 
     if (x.t == STRING) {
         result.data.l = strlen(x.data.s);
-    }
-    else if (x.t == ARRAY) {
+    } else if (x.t == ARRAY) {
         result.data.l = x.data.a->sp;
-    }
-    else if (x.t == LONG) {
+    } else if (x.t == LONG) {
         STACK *arr = create_stack();
-        
+
         for (int i = 0; i < x.data.l; i++) {
-            STACK_ELEM to_push = { .t = LONG };
+            STACK_ELEM to_push = {.t = LONG};
             to_push.data.l = i;
-            
+
             push(arr, to_push);
         }
 
@@ -1058,7 +986,7 @@ void split_string_by_whitespace(STACK *s) {
 
     if (x.t == STRING) {
         STACK *arr = create_stack();
-        
+
         STACK_ELEM to_push;
         to_push.t = STRING;
 
@@ -1069,7 +997,27 @@ void split_string_by_whitespace(STACK *s) {
             push(arr, to_push);
             token = strtok(NULL, " ");
         }
-        
+
         push(s, result);
     }
+}
+
+void convert_lines_to_string(STACK *s) {
+    FILE *f_ptr;
+    char *line = malloc(BUFSIZ * sizeof(char)), *total = line;
+    int length = 0;
+
+    f_ptr = fopen("Test_t.txt", "r");
+
+    while (fgets(line, BUFSIZ, f_ptr)) {
+        length = strlen(line);
+        line = line + length;
+    }
+
+    *line = '\0';
+
+    STACK_ELEM result = {.t = STRING, .data.s = total};
+
+    fclose(f_ptr);
+    push(s, result);
 }
