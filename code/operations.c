@@ -879,12 +879,22 @@ STACK_ELEM get_global(char value, GLOBALS *g) {
         new.data.l = current.data.l;
     }
     else if (current.t == STRING) {
+        int len = strlen(current.data.s); // Vai ser criada cópia da string de modo a não alterar o valor
+        char *copy = malloc(sizeof(char) * len + 1);
+        strcpy(copy,current.data.s);
+        copy[len] = '\0'; // Assegurar que a string é finalizada corretamente
         new.t = STRING;
-        new.data.s = current.data.s;
+        new.data.s = copy;
     }
     else if (current.t == ARRAY) {
-        new.t = ARRAY;
-        new.data.a = current.data.a;
+        STACK_ELEM temp;
+        STACK *cpy_array = create_stack();
+        for(int i = current.data.a->sp -1;i>=0;i--){
+            nth_element(current.data.a,&temp,i);
+            assert(push(cpy_array,temp) == 0);
+        }
+        new.t= ARRAY;
+        new.data.a=cpy_array;
     }
     else {
         new.t = CHAR;
@@ -1226,7 +1236,7 @@ void split_string_by_whitespace(STACK *s) {
     if (x.t == STRING) {
         char *token, *rest = x.data.s;
 
-        while ((token = strtok_r(rest, " ", &rest))) {
+        while ((token = strtok_r(rest, " \t\r\n\v\f", &rest))) {
             STACK_ELEM to_push = {
                 .t = STRING,
                 .data.s = strdup(token)
