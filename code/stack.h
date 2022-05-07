@@ -9,7 +9,8 @@ typedef enum {
     CHAR,
     DOUBLE,
     STRING,
-    ARRAY
+    ARRAY,
+    BLOCK
 } TYPE;
 
 /**

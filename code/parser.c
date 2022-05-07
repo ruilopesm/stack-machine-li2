@@ -91,6 +91,25 @@ void handle_token(STACK *s, char *token, GLOBALS *g) {
         
         assert(push(s, new) == 0);
     }
+    else if (is_block(token)) {
+        int len = strlen(token);
+
+        // Remove os {} do bloco (e espaços entre esses e os elementos do bloco)
+        remove_char(token, len - 2);
+        remove_char(token, len - 2);
+        remove_char(token, 0);
+        remove_char(token, 0);
+        
+        STACK *block = create_stack();
+        parse_line(block,token);
+        
+        STACK_ELEM new = {
+            .t = BLOCK,
+            .data= { .a = block}
+        };
+        
+        assert(push(s, new) == 0);
+    }
     else if (is_string(token)) {
         char *heap_token = strdup(token);
         int len = strlen(token);
@@ -174,6 +193,10 @@ int is_string(char *token) {
 
 int is_array(char *token) {
     return token[0] == '[' && token[strlen(token) - 1] == ']';
+}
+
+int is_block(char *token) {
+    return token[0] == '{' && token[strlen(token) - 1] == '}';
 }
 
 int is_global(char *token) {
