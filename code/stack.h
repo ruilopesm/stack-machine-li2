@@ -9,7 +9,8 @@ typedef enum {
     CHAR,
     DOUBLE,
     STRING,
-    ARRAY
+    ARRAY,
+    BLOCK
 } TYPE;
 
 /**
@@ -24,6 +25,7 @@ typedef struct {
         double d;
         char *s;
         STACK *a;
+        char *b;
     } data; /**< Conteúdo do elemento */
 } STACK_ELEM;
 

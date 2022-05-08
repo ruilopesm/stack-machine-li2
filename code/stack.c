@@ -67,6 +67,9 @@ void print_elems(STACK *s) {
         else if (current.t == ARRAY) {
             print_elems(current.data.a);
         }
+        else if (current.t == BLOCK) {
+            printf("{ %s }", current.data.b);
+        }
     }
 }
 
