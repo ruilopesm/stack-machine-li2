@@ -44,6 +44,8 @@ int is_string(char *token);
 
 int is_array(char *token);
 
+int is_block(char *token);
+
 /**
  * @brief Verifica se o token é uma "vaiável global"
  * 
