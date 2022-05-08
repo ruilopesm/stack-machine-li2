@@ -228,6 +228,16 @@ int is_readress_global(char *token) {
     return token[0] == ':' && token[1] >= 'A' && token[1] <= 'Z' && strlen(token) == 2;
 }
 
+int is_operator(char *token) {
+    for (int i = 0; i < N_OPERATORS; i++) {
+        if (strcmp(token, get_operator(i)) == 0) {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
 int find_char(char *line, char c, int parsed) {
     int i;
     

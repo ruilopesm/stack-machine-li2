@@ -62,6 +62,14 @@ int is_global(char *token);
 int is_readress_global(char *token);
 
 /**
+ * @brief Função que verifica se um dado char é um operador
+ *
+ * @param token Uma string cujo primeiro elemento é o char a ser verificado
+ * @return int
+ */
+int is_operator(char *token);
+
+/**
  * @brief Funçao que encontra o indice do char c
  * 
  * @param line array
