@@ -665,7 +665,6 @@ void decrement(STACK *s) {
 }
 
 void not(STACK *s) {
-    
     STACK_ELEM x;
 
     assert(pop(s, &x) == 0);

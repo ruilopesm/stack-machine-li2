@@ -38,6 +38,9 @@ void parse_line(STACK *s, char *line, GLOBALS *g) {
         else if (line[parsed] == '[') {
             copy(token, line, get_array_length(line, parsed) + 1, parsed);
         }
+        else if (line[parsed] == '{') {
+            copy(token, line, find_char(line, '}', parsed) + 1, parsed);
+        }
         else {
             copy(token, line, find_char(line, ' ', parsed), parsed);
         }
@@ -72,6 +75,21 @@ void handle_token(STACK *s, char *token, GLOBALS *g) {
 
         assert(push(s, new) == 0);
     }
+    else if (is_string(token)) {
+        char *heap_token = strdup(token);
+        int len = strlen(token);
+
+        // Remove as aspas da string
+        remove_char(heap_token, 0);
+        remove_char(heap_token, len - 2);
+
+        STACK_ELEM new = {
+            .t = STRING, 
+            .data = { .s = heap_token }
+        };
+
+        assert(push(s, new) == 0);
+    }
     else if (is_array(token)) {
         int len = strlen(token);
 
@@ -86,22 +104,24 @@ void handle_token(STACK *s, char *token, GLOBALS *g) {
         
         STACK_ELEM new = {
             .t = ARRAY,
-            .data= { .a = array }
+            .data = { .a = array }
         };
         
         assert(push(s, new) == 0);
     }
-    else if (is_string(token)) {
+    else if (is_block(token)) {
         char *heap_token = strdup(token);
         int len = strlen(token);
 
-        // Remove as aspas da string
-        remove_char(heap_token, 0);
+        // Remove as {} do bloco (e espaços entre esses e os elementos do bloco)
         remove_char(heap_token, len - 2);
+        remove_char(heap_token, len - 2);
+        remove_char(heap_token, 0);
+        remove_char(heap_token, 0);
 
         STACK_ELEM new = {
-            .t = STRING, 
-            .data = { .s = heap_token }
+            .t = BLOCK,
+            .data = { .b = heap_token }
         };
 
         assert(push(s, new) == 0);
@@ -123,23 +143,33 @@ void handle_token(STACK *s, char *token, GLOBALS *g) {
         if (top.t == STRING) {
             int len = strlen(top.data.s);
             
-            char *copy = malloc(sizeof(char) * len + 1);
-            strcpy(copy, top.data.s);
-            copy[len] = '\0';
+            char *copy_string = malloc(sizeof(char) * len + 1);
+            strcpy(copy_string, top.data.s);
+            copy_string[len] = '\0';
 
             new.t = STRING;
-            new.data.s = copy;
+            new.data.s = copy_string;
         }
         else if (top.t == ARRAY) {
-            STACK *cpy_array = create_stack();
+            STACK *copy_array = create_stack();
             
             for (int i = top.data.a->sp - 1; i >= 0; i--) {
                 nth_element(top.data.a, &temp, i);
-                assert(push(cpy_array, temp) == 0);
+                assert(push(copy_array, temp) == 0);
             }
 
             new.t = ARRAY;
-            new.data.a = cpy_array;
+            new.data.a = copy_array;
+        }
+        else if (top.t == BLOCK) {
+            int len = strlen(top.data.b);
+
+            char *copy_block = malloc(sizeof(char) * len + 1);
+            strcpy(copy_block, top.data.b);
+            copy_block[len] = '\0';
+
+            new.t = BLOCK;
+            new.data.b = copy_block;
         }
 
         char value = token[1];
@@ -174,6 +204,10 @@ int is_string(char *token) {
 
 int is_array(char *token) {
     return token[0] == '[' && token[strlen(token) - 1] == ']';
+}
+
+int is_block(char *token) {
+    return token[0] == '{' && token[strlen(token) - 1] == '}';
 }
 
 int is_global(char *token) {
