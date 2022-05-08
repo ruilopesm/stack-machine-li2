@@ -9,71 +9,8 @@
 #include <math.h>
 #include <float.h>
 
-char *get_operator(int i) {
-    static char *operators[N_OPERATORS] = {
-        "+",
-        "-",
-        "*",
-        "/",
-        "%",
-        "#",
-        "^",
-        "&",
-        "|",
-        ")",
-        "(",
-        "~",
-        "i",
-        "f",
-        "c",
-        "s",
-        "_",
-        ";",
-        "\\",
-        "@",
-        "$",
-        "l",
-        "=",
-        "<",
-        ">",
-        "!",
-        "e&",
-        "e|",
-        "e<",
-        "e>",
-        "?",
-        ",",
-        "S/",
-        "N/",
-        "t"
-    };
-
-    return operators[i];
-}
-
-int is_operator(char *token) {
-    for (int i = 0; i < N_OPERATORS; i++) {
-        if (strcmp(token, get_operator(i)) == 0) {
-            return 1;
-        }
-    }
-
-    return 0;
-}
-
-int get_index(char *operator) {
-    for (int i = 0; i < N_OPERATORS; i++) {
-        if (strcmp(operator, get_operator(i)) == 0) {
-            return i;
-        }
-    }
-
-    // Caso o operador não tenha sido encontrado: retorna -1 (ERRO)
-    return -1;
-}
-
 void dispatch_table(STACK *s, char *operator) {
-    static function table[] = {
+    static function_pointer table[N_OPERATORS] = {
         sum,
         sub,
         mult,
@@ -113,9 +50,61 @@ void dispatch_table(STACK *s, char *operator) {
 
     int index = get_index(operator);
     assert(index != -1);
+    
+    table[index](s); // Chama o function pointer
+}
 
-    // Chama o function pointer
-    table[index](s);
+int get_index(char *operator) {
+    for (int i = 0; i < N_OPERATORS; i++) {
+        if (strcmp(operator, get_operator(i)) == 0) {
+            return i;
+        }
+    }
+
+    // Caso o operador não tenha sido encontrado: retorna -1 (ERRO)
+    return -1;
+}
+
+char *get_operator(int index) {
+    static char *operators[N_OPERATORS] = {
+        "+",
+        "-",
+        "*",
+        "/",
+        "%",
+        "#",
+        "^",
+        "&",
+        "|",
+        ")",
+        "(",
+        "~",
+        "i",
+        "f",
+        "c",
+        "s",
+        "_",
+        ";",
+        "\\",
+        "@",
+        "$",
+        "l",
+        "=",
+        "<",
+        ">",
+        "!",
+        "e&",
+        "e|",
+        "e<",
+        "e>",
+        "?",
+        ",",
+        "S/",
+        "N/",
+        "t"
+    };
+
+    return operators[index];
 }
 
 double get_double_arg(STACK_ELEM x) {
