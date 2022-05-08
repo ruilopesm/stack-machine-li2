@@ -238,10 +238,10 @@ void append_string_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result, int order
             new[0] = x.data.c;
             new[1] = '\0';
             
-            strcat(new,y.data.s);
+            strcat(new, y.data.s);
         }
        
-        new[len + 1 ] = '\0';
+        new[len + 1] = '\0';
         result->t = STRING;
         result->data.s = new;
         

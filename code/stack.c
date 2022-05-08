@@ -68,12 +68,19 @@ void print_elems(STACK *s) {
             print_elems(current.data.a);
         }
         else if (current.t == BLOCK) {
-            print_elems(current.data.a);
+            printf("{ %s }", current.data.b);
         }
     }
 }
 
 void free_stack(STACK *s) {
+    // Procura por arrays para libertar
+    for (int i = 0; i < s->sp; i++) {
+        if (s->stc[i].t == ARRAY) {
+            free_stack(s->stc[i].data.a);
+        }
+    }
+    
     // De seguida liberta-se o outro conteúdo da stack
     free(s->stc);
     

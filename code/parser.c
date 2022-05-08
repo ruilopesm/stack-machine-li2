@@ -38,6 +38,9 @@ void parse_line(STACK *s, char *line, GLOBALS *g) {
         else if (line[parsed] == '[') {
             copy(token, line, get_array_length(line, parsed) + 1, parsed);
         }
+        else if (line[parsed] == '{') {
+            copy(token, line, find_char(line, '}', parsed) + 1, parsed);
+        }
         else {
             copy(token, line, find_char(line, ' ', parsed), parsed);
         }
@@ -72,6 +75,21 @@ void handle_token(STACK *s, char *token, GLOBALS *g) {
 
         assert(push(s, new) == 0);
     }
+    else if (is_string(token)) {
+        char *heap_token = strdup(token);
+        int len = strlen(token);
+
+        // Remove as aspas da string
+        remove_char(heap_token, 0);
+        remove_char(heap_token, len - 2);
+
+        STACK_ELEM new = {
+            .t = STRING, 
+            .data = { .s = heap_token }
+        };
+
+        assert(push(s, new) == 0);
+    }
     else if (is_array(token)) {
         int len = strlen(token);
 
@@ -93,30 +111,19 @@ void handle_token(STACK *s, char *token, GLOBALS *g) {
     }
     else if (is_block(token)) {
         char *heap_token = strdup(token);
-        
-        STACK *block = create_stack();
-        parse_line(block,token, g);
+        int len = strlen(token);
+
+        // Remove as {} do array (e espaços entre esses e os elementos do bloco)
+        remove_char(heap_token, len - 2);
+        remove_char(heap_token, len - 2);
+        remove_char(heap_token, 0);
+        remove_char(heap_token, 0);
         
         STACK_ELEM new = {
             .t = BLOCK,
-            .data= { .b = heap_token}
+            .data= { .b = heap_token }
         };
         
-        assert(push(s, new) == 0);
-    }
-    else if (is_string(token)) {
-        char *heap_token = strdup(token);
-        int len = strlen(token);
-
-        // Remove as aspas da string
-        remove_char(heap_token, 0);
-        remove_char(heap_token, len - 2);
-
-        STACK_ELEM new = {
-            .t = STRING, 
-            .data = { .s = heap_token }
-        };
-
         assert(push(s, new) == 0);
     }
     else if (is_global(token)) {
