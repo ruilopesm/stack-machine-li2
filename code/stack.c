@@ -6,28 +6,28 @@
 STACK *create_stack() {
     STACK *s = malloc(sizeof(STACK));
     s->sp = 0;
-    s->size = 15000;
-    s->stc = calloc(sizeof(STACK_ELEM), s->size);
+    s->size = 15000; //É criada uma stack com 15000 posições
+    s->stc = calloc(sizeof(STACK_ELEM), s->size); // É alocada a memória necessária para todas esssas posições
 
     return s;
 }
 
-GLOBALS *init_globals() {
+GLOBALS *init_globals() { //São inicializadas as globais com os valores predefinidos
     GLOBALS *g = malloc(sizeof(GLOBALS));
 
     for (int i = 0; i < 6; i++) {
         g->globals[i].t = LONG;
-        g->globals[i].data.l = i + 10;
+        g->globals[i].data.l = i + 10; //São inicializados os valores de A a F (10 a 15)
     }
     
     g->globals[13].t = CHAR;
     g->globals[13].data.c = '\n';
     g->globals[18].t = CHAR;
-    g->globals[18].data.c = ' ';
+    g->globals[18].data.c = ' ';// São inicializados os valores de S e N (' ' e '\n', respetivamente)
     
     for (int i = 0; i < 3; i++) {
         g->globals[i + 23].t = LONG;
-        g->globals[i + 23].data.l = i;
+        g->globals[i + 23].data.l = i;//São inicializados os valores de X a Z (0 a 2)
     }
 
     return g;
@@ -48,7 +48,7 @@ void print_stack(STACK *s) {
     putchar('\n');
 }
 
-void print_elems(STACK *s) {
+void print_elems(STACK *s) { //São imprimidos os valores da stack um a um
     for (int i = 0; i < s->sp; i++) {
         STACK_ELEM current = s->stc[i];
 
@@ -65,7 +65,7 @@ void print_elems(STACK *s) {
             printf("%s", current.data.s);
         }
         else if (current.t == ARRAY) {
-            print_elems(current.data.a);
+            print_elems(current.data.a);// Se for encontrado um array, a função é chamada recursivamente de modo a imprimir os conteúdos no interior do mesmo
         }
         else if (current.t == BLOCK) {
             printf("{ %s }", current.data.b);
@@ -95,8 +95,8 @@ int push(STACK *s, STACK_ELEM elem) {
             return 1; 
         }
     }
-    s->stc[s->sp] = elem;
-    s->sp++;
+    s->stc[s->sp] = elem;//O elemento é colocado no topo da stack
+    s->sp++; // O indicador do número de elementos atualmente na stack é aumentado por um
 
     return 0;
 }
@@ -106,9 +106,9 @@ int pop(STACK *s, STACK_ELEM *elem) {
     if (s->sp == 0) {
         return 1; 
     }
-    s->sp--;
+    s->sp--;// O indicador do número de elementos atualmente na stack é reduzido por um
 
-    STACK_ELEM current = s->stc[s->sp];
+    STACK_ELEM current = s->stc[s->sp];//O elemento do topo da stack é extraído para o endereço pretendido
     
     *elem = current;
     
@@ -120,16 +120,16 @@ int peek(STACK *s, STACK_ELEM *elem) {
     if (s->sp == 0) {
         return 1;
     }
-    *elem = s->stc[s->sp - 1];
+    *elem = s->stc[s->sp - 1];//O elemento do topo da stack é extraído para o endereço pretendido, sem alterar o mesmo
 
     return 0;
 }
 
-int nth_element(STACK *s, STACK_ELEM *elem, int n) {
+int nth_element(STACK *s, STACK_ELEM *elem, int n) { // Cria uma cópia do elemento localizado em determinada posição, sendo a posição 0 o topo da stack
     if (s->sp == 0) {
         return 1;
     }
-    *elem = s->stc[s->sp - n - 1];
+    *elem = s->stc[s->sp - n - 1];//O elemento na posição indicada é extraído para o endereço pretendido, sem alterar o mesmo
 
     return 0;
 }

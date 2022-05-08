@@ -95,3 +95,7 @@ void copy(char *token, char *line, int len, int parsed);
  * @param p 
  */
 void remove_char(char *s, int p);
+
+STACK_ELEM *handle_string_token(char *token);
+STACK_ELEM *handle_block_token(char *token);
+STACK_ELEM *handle_readress_global_token(char *token);
