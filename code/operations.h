@@ -1,24 +1,22 @@
 /**
+ * @brief Definição do tipo de cada elemento da tabela de despacho
+ *
+ */
+typedef void (*function_pointer)(STACK *s);
+
+/**
  * @brief Macro que define o número de operadores implementados na stack
  *
  */
 #define N_OPERATORS 35
 
 /**
- * @brief Função que retorna o operador associado ao índice dado
+ * @brief Uma tabela de despacho responsável por invocar a função correspondente ao operador dado
  *
- * @param i O índice
- * @return char
+ * @param s Apontador para a stack
+ * @param operator O operador
  */
-char *get_operator(int i);
-
-/**
- * @brief Função que verifica se um dado char é um operador
- *
- * @param token Uma string cujo primeiro elemento é o char a ser verificado
- * @return int
- */
-int is_operator(char *token);
+void dispatch_table(STACK *s, char *operator);
 
 /**
  * @brief Função que retorna o índice associado a um operador
@@ -27,6 +25,14 @@ int is_operator(char *token);
  * @return int
  */
 int get_index(char *operator);
+
+/**
+ * @brief Função que retorna o operador associado ao índice dado
+ *
+ * @param i O índice
+ * @return char
+ */
+char *get_operator(int i);
 
 /**
  * @brief Funçao que obtem um argumento e converte para o tipo "double"
@@ -43,19 +49,6 @@ double get_double_arg(STACK_ELEM x);
  * @return long 
  */
 long get_long_arg(STACK_ELEM x);
-/**
- * @brief Uma tabela de despacho responsável por invocar a função correspondente ao operador dado
- *
- * @param s Apontador para a stack
- * @param operator O operador
- */
-void dispatch_table(STACK *s, char *operator);
-
-/**
- * @brief Definição do tipo de cada elemento da tabela de despacho
- *
- */
-typedef void (*function)(STACK *s);
 
 /**
  * @brief Retira os dois elementos do topo da stack e coloca no topo a soma dos mesmos
