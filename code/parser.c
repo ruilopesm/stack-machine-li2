@@ -54,126 +54,25 @@ void parse_line(STACK *s, char *line, GLOBALS *g) {
 
 void handle_token(STACK *s, char *token, GLOBALS *g) {
     if (is_long(token)) {
-        long value;
-        sscanf(token, "%ld", &value);
-        
-        STACK_ELEM new = {
-            .t = LONG, 
-            .data = { .l = value }
-        };
-
-        assert(push(s, new) == 0);
+        handle_long(s, token);
     } 
     else if (is_double(token)) {
-        double value;
-        sscanf(token, "%lg", &value);
-
-        STACK_ELEM new = {
-            .t = DOUBLE, 
-            .data = { .d = value }
-        };
-
-        assert(push(s, new) == 0);
+        handle_double(s, token);
     }
     else if (is_string(token)) {
-        char *heap_token = strdup(token);
-        int len = strlen(token);
-
-        // Remove as aspas da string
-        remove_char(heap_token, 0);
-        remove_char(heap_token, len - 2);
-
-        STACK_ELEM new = {
-            .t = STRING, 
-            .data = { .s = heap_token }
-        };
-
-        assert(push(s, new) == 0);
+        handle_string(s, token);
     }
     else if (is_array(token)) {
-        int len = strlen(token);
-
-        // Remove os [] do array (e espaços entre esses e os elementos do array)
-        remove_char(token, len - 2);
-        remove_char(token, len - 2);
-        remove_char(token, 0);
-        remove_char(token, 0);
-        
-        STACK *array = create_stack();
-        parse_line(array, token, g);
-        
-        STACK_ELEM new = {
-            .t = ARRAY,
-            .data = { .a = array }
-        };
-        
-        assert(push(s, new) == 0);
+        handle_array(s, token, g);
     }
     else if (is_block(token)) {
-        char *heap_token = strdup(token);
-        int len = strlen(token);
-
-        // Remove as {} do bloco (e espaços entre esses e os elementos do bloco)
-        remove_char(heap_token, len - 2);
-        remove_char(heap_token, len - 2);
-        remove_char(heap_token, 0);
-        remove_char(heap_token, 0);
-
-        STACK_ELEM new = {
-            .t = BLOCK,
-            .data = { .b = heap_token }
-        };
-
-        assert(push(s, new) == 0);
+        handle_block(s, token);
     }
     else if (is_global(token)) {
-        char value;
-        sscanf(token, "%c", &value);
-        
-        STACK_ELEM new = get_global(value, g);
-        
-        assert(push(s, new) == 0);
+        handle_global(s, token, g);
     }
     else if (is_readress_global(token)) {
-        STACK_ELEM top, new, temp;
-        
-        assert(peek(s, &top) == 0);
-        new = top;
-        
-        if (top.t == STRING) {
-            int len = strlen(top.data.s);
-            
-            char *copy_string = malloc(sizeof(char) * len + 1);
-            strcpy(copy_string, top.data.s);
-            copy_string[len] = '\0';
-
-            new.t = STRING;
-            new.data.s = copy_string;
-        }
-        else if (top.t == ARRAY) {
-            STACK *copy_array = create_stack();
-            
-            for (int i = top.data.a->sp - 1; i >= 0; i--) {
-                nth_element(top.data.a, &temp, i);
-                assert(push(copy_array, temp) == 0);
-            }
-
-            new.t = ARRAY;
-            new.data.a = copy_array;
-        }
-        else if (top.t == BLOCK) {
-            int len = strlen(top.data.b);
-
-            char *copy_block = malloc(sizeof(char) * len + 1);
-            strcpy(copy_block, top.data.b);
-            copy_block[len] = '\0';
-
-            new.t = BLOCK;
-            new.data.b = copy_block;
-        }
-
-        char value = token[1];
-        g->globals[value - 65] = new;
+        handle_readress_global(s, token, g);
     }
     else if (is_operator(token)) {
         dispatch_table(s, token);
@@ -216,6 +115,135 @@ int is_global(char *token) {
 
 int is_readress_global(char *token) {
     return token[0] == ':' && token[1] >= 'A' && token[1] <= 'Z' && strlen(token) == 2;
+}
+
+void handle_long(STACK *s, char *token) {
+    long value;
+    sscanf(token, "%ld", &value);
+        
+    STACK_ELEM new = {
+        .t = LONG, 
+        .data = { .l = value }
+    };
+
+    assert(push(s, new) == 0);
+}
+
+void handle_double(STACK *s, char *token) {
+    double value;
+    sscanf(token, "%lg", &value);
+
+    STACK_ELEM new = {
+        .t = DOUBLE, 
+        .data = { .d = value }
+    };
+
+    assert(push(s, new) == 0);
+}
+
+void handle_string(STACK *s, char *token) {
+    char *heap_token = strdup(token);
+    int len = strlen(token);
+
+    // Remove as aspas da string
+    remove_char(heap_token, 0);
+    remove_char(heap_token, len - 2);
+
+    STACK_ELEM new = {
+        .t = STRING, 
+        .data = { .s = heap_token }
+    };
+
+    assert(push(s, new) == 0);
+}
+
+void handle_array(STACK *s, char *token, GLOBALS *g) {
+    int len = strlen(token);
+
+    // Remove os [] do array (e espaços entre esses e os elementos do array)
+    remove_char(token, len - 2);
+    remove_char(token, len - 2);
+    remove_char(token, 0);
+    remove_char(token, 0);
+    
+    STACK *array = create_stack();
+    parse_line(array, token, g);
+    
+    STACK_ELEM new = {
+        .t = ARRAY,
+        .data = { .a = array }
+    };
+    
+    assert(push(s, new) == 0);
+}
+
+void handle_block(STACK *s, char *token) {
+    char *heap_token = strdup(token);
+    int len = strlen(token);
+
+    // Remove as {} do bloco (e espaços entre esses e os elementos do bloco)
+    remove_char(heap_token, len - 2);
+    remove_char(heap_token, len - 2);
+    remove_char(heap_token, 0);
+    remove_char(heap_token, 0);
+
+    STACK_ELEM new = {
+        .t = BLOCK,
+        .data = { .b = heap_token }
+    };
+
+    assert(push(s, new) == 0);
+}
+
+void handle_global(STACK *s, char *token, GLOBALS *g) {
+    char value;
+    sscanf(token, "%c", &value);
+    
+    STACK_ELEM new = get_global(value, g);
+    
+    assert(push(s, new) == 0);
+}
+
+void handle_readress_global(STACK *s, char *token, GLOBALS *g) {
+    STACK_ELEM top, new, temp;
+        
+    assert(peek(s, &top) == 0);
+    new = top;
+    
+    if (top.t == STRING) {
+        int len = strlen(top.data.s);
+        
+        char *copy_string = malloc(sizeof(char) * len + 1);
+        strcpy(copy_string, top.data.s);
+        copy_string[len] = '\0';
+
+        new.t = STRING;
+        new.data.s = copy_string;
+    }
+    else if (top.t == ARRAY) {
+        STACK *copy_array = create_stack();
+        
+        for (int i = top.data.a->sp - 1; i >= 0; i--) {
+            nth_element(top.data.a, &temp, i);
+            assert(push(copy_array, temp) == 0);
+        }
+
+        new.t = ARRAY;
+        new.data.a = copy_array;
+    }
+    else if (top.t == BLOCK) {
+        int len = strlen(top.data.b);
+
+        char *copy_block = malloc(sizeof(char) * len + 1);
+        strcpy(copy_block, top.data.b);
+        copy_block[len] = '\0';
+
+        new.t = BLOCK;
+        new.data.b = copy_block;
+    }
+
+    char value = token[1];
+    g->globals[value - 65] = new;
 }
 
 int find_char(char *line, char c, int parsed) {

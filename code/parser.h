@@ -61,6 +61,20 @@ int is_global(char *token);
  */
 int is_readress_global(char *token);
 
+void handle_long(STACK *s, char *token);
+
+void handle_double(STACK *s, char *token);
+
+void handle_string(STACK *s, char *token);
+
+void handle_array(STACK *s, char *token, GLOBALS *g);
+
+void handle_block(STACK *s, char *token);
+
+void handle_global(STACK *s, char *token, GLOBALS *g);
+
+void handle_readress_global(STACK *s, char *token, GLOBALS *g);
+
 /**
  * @brief Funçao que encontra o indice do char c
  * 

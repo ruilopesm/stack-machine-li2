@@ -878,22 +878,26 @@ STACK_ELEM get_global(char value, GLOBALS *g) {
         new.data.l = current.data.l;
     }
     else if (current.t == STRING) {
-        int len = strlen(current.data.s); // Vai ser criada cópia da string de modo a não alterar o valor
+        int len = strlen(current.data.s);
+        
         char *copy = malloc(sizeof(char) * len + 1);
         strcpy(copy,current.data.s);
-        copy[len] = '\0'; // Assegurar que a string é finalizada corretamente
+        copy[len] = '\0';
+        
         new.t = STRING;
         new.data.s = copy;
     }
     else if (current.t == ARRAY) {
         STACK_ELEM temp;
-        STACK *cpy_array = create_stack();
-        for(int i = current.data.a->sp -1;i>=0;i--){
-            nth_element(current.data.a,&temp,i);
-            assert(push(cpy_array,temp) == 0);
+        STACK *copy_array = create_stack();
+        
+        for (int i = current.data.a->sp - 1; i >= 0; i--) {
+            nth_element(current.data.a, &temp, i);
+            assert(push(copy_array, temp) == 0);
         }
-        new.t= ARRAY;
-        new.data.a=cpy_array;
+        
+        new.t = ARRAY;
+        new.data.a = copy_array;
     }
     else {
         new.t = CHAR;
