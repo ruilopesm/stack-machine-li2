@@ -1,3 +1,6 @@
+#ifndef STACK_H
+#define STACK_H
+
 typedef struct STACK STACK;
 
 /**
@@ -126,3 +129,5 @@ int peek(STACK *s, STACK_ELEM *elem);
  * @return int 
  */
 int nth_element(STACK *s, STACK_ELEM *elem, int n);
+
+#endif
