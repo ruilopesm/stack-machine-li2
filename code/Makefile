@@ -22,7 +22,7 @@ test:
 	$(value script)
 
 submit:
-	cd ..; zip -r submission.zip code/*{.c,.h}
+	cd ..; zip -r submission.zip . -i code/*{.c,.h}
 
 doc: $(DOC_FILE)
 	doxygen Doxyfile
