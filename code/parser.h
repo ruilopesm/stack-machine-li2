@@ -92,6 +92,8 @@ int find_char(char *line, char c, int parsed);
  */
 int get_array_length(char *line, int parsed);
 
+int get_block_length(char *line, int parsed);
+
 /**
  * @brief Funçao que copia o line para o token a partir da posição parsed até que tenha um tamanho de len
  * 

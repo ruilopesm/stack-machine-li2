@@ -39,7 +39,7 @@ void parse_line(STACK *s, char *line, GLOBALS *g) {
             copy(token, line, get_array_length(line, parsed) + 1, parsed);
         }
         else if (line[parsed] == '{') {
-            copy(token, line, find_char(line, '}', parsed) + 1, parsed);
+            copy(token, line, get_block_length(line, parsed) + 1, parsed);
         }
         else {
             copy(token, line, find_char(line, ' ', parsed), parsed);
@@ -283,6 +283,27 @@ int get_array_length(char *line, int parsed) {
             }
             else {
                 array_number--;
+            }
+        }
+    }
+
+    return i - parsed;
+}
+
+int get_block_length(char *line, int parsed) {
+    int i, block_number = 0;
+    
+    for (i = 1 + parsed; line[i] != '\0' && line[i] != '\n'; i++) {
+        // Se encontrar um array dentro do mesmo, irá ignorar o próximo ']' que encontrar, visto que esse pertencerá ao array dentro desse mesmo
+        if (line[i] == '['){ 
+            block_number++;
+        }
+        else if (line[i] == ']'){
+            if (block_number == 0){
+                return i - parsed;
+            }
+            else {
+                block_number--;
             }
         }
     }
