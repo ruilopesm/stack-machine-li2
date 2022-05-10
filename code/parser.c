@@ -74,6 +74,21 @@ void handle_token(STACK *s, char *token, GLOBALS *g) {
     else if (is_readress_global(token)) {
         handle_readress_global(s, token, g);
     }
+    // Block operators
+    else if (strcmp(token, "~") == 0) {
+        STACK_ELEM top;
+        assert(peek(s, &top) == 0);
+
+        if (top.t == BLOCK) {
+            STACK_ELEM x;
+            pop(s, &x);
+
+            parse_line(s, x.data.b, g);
+        }
+        else {
+            dispatch_table(s, token);
+        }
+    }
     else if (is_operator(token)) {
         dispatch_table(s, token);
     }

@@ -352,12 +352,12 @@ STACK_ELEM get_global(char value, GLOBALS *g) {
     else if (current.t == STRING) {
         int len = strlen(current.data.s);
         
-        char *copy = malloc(sizeof(char) * len + 1);
-        strcpy(copy,current.data.s);
-        copy[len] = '\0';
+        char *copy_string = malloc(sizeof(char) * len + 1);
+        strcpy(copy_string, current.data.s);
+        copy_string[len] = '\0';
         
         new.t = STRING;
-        new.data.s = copy;
+        new.data.s = copy_string;
     }
     else if (current.t == ARRAY) {
         STACK_ELEM temp;
@@ -370,6 +370,16 @@ STACK_ELEM get_global(char value, GLOBALS *g) {
         
         new.t = ARRAY;
         new.data.a = copy_array;
+    }
+    else if (current.t == BLOCK) {
+        int len = strlen(current.data.b);
+        
+        char *copy_block = malloc(sizeof(char) * len + 1);
+        strcpy(copy_block, current.data.b);
+        copy_block[len] = '\0';
+        
+        new.t = BLOCK;
+        new.data.b = copy_block;
     }
     else {
         new.t = CHAR;
