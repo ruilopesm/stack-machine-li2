@@ -278,7 +278,7 @@ int get_array_length(char *line, int parsed) {
 void copy(char *token, char *line, int len, int parsed) {
     int i;
     
-    for (i = 0; i < len; i++){
+    for (i = 0; i < len; i++) {
         token[i] = line[i + parsed];
     }
     token[i] = '\0';
