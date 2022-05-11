@@ -49,34 +49,34 @@ long get_long_arg(STACK_ELEM x);
  * @param s Apontador para a stack
  * @param operator O operador
  */
-void dispatch_table(STACK *s, char *operator);
+void dispatch_table(STACK *s, char *operator, GLOBALS *g);
 
 /**
  * @brief Definição do tipo de cada elemento da tabela de despacho
  *
  */
-typedef void (*function)(STACK *s);
+typedef void (*function_pointer)(STACK *s, GLOBALS *g);
 
 /**
  * @brief Retira os dois elementos do topo da stack e coloca no topo a soma dos mesmos
  *
  * @param s Apontador para a stack
  */
-void plus_operator(STACK *s);
+void plus_operator(STACK *s,GLOBALS *g);
 
 /**
  * @brief Retira os dois elementos do topo da stack e coloca no topo a subtração do penúltimo pelo último
  *
  * @param s Apontador para a stack
  */
-void minus_operator(STACK *s);
+void minus_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Retira os dois elementos do topo da stack e coloca no topo a multiplicação dos mesmos
  *
  * @param s Apontador para a stack
  */
-void asterisk_operator(STACK *s);
+void asterisk_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Funçao que concatena multiplas vezes um array ou uma string
@@ -92,77 +92,77 @@ void mult_structure(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
  *
  * @param s Apontador para a stack
  */
-void slash_operator(STACK *s);
+void slash_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Retira os dois elementos do topo da stack e coloca no topo o resto da divisão do penúltimo pelo último
  *
  * @param s Apontador para a stack
  */
-void percentage_operator(STACK *s);
+void percentage_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Função que calcula a exponenciação de dois elementos da stack
  *
  * @param s Apontador para a stack
  */
-void hashtag_operator(STACK *s);
+void hashtag_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Retira os dois elementos do topo da stack e retorna o resultado da operação XOR ("ou exclusivo" ao nível dos bits)
  *
  * @param s Apontador para a stack
  */
-void circumflex_operator(STACK *s);
+void circumflex_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Retira os dois elementos do topo da stack e retorna o resultado da operação AND ("e" ao nível dos bits)
  *
  * @param s Apontador para a stack
  */
-void and_operator(STACK *s);
+void and_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Retira os dois elementos do topo da stack e retorna o resultado da operação OR ("ou" ao nível dos bits)
  *
  * @param s Apontador para a stack
  */
-void or_operator(STACK *s);
+void or_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Retira um elemento da stack, incrementa o seu valor, e de seguida coloca-o de volta na stack
  *
  * @param s Apontador para a stack
  */
-void left_parenthesis_operator(STACK *s);
+void left_parenthesis_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Retira um elemento da stack, decrementa o seu valor, e de seguida coloca-o de volta na stack
  *
  * @param s Apontador para a stack
  */
-void right_parenthesis_operator(STACK *s);
+void right_parenthesis_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Retira os um elementos do topo da stack e retorna o resultado da operação NOT ("negação" ao nível dos bits)
  *
  * @param s Apontador para a stack
  */
-void tilde_operator(STACK *s);
+void tilde_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Converte o elemento no topo da stack para o tipo "int"
  * 
  * @param s Apontador para a stack
  */
-void lowercase_i_operator(STACK *s);
+void lowercase_i_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Converte o elemento no topo da stack para o tipo "double"
  * 
  * @param s Apontador para a stack
  */
-void lowercase_f_operator(STACK *s);
+void lowercase_f_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Converte o elemento no topo da stack para o tipo "char"
@@ -170,56 +170,56 @@ void lowercase_f_operator(STACK *s);
  * 
  * @param s Apontador para a stack
  */        
-void lowercase_c_operator(STACK *s);
+void lowercase_c_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Converte o elemento no topo da stack para o tipo "string"
  * 
  * @param s Apontador para a stack
  */
-void lowercase_s_operator(STACK *s);
+void lowercase_s_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Duplica o elemento no topo da stack
  * 
  * @param s Apontador para a stack
  */
-void underscore_operator(STACK *s);
+void underscore_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Dá pop do elemento no topo da stack
  * 
  * @param s Apontador para a stack
  */
-void semicolon_operator(STACK *s);
+void semicolon_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Troca a ordem dos dois elementos no topo da stack
  * 
  * @param s Apontador para a stack
  */
-void inverted_slash_operator(STACK *s);
+void inverted_slash_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Coloca o terceiro elemento no topo da stack
  * 
  * @param s Apontador para a stack
  */
-void arroba_operator(STACK *s);
+void arroba_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Copia o n-ésimo elemento para o topo da stack
  * 
  * @param s Apontador para a stack
  */
-void dollar_operator(STACK *s);
+void dollar_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Lê a linha seguinte e adiciona-a à stack
  * 
  * @param s Apontador para a stack
  */
-void lowercase_l_operator(STACK *s);
+void lowercase_l_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Coloca o valor atual da variável global na stack
@@ -235,73 +235,73 @@ STACK_ELEM get_global(char value, GLOBALS *g);
  * 
  * @param s Apontador para a stack
  */
-void equal_sign_operator(STACK *s);
+void equal_sign_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Função que compara se o elemento do topo da stack é menor do que o segundo elemento da stack
  * 
  * @param s Apontador para a stack
  */
-void less_sign_operator(STACK *s);
+void less_sign_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Função que compara se o elemento do topo da stack é maoir do que o segundo elemento da stack
  * 
  * @param s Apontador para a stack
  */
-void more_sign_operator(STACK *s);
+void more_sign_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Função que devolve a negação de um argumento
  * 
  * @param s Apontador para a stack
  */
-void exclamation_mark_operator(STACK *s);
+void exclamation_mark_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief operador lógico "e". Recebe dois argumentos, se ambos forem verdadeiros devolve verdadeiro
  * 
  * @param s Apontador para a stack
  */
-void and_with_and_operator(STACK *s);
+void and_with_and_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief operador lógico "ou". Recebe dois argumentos, caso um deles seja verdadeiro devolve verdadeiro
  * 
  * @param s Apontador para a stack
  */
-void and_with_or_operator(STACK *s);
+void and_with_or_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Funçao que coloca o menor de dois números no topo da stack
  * 
  * @param s Apontador para a stack
  */
-void and_with_less_operator(STACK *s);
+void and_with_less_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Funçao que coloca o maior de dois números no topo da stack
  * 
  * @param s Apontador para a stack
  */
-void and_with_more_operator(STACK *s);
+void and_with_more_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Função que recebe tres argumentos. Caso o primeiro seja verdadeiro devolve o segundo elemento, caso contrario devolve o terceiro
  * 
  * @param s Apontador para a stack
  */
-void question_mark_operator(STACK *s);
+void question_mark_operator(STACK *s, GLOBALS *g);
 
 /**
  * @brief Funçao que calcula o comprimento/range de um argumento.
  * 
  * @param s Apontador para a stack
  */
-void comma_operator(STACK *s);
+void comma_operator(STACK *s, GLOBALS *g);
 
-void uppercase_s_and_slash_operator(STACK *s);
+void uppercase_s_and_slash_operator(STACK *s, GLOBALS *g);
 
-void uppercase_n_and_slash_operator(STACK *s);
+void uppercase_n_and_slash_operator(STACK *s, GLOBALS *g);
 
-void lowercase_t_operator(STACK *s);
+void lowercase_t_operator(STACK *s, GLOBALS *g);

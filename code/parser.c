@@ -74,23 +74,8 @@ void handle_token(STACK *s, char *token, GLOBALS *g) {
     else if (is_readress_global(token)) {
         handle_readress_global(s, token, g);
     }
-    // Block operators
-    else if (strcmp(token, "~") == 0) {
-        STACK_ELEM top;
-        assert(peek(s, &top) == 0);
-
-        if (top.t == BLOCK) {
-            STACK_ELEM x;
-            pop(s, &x);
-
-            parse_line(s, x.data.b, g);
-        }
-        else {
-            dispatch_table(s, token);
-        }
-    }
     else if (is_operator(token)) {
-        dispatch_table(s, token);
+        dispatch_table(s, token, g);
     }
 }
 
@@ -295,10 +280,10 @@ int get_block_length(char *line, int parsed) {
     
     for (i = 1 + parsed; line[i] != '\0' && line[i] != '\n'; i++) {
         // Se encontrar um array dentro do mesmo, irá ignorar o próximo ']' que encontrar, visto que esse pertencerá ao array dentro desse mesmo
-        if (line[i] == '['){ 
+        if (line[i] == '{'){ 
             block_number++;
         }
-        else if (line[i] == ']'){
+        else if (line[i] == '}'){
             if (block_number == 0){
                 return i - parsed;
             }

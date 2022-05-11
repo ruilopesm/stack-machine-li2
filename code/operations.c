@@ -15,7 +15,9 @@
 #include <math.h>
 #include <float.h>
 
-void plus_operator(STACK *s) {
+#define UNUSED(x) (void) (x)
+
+void plus_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
 
     assert(pop(s, &x) == 0);
@@ -37,9 +39,11 @@ void plus_operator(STACK *s) {
     }
 
     push(s, result);
+
+    UNUSED(g);
 }
 
-void minus_operator(STACK *s) {
+void minus_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
 
     assert(pop(s, &y) == 0);
@@ -50,9 +54,11 @@ void minus_operator(STACK *s) {
     subtract_two_numbers(x, y, &result);
 
     push(s, result);
+
+    UNUSED(g);
 }
 
-void asterisk_operator(STACK *s) {
+void asterisk_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
 
     assert(pop(s, &x) == 0);
@@ -71,9 +77,11 @@ void asterisk_operator(STACK *s) {
     }
 
     push(s, result);
+
+    UNUSED(g);
 }
 
-void slash_operator(STACK *s) {
+void slash_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
 
     assert(pop(s, &y) == 0);
@@ -98,22 +106,39 @@ void slash_operator(STACK *s) {
 
     push(s, result);
 
+    UNUSED(g);
 }
 
-void percentage_operator(STACK *s) {
+void percentage_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
 
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
 
     STACK_ELEM result;
+    
+    if (y.t == BLOCK) {
+        result.t = ARRAY;
 
-    remainder_two_numbers(x, y, &result);
+        STACK *array_map = create_stack();
+
+        for (int i = 0; i < x.data.a->sp; i++) {
+            push(array_map, x.data.a->stc[i]);
+            parse_line(array_map, y.data.b, g);
+        }
+
+        result.data.a = array_map;
+
+        push(s, result);
+    }
+    else {
+        remainder_two_numbers(x, y, &result);
+    }
 
     push(s, result);
 }
 
-void hashtag_operator(STACK *s) {
+void hashtag_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
 
     assert(pop(s, &y) == 0);
@@ -129,9 +154,11 @@ void hashtag_operator(STACK *s) {
     }
 
     push(s, result);
+
+    UNUSED(g);
 }
 
-void circumflex_operator(STACK *s) {
+void circumflex_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
 
     assert(pop(s, &x) == 0);
@@ -142,9 +169,11 @@ void circumflex_operator(STACK *s) {
     bitwise_xor_two_numbers(x, y, &result);
 
     push(s, result);
+
+    UNUSED(g);
 }
 
-void and_operator(STACK *s) {
+void and_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
 
     assert(pop(s, &x) == 0);
@@ -155,9 +184,11 @@ void and_operator(STACK *s) {
     bitwise_and_two_numbers(x, y, &result);
 
     push(s, result);
+
+    UNUSED(g);
 }
 
-void or_operator(STACK *s) {
+void or_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
 
     assert(pop(s, &x) == 0);
@@ -168,9 +199,11 @@ void or_operator(STACK *s) {
     bitwise_or_two_numbers(x, y, &result);
 
     push(s, result);
+
+    UNUSED(g);
 }
 
-void left_parenthesis_operator(STACK *s) {
+void left_parenthesis_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x;
 
     assert(pop(s, &x) == 0);
@@ -192,9 +225,11 @@ void left_parenthesis_operator(STACK *s) {
 
         push(s, result);
     }
+
+    UNUSED(g);
 }   
 
-void right_parenthesis_operator(STACK *s) {
+void right_parenthesis_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x;
 
     assert(pop(s, &x) == 0);
@@ -216,14 +251,19 @@ void right_parenthesis_operator(STACK *s) {
 
         push(s, result);
     }
+
+    UNUSED(g);
 }
 
-void tilde_operator(STACK *s) {
+void tilde_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x;
 
     assert(pop(s, &x) == 0);
 
-    if (x.t == ARRAY) {
+    if (x.t == BLOCK) {
+        parse_line(s, x.data.b, g);
+    }
+    else if (x.t == ARRAY) {
         transfer_array_elements_to_stack(s, x);
     }
     else {
@@ -233,7 +273,7 @@ void tilde_operator(STACK *s) {
     }
 }
 
-void lowercase_i_operator(STACK *s) {
+void lowercase_i_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x;
     
     assert(pop(s, &x) == 0);
@@ -241,9 +281,11 @@ void lowercase_i_operator(STACK *s) {
     STACK_ELEM result;
 
     convert_to_int(s, x, &result);
+
+    UNUSED(g);
 }
 
-void lowercase_f_operator(STACK *s) {
+void lowercase_f_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x;
     
     assert(pop(s, &x) == 0);
@@ -251,9 +293,11 @@ void lowercase_f_operator(STACK *s) {
     STACK_ELEM result;
 
     convert_to_double(s, x, &result);
+
+    UNUSED(g);
 }
 
-void lowercase_c_operator(STACK *s) {
+void lowercase_c_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x;
     
     assert(pop(s, &x) == 0);
@@ -261,9 +305,11 @@ void lowercase_c_operator(STACK *s) {
     STACK_ELEM result;
 
     convert_to_char(s, x, &result);
+
+    UNUSED(g);
 }
 
-void lowercase_s_operator(STACK *s) {
+void lowercase_s_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x;
     
     assert(pop(s, &x) == 0);
@@ -272,24 +318,30 @@ void lowercase_s_operator(STACK *s) {
     result.data.s = malloc(sizeof(char) * BUFSIZ);
 
     convert_to_string(s, x, &result);
+
+    UNUSED(g);
 }
 
-void underscore_operator(STACK *s) {
+void underscore_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x;
     
     assert(pop(s, &x) == 0);
     
     assert(push(s, x) == 0);
     assert(push(s, x) == 0);
+
+    UNUSED(g);
 }
 
-void semicolon_operator(STACK *s) {
+void semicolon_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x;
     
     assert(pop(s, &x) == 0);
+
+    UNUSED(g);
 }
 
-void inverted_slash_operator(STACK *s) {
+void inverted_slash_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
 
     assert(pop(s, &x) == 0);
@@ -297,9 +349,11 @@ void inverted_slash_operator(STACK *s) {
 
     assert(push(s, x) == 0);
     assert(push(s, y) == 0);
+
+    UNUSED(g);
 }
 
-void arroba_operator(STACK *s) {
+void arroba_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y, z;
 
     assert(pop(s, &x) == 0);
@@ -308,10 +362,12 @@ void arroba_operator(STACK *s) {
 
     assert(push(s, y) == 0);
     assert(push(s, x) == 0);
-    assert(push(s, z) == 0);   
+    assert(push(s, z) == 0); 
+
+    UNUSED(g);  
 }
 
-void dollar_operator(STACK *s) {
+void dollar_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x;
 
     assert(pop(s, &x) == 0);
@@ -321,9 +377,11 @@ void dollar_operator(STACK *s) {
     assert(nth_element(s, &result, x.data.l) == 0);
 
     assert(push(s, result) == 0);
+
+    UNUSED(g);
 }
 
-void lowercase_l_operator(STACK *s) {
+void lowercase_l_operator(STACK *s, GLOBALS *g) {
     char *line = malloc(sizeof(char) * BUFSIZ);
 
     if (fgets(line, BUFSIZ, stdin) != NULL) {
@@ -336,6 +394,8 @@ void lowercase_l_operator(STACK *s) {
 
         assert(push(s, result) == 0);
     }
+
+    UNUSED(g);
 }
 
 STACK_ELEM get_global(char value, GLOBALS *g) {
@@ -389,7 +449,7 @@ STACK_ELEM get_global(char value, GLOBALS *g) {
     return new;
 }
 
-void equal_sign_operator(STACK *s) {
+void equal_sign_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
     long to_push = 0;
 
@@ -410,9 +470,11 @@ void equal_sign_operator(STACK *s) {
     else {
         compare_two_numbers_equality(s, x, y, to_push, &result);
     }
+
+    UNUSED(g);
 }
 
-void less_signal_operator(STACK *s) {
+void less_signal_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
     long to_push = 0;
 
@@ -433,9 +495,11 @@ void less_signal_operator(STACK *s) {
     else {
         compare_two_numbers_less(s, x, y, to_push, &result);
     }
+
+    UNUSED(g);
 }
 
-void more_sign_operator(STACK *s) {
+void more_sign_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
     long to_push = 0;
 
@@ -456,9 +520,11 @@ void more_sign_operator(STACK *s) {
     else {
         compare_two_numbers_more(s, x, y, to_push, &result);
     }
+
+    UNUSED(g);
 }
 
-void exclamation_mark_operator(STACK *s) {
+void exclamation_mark_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x;
     long to_push = 0;
 
@@ -473,15 +539,17 @@ void exclamation_mark_operator(STACK *s) {
     else if (x.t == DOUBLE && x.data.d == 0.0) {
         to_push = 1;
     }
-    else if (x.t == CHAR && x.data.c == 0) {
+    else if (x.t == CHAR && x.data.c == '\0') {
         to_push = 1;
     }
     
     result.data.l = to_push;
     push(s, result);
+
+    UNUSED(g);
 }
 
-void and_with_and_operator(STACK *s) {
+void and_with_and_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
     
     assert(pop(s, &y) == 0);
@@ -494,9 +562,11 @@ void and_with_and_operator(STACK *s) {
     }
 
     push(s, result);
+
+    UNUSED(g);
 }
 
-void and_with_or_operator(STACK *s) {
+void and_with_or_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
     
     assert(pop(s, &y) == 0);
@@ -509,9 +579,11 @@ void and_with_or_operator(STACK *s) {
     }
 
     push(s, result);
+
+    UNUSED(g);
 }
 
-void and_with_less_operator(STACK *s) {
+void and_with_less_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
 
     assert(pop(s, &y) == 0);
@@ -529,9 +601,11 @@ void and_with_less_operator(STACK *s) {
     }
     
     push(s, result);
+
+    UNUSED(g);
 }
 
-void and_with_more_operator(STACK *s) {
+void and_with_more_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y;
 
     assert(pop(s, &y) == 0);
@@ -549,9 +623,11 @@ void and_with_more_operator(STACK *s) {
     }
     
     push(s, result);
+
+    UNUSED(g);
 }
 
-void question_mark_operator(STACK *s) {
+void question_mark_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y, z;
 
     assert(pop(s, &z) == 0);
@@ -574,9 +650,11 @@ void question_mark_operator(STACK *s) {
     }
 
     push(s, result);
+
+    UNUSED(g);
 }
 
-void comma_operator(STACK *s) {
+void comma_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x;
 
     assert(pop(s, &x) == 0);
@@ -595,9 +673,11 @@ void comma_operator(STACK *s) {
     }
 
     push(s, result);
+
+    UNUSED(g);
 }
 
-void uppercase_s_and_slash_operator(STACK *s) {
+void uppercase_s_and_slash_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x;
     
     assert(pop(s, &x) == 0);
@@ -623,9 +703,11 @@ void uppercase_s_and_slash_operator(STACK *s) {
         
         free(token);
     }
+
+    UNUSED(g);
 }
 
-void uppercase_n_and_slash_operator(STACK *s) {
+void uppercase_n_and_slash_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x;
     
     assert(pop(s, &x) == 0);
@@ -651,9 +733,11 @@ void uppercase_n_and_slash_operator(STACK *s) {
         
         free(token);
     }
+
+    UNUSED(g);
 }
 
-void lowercase_t_operator(STACK *s) {
+void lowercase_t_operator(STACK *s, GLOBALS *g) {
     char *line = malloc(sizeof(char) * BUFSIZ), *total = line;
     int len = 0;
 
@@ -670,6 +754,8 @@ void lowercase_t_operator(STACK *s) {
     line[strlen(line) - 1] = '\0';
 
     assert(push(s, result) == 0);
+
+    UNUSED(g);
 }
 
 double get_double_arg(STACK_ELEM x) {
@@ -756,8 +842,8 @@ int get_index(char *operator) {
     return -1;
 }
 
-void dispatch_table(STACK *s, char *operator) {
-    static function table[] = {
+void dispatch_table(STACK *s, char *operator, GLOBALS *g) {
+    static function_pointer table[] = {
         plus_operator,
         minus_operator,
         asterisk_operator,
@@ -799,5 +885,5 @@ void dispatch_table(STACK *s, char *operator) {
     assert(index != -1);
 
     // Chama o function pointer
-    table[index](s);
+    table[index](s, g);
 }
