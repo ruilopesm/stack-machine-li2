@@ -3,8 +3,9 @@
 #include "operations.h"
 #include "mathematics.h"
 #include "conversions.h"
-#include "arrays.h"
 #include "strings.h"
+#include "arrays.h"
+#include "blocks.h"
 
 #include "parser.h"
 
@@ -118,18 +119,9 @@ void percentage_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM result;
     
     if (y.t == BLOCK) {
-        result.t = ARRAY;
-
-        STACK *array_map = create_stack();
-
-        for (int i = 0; i < x.data.a->sp; i++) {
-            push(array_map, x.data.a->stc[i]);
-            parse_line(array_map, y.data.b, g);
+        if (x.t == ARRAY) {
+            map_array(x, y, &result, g);
         }
-
-        result.data.a = array_map;
-
-        push(s, result);
     }
     else {
         remainder_two_numbers(x, y, &result);
