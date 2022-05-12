@@ -110,24 +110,25 @@ void slash_operator(STACK *s, GLOBALS *g) {
     UNUSED(g);
 }
 
-void percentage_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x, y;
-
-    assert(pop(s, &y) == 0);
-    assert(pop(s, &x) == 0);
-
-    STACK_ELEM result;
+void percentage_operator(STACK *s, GLOBALS *g) { 
+    STACK_ELEM x, y; 
     
-    if (y.t == BLOCK) {
-        if (x.t == ARRAY) {
-            map_array(x, y, &result, g);
-        }
-    }
-    else {
-        remainder_two_numbers(x, y, &result);
-    }
-
-    push(s, result);
+    assert(pop(s, &y) == 0); 
+    assert(pop(s, &x) == 0); 
+    
+    STACK_ELEM result; 
+    
+    if (y.t == BLOCK && x.t == ARRAY) { 
+        map_array(x, y, &result, g); 
+    } 
+    else if (y.t == BLOCK && x.t == STRING) { 
+        map_string(x, y, &result, g); 
+    } 
+    else { 
+        remainder_two_numbers(x, y, &result); 
+    } 
+    
+    push(s, result); 
 }
 
 void hashtag_operator(STACK *s, GLOBALS *g) {
