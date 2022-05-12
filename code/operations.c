@@ -71,7 +71,10 @@ void asterisk_operator(STACK *s, GLOBALS *g) {
         replicate_string(x, y, &result);
     }
     else if (y.t == ARRAY) {
-        replicate_array(x, y, &result);
+        if (x.t == BLOCK)
+            fold(y, x, &result, g);
+        else
+            replicate_array(x, y, &result);
     }
     else {
         multiply_two_numbers(x, y, &result);
@@ -663,6 +666,11 @@ void comma_operator(STACK *s, GLOBALS *g) {
     }
     else if (x.t == LONG || x.t == CHAR) {
         create_array_in_range(x, &result);
+    }
+    else {
+        STACK_ELEM y;
+        assert(pop(s, &y) == 0);
+        filter(y, x, &result, g);
     }
 
     push(s, result);
