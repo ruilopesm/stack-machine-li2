@@ -122,3 +122,19 @@ void filter_string(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {
     result->data.s = start;
     free_stack(string_filter);
 }
+
+void while_operation(STACK *s, STACK_ELEM x, GLOBALS *g) {
+    STACK_ELEM aux;
+    int flag = 1;
+
+    while (flag) {
+        parse_line(s, x.data.b, g);
+        assert(pop(s, &aux) == 0);
+        if (aux.data.l == 0) {
+            flag = 0;
+        }
+        else {
+            push(s, aux);
+        }
+    }
+}

@@ -759,6 +759,17 @@ void lowercase_t_operator(STACK *s, GLOBALS *g) {
     UNUSED(g);
 }
 
+void lowercase_w_operator(STACK *s, GLOBALS *g) {
+    STACK_ELEM x;
+
+    assert(pop(s, &x) == 0);
+
+    if (x.t == BLOCK) {
+        while_operation(s, x, g);
+    }
+
+}
+
 double get_double_arg(STACK_ELEM x) {
     if (x.t == DOUBLE) {
         return x.data.d;
@@ -816,7 +827,8 @@ char *get_operator(int i) {
         ",",
         "S/",
         "N/",
-        "t"
+        "t",
+        "w"
     };
 
     return operators[i];
@@ -879,7 +891,8 @@ void dispatch_table(STACK *s, char *operator, GLOBALS *g) {
         comma_operator,
         uppercase_s_and_slash_operator,
         uppercase_n_and_slash_operator,
-        lowercase_t_operator
+        lowercase_t_operator,
+        lowercase_w_operator
     }; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
 
     int index = get_index(operator);
