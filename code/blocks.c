@@ -20,3 +20,31 @@ void map_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {
     result->data.a = array_map;
 }
 
+void map_string(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {
+    char *str = malloc((strlen(x.data.s) + 1) * sizeof(char)), *start = str;
+    strcpy(str, x.data.s);
+
+    STACK *string_map = create_stack();
+
+    STACK_ELEM aux;
+    aux.t = CHAR;
+
+    for (char c = *str; c != '\0'; c = *++str) {
+        aux.data.c = c;
+        push(string_map, aux);
+        parse_line(string_map, y.data.b, g);
+    }
+
+    str = start;
+
+    for (int i = 0; i < string_map->sp; i++) {
+        aux = string_map->stc[i];
+        *str++ = aux.data.c;
+    }
+
+    *str = '\0';
+
+    result->t = STRING;
+    result->data.s = start;
+    free_stack(string_map);
+}
