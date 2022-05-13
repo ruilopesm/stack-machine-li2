@@ -97,11 +97,21 @@ void replicate_string(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
 
 void split_string_by_substring(STACK_ELEM *main, STACK_ELEM *sub, STACK *new) {
     char *init = main->data.s, *current;
-    
     STACK_ELEM temp;
     temp.t = STRING;
     
-    int len = strlen(sub->data.s);
+    int len = strlen(main->data.s);
+    
+    if(sub->data.s[0] =='\0'){
+        for(int i=0;i<len;i++){
+            char *character = malloc(sizeof(char) * 2);
+            character[0]=main->data.s[i];
+            character[1]='\0';
+            temp.data.s =character;
+            assert(push(new, temp) == 0);
+        }
+        return;
+    }
     
     while ((current = strstr(init, sub->data.s)) != NULL) {
         char *section = malloc(sizeof(char) * (current - init + 1));
