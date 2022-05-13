@@ -88,31 +88,19 @@ int cmp_arrays(STACK *x, STACK *y){
     for(int i=0;i>=0;i++){
         if(x->stc[i].t==STRING && y->stc[i].t == STRING){
             result = (strcmp(x->stc[i].data.s,y->stc[i].data.s));
-            if (result < 0){
-                return 0;
-            }
-            if (result > 0){
-                return 1;
-            }
         }
-        if(x->stc[i].t==ARRAY && y->stc[i].t == ARRAY){
+        else if(x->stc[i].t==ARRAY && y->stc[i].t == ARRAY){
             result = cmp_arrays(x->stc[i].data.a,y->stc[i].data.a);
-            if (result < 0){
-                return 0;
-            }
-            if (result > 0){
-                return 1;
-            }
         }
         else{
             double xc = get_double_arg(x->stc[i]),yc = get_double_arg(y->stc[i]);
-            if(xc < yc){
-                return 0;
-            }
-            if(xc > yc){
-                return 1;
-            }
-
+            result = xc - yc
+        }
+        if (result < 0){
+            return 0;
+        }
+        else if (result > 0){
+            return 1;
         }
         //Se chegar ao fim de qualquer um dos arrays termina a comparação
         if(i==x->sp-1){
