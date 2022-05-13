@@ -71,7 +71,10 @@ void asterisk_operator(STACK *s, GLOBALS *g) {
         replicate_string(x, y, &result);
     }
     else if (y.t == ARRAY) {
-        replicate_array(x, y, &result);
+        if (x.t == BLOCK)
+            fold(y, x, &result, g);
+        else
+            replicate_array(x, y, &result);
     }
     else {
         multiply_two_numbers(x, y, &result);
@@ -664,6 +667,11 @@ void comma_operator(STACK *s, GLOBALS *g) {
     else if (x.t == LONG || x.t == CHAR) {
         create_array_in_range(x, &result);
     }
+    else {
+        STACK_ELEM y;
+        assert(pop(s, &y) == 0);
+        filter(y, x, &result, g);
+    }
 
     push(s, result);
 
@@ -751,6 +759,17 @@ void lowercase_t_operator(STACK *s, GLOBALS *g) {
     UNUSED(g);
 }
 
+void lowercase_w_operator(STACK *s, GLOBALS *g) {
+    STACK_ELEM x;
+
+    assert(pop(s, &x) == 0);
+
+    if (x.t == BLOCK) {
+        while_operation(s, x, g);
+    }
+
+}
+
 double get_double_arg(STACK_ELEM x) {
     if (x.t == DOUBLE) {
         return x.data.d;
@@ -808,7 +827,8 @@ char *get_operator(int i) {
         ",",
         "S/",
         "N/",
-        "t"
+        "t",
+        "w"
     };
 
     return operators[i];
@@ -871,7 +891,8 @@ void dispatch_table(STACK *s, char *operator, GLOBALS *g) {
         comma_operator,
         uppercase_s_and_slash_operator,
         uppercase_n_and_slash_operator,
-        lowercase_t_operator
+        lowercase_t_operator,
+        lowercase_w_operator
     }; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
 
     int index = get_index(operator);
