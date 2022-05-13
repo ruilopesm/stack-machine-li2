@@ -100,10 +100,11 @@ void split_string_by_substring(STACK_ELEM *main, STACK_ELEM *sub, STACK *new) {
     STACK_ELEM temp;
     temp.t = STRING;
     
-    int len = strlen(main->data.s);
+    int len = strlen(sub->data.s);
+    int length = strlen(main->data.s);
     
     if(sub->data.s[0] =='\0'){
-        for(int i=0;i<len;i++){
+        for(int i=0;i<length;i++){
             char *character = malloc(sizeof(char) * 2);
             character[0]=main->data.s[i];
             character[1]='\0';

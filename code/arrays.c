@@ -34,7 +34,7 @@ void concatenate_two_arrays(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result, int 
 void replicate_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     int len = y.data.a->sp;
 
-    for (int i = 0; i < (len * x.data.l) - x.data.l; i++) {
+    for (int i = 0; i < (len * x.data.l) - len; i++) {
         push(y.data.a, y.data.a->stc[i]);
     }
 
