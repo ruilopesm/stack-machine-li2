@@ -307,6 +307,7 @@ void copy(char *token, char *line, int len, int parsed) {
 
 // Remove o caracter na posição indicada por 'p'
 void remove_char(char *s, int p) {
+    if(p< 0) p=0;
     for (int i = p; s[i] != '\0'; i++) {
         s[i] = s[i + 1];
     }
