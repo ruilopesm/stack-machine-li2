@@ -2,7 +2,7 @@
  * @brief Macro que define o número de operadores implementados na stack
  *
  */
-#define N_OPERATORS 35
+#define N_OPERATORS 36
 
 /**
  * @brief Função que retorna o operador associado ao índice dado
@@ -305,3 +305,5 @@ void uppercase_s_and_slash_operator(STACK *s, GLOBALS *g);
 void uppercase_n_and_slash_operator(STACK *s, GLOBALS *g);
 
 void lowercase_t_operator(STACK *s, GLOBALS *g);
+
+void lowercase_w_operator(STACK *s, GLOBALS *g);
