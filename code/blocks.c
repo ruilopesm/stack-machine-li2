@@ -94,7 +94,7 @@ int cmp_arrays(STACK *x, STACK *y){
         }
         else{
             double xc = get_double_arg(x->stc[i]),yc = get_double_arg(y->stc[i]);
-            result = xc - yc
+            result = xc - yc;
         }
         if (result < 0){
             return 0;
