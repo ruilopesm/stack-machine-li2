@@ -110,6 +110,7 @@ int cmp_arrays(STACK *x, STACK *y){
             return 1;
         }
     }
+    return 0; // So para nao dar compile error mesmo, nao faz nada
 }
 
 //Ordena um array segundo dada condição por um bloco

@@ -365,18 +365,18 @@ void arroba_operator(STACK *s, GLOBALS *g) {
 
 void dollar_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x,y;
-    STACK_ELEM *result = NULL;
+    STACK_ELEM result;
     assert(pop(s, &x) == 0);
     if(x.t == BLOCK){
         assert(pop(s, &y) == 0);
         sortOn(x,&y,g);
-        result = &y;
+        result = y;
         free(x.data.b);
     }
     else{
-        assert(nth_element(s, result, x.data.l) == 0);
+        assert(nth_element(s, &result, x.data.l) == 0);
     }
-    assert(push(s, *result) == 0);
+    assert(push(s, result) == 0);
 
     UNUSED(g);
 }
