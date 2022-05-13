@@ -130,4 +130,6 @@ int peek(STACK *s, STACK_ELEM *elem);
  */
 int nth_element(STACK *s, STACK_ELEM *elem, int n);
 
+void swap(STACK *array, int x, int y);
+
 #endif

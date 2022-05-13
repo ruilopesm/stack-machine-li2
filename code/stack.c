@@ -37,13 +37,13 @@ int increase_stack(STACK *s) {
     STACK_ELEM temp;
     STACK_ELEM *new = malloc(sizeof(STACK_ELEM) * s->size * 2);
     // Se a realocação da stack falhar: retorna 1 (ERRO)
+    if (new == NULL) {
+        return 1;
+    }
     STACK temp_stack;
     temp_stack.stc = new;
     temp_stack.size = s->size * 2;
     temp_stack.sp = 0;
-    if (new == NULL) {
-        return 1;
-    }
     for(int i = s->sp-1;i>=0;i--){
         nth_element(s,&temp,i);
         push(&temp_stack,temp);
@@ -137,4 +137,12 @@ int nth_element(STACK *s, STACK_ELEM *elem, int n) {
     *elem = s->stc[s->sp - n - 1];
 
     return 0;
+}
+
+//Troca a posição de dois elementos numa stack (onde a posição 0 é o fundo da stack e sp-1 o topo)
+void swap(STACK *array, int x, int y){
+    STACK_ELEM temp;
+    nth_element(array,&temp,(array->sp-1)-x);//Vai buscar o elemento da posição x e armazena-o temporariamente
+    nth_element(array,&array->stc[x],(array->sp-1)-y);//Vai buscar o elemento da posição y e armazena-o na posição x
+    array->stc[y]=temp;
 }
