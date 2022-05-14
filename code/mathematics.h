@@ -1,3 +1,6 @@
+#ifndef MATHEMATICS_H
+#define MATHEMATICS_H
+
 /**
  * @brief Função que executa a adiçao de dois números
  * 
@@ -130,3 +133,5 @@ void compare_two_numbers_less(STACK *s, STACK_ELEM x, STACK_ELEM y, long to_push
  * @param result STACK_ELEMENT onde irá ser guardado o resultado
  */
 void compare_two_numbers_more(STACK *s, STACK_ELEM x, STACK_ELEM y, long to_push, STACK_ELEM *result);
+
+#endif

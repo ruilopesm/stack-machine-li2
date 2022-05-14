@@ -1,3 +1,6 @@
+#ifndef BLOCKS_H
+#define BLOCKS_H
+
 void map(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
 
 void map_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
@@ -21,3 +24,5 @@ void sort_on(STACK_ELEM block,STACK_ELEM *array,GLOBALS *g);
 void while_operation(STACK *s, STACK_ELEM x, GLOBALS *g);
 
 int truthy_value(STACK_ELEM x);
+
+#endif
