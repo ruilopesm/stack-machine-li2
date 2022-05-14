@@ -273,7 +273,6 @@ void tilde_operator(STACK *s, GLOBALS *g) {
     }
     else {
         STACK_ELEM result;
-
         bitwise_not_one_number(s, x, &result);
     }
 }
