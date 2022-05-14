@@ -1,6 +1,8 @@
 #ifndef STACK_H
 #define STACK_H
 
+#define MAX_BUFFER_SIZE 10081
+
 typedef struct STACK STACK;
 
 /**

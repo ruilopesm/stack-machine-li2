@@ -22,7 +22,7 @@ void concatenate_two_arrays(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result, int 
         STACK *s = create_stack();
         assert(push(s, x) == 0);
         
-        for(int i = 0; i < y.data.a->sp; i++) {
+        for (int i = 0; i < y.data.a->sp; i++) {
             assert(push(s, y.data.a->stc[i]) == 0);
         }
         
@@ -34,7 +34,7 @@ void concatenate_two_arrays(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result, int 
 void replicate_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     int len = y.data.a->sp;
 
-    for (int i = 0; i < (len * x.data.l) - len; i++) {
+    for (int i = 0; i < len * x.data.l - len; i++) {
         push(y.data.a, y.data.a->stc[i]);
     }
 
@@ -79,7 +79,7 @@ void transfer_array_elements_to_stack(STACK *s, STACK_ELEM x) {
 void get_element_at_index(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     long pos = get_long_arg(x);
         
-    assert(nth_element(y.data.a, result, (y.data.a->sp) - pos - 1) == 0);
+    assert(nth_element(y.data.a, result, y.data.a->sp - pos - 1) == 0);
     
     push(s, *result);
 }
@@ -103,7 +103,7 @@ void take_from_array(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
 }
 
 void drop_from_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
-    long len = x.data.a->sp,extract = get_long_arg(y);
+    long len = x.data.a->sp, extract = get_long_arg(y);
 
     STACK *new_array = create_stack();
         
@@ -123,8 +123,10 @@ void create_array_in_range(STACK_ELEM x, STACK_ELEM *result) {
     STACK *new = create_stack();
 
     for (int i = 0; i < x.data.l; i++) {
-        STACK_ELEM to_push = { .t = LONG };
-        to_push.data.l = i;
+        STACK_ELEM to_push = { 
+            .t = LONG,
+            .data.l = i
+        };
 
         push(new, to_push);
     }

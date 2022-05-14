@@ -11,9 +11,9 @@
 #include <errno.h>
 
 int get_line(STACK *s, GLOBALS *g) {
-    char *line = malloc(sizeof(char) * 10081);
+    char *line = malloc(sizeof(char) * MAX_BUFFER_SIZE);
     
-    if (fgets(line, 10081, stdin) != NULL) {
+    if (fgets(line, MAX_BUFFER_SIZE, stdin) != NULL) {
         line[strlen(line) - 1] = '\0';
 
         parse_line(s, line, g);
@@ -24,7 +24,7 @@ int get_line(STACK *s, GLOBALS *g) {
 }
     
 void parse_line(STACK *s, char *line, GLOBALS *g) {
-    char *token = malloc(sizeof(char) * 10081);
+    char *token = malloc(sizeof(char) * MAX_BUFFER_SIZE);
     int parsed = 0;
     
     while ((int) strlen(line) != parsed) {
@@ -212,8 +212,8 @@ void handle_readress_global(STACK *s, char *token, GLOBALS *g) {
     
     if (top.t == STRING) {
         int len = strlen(top.data.s);
-        
         char *copy_string = malloc(sizeof(char) * len + 1);
+        
         strcpy(copy_string, top.data.s);
         copy_string[len] = '\0';
 
@@ -233,8 +233,8 @@ void handle_readress_global(STACK *s, char *token, GLOBALS *g) {
     }
     else if (top.t == BLOCK) {
         int len = strlen(top.data.b);
-
         char *copy_block = malloc(sizeof(char) * len + 1);
+        
         strcpy(copy_block, top.data.b);
         copy_block[len] = '\0';
 
@@ -259,11 +259,11 @@ int get_array_length(char *line, int parsed) {
     
     for (i = 1 + parsed; line[i] != '\0' && line[i] != '\n'; i++) {
         // Se encontrar um array dentro do mesmo, irá ignorar o próximo ']' que encontrar, visto que esse pertencerá ao array dentro desse mesmo
-        if (line[i] == '['){ 
+        if (line[i] == '[') { 
             array_number++;
         }
-        else if (line[i] == ']'){
-            if (array_number == 0){
+        else if (line[i] == ']') {
+            if (array_number == 0) {
                 return i - parsed;
             }
             else {
@@ -280,11 +280,11 @@ int get_block_length(char *line, int parsed) {
     
     for (i = 1 + parsed; line[i] != '\0' && line[i] != '\n'; i++) {
         // Se encontrar um array dentro do mesmo, irá ignorar o próximo ']' que encontrar, visto que esse pertencerá ao array dentro desse mesmo
-        if (line[i] == '{'){ 
+        if (line[i] == '{') { 
             block_number++;
         }
-        else if (line[i] == '}'){
-            if (block_number == 0){
+        else if (line[i] == '}') {
+            if (block_number == 0) {
                 return i - parsed;
             }
             else {
@@ -302,12 +302,16 @@ void copy(char *token, char *line, int len, int parsed) {
     for (i = 0; i < len; i++) {
         token[i] = line[i + parsed];
     }
+
     token[i] = '\0';
 }
 
 // Remove o caracter na posição indicada por 'p'
 void remove_char(char *s, int p) {
-    if(p< 0) p=0;
+    if (p < 0) {
+        p = 0;
+    }
+    
     for (int i = p; s[i] != '\0'; i++) {
         s[i] = s[i + 1];
     }

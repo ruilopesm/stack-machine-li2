@@ -35,10 +35,12 @@ GLOBALS *init_globals() {
 
 int increase_stack(STACK *s){
     s->stc = realloc(s->stc,sizeof(STACK_ELEM) * s->size * 2);
+    
     // Se a realocação da stack falhar: retorna 1 (ERRO)
     if (s->stc == NULL) {
         return 1;
     }
+    
     s->size *= 2;
 
     return 0;
@@ -89,6 +91,7 @@ int push(STACK *s, STACK_ELEM elem) {
             return 1; 
         }
     }
+    
     s->stc[s->sp] = elem;
     s->sp++;
 
@@ -100,20 +103,21 @@ int pop(STACK *s, STACK_ELEM *elem) {
     if (s->sp == 0) {
         return 1; 
     }
-    s->sp--;
-
-    STACK_ELEM current = s->stc[s->sp];
     
+    s->sp--;
+    STACK_ELEM current = s->stc[s->sp];
     *elem = current;
     
     return 0;
 }
 
+// Caso especial da 'nth_element' quando n = 0
 int peek(STACK *s, STACK_ELEM *elem) {
     // Se a stack estiver vazia: retorna 1 (ERRO)
     if (s->sp == 0) {
         return 1;
     }
+    
     *elem = s->stc[s->sp - 1];
 
     return 0;
@@ -123,15 +127,18 @@ int nth_element(STACK *s, STACK_ELEM *elem, int n) {
     if (s->sp == 0) {
         return 1;
     }
+    
     *elem = s->stc[s->sp - n - 1];
 
     return 0;
 }
 
-//Troca a posição de dois elementos numa stack (onde a posição 0 é o fundo da stack e sp-1 o topo)
-void swap(STACK *array, int x, int y){
+// Troca a posição de dois elementos numa stack (onde a posição 0 é o fundo da stack e sp - 1 o topo)
+void swap(STACK *array, int x, int y) {
     STACK_ELEM temp;
-    nth_element(array,&temp,(array->sp-1)-x);//Vai buscar o elemento da posição x e armazena-o temporariamente
-    nth_element(array,&array->stc[x],(array->sp-1)-y);//Vai buscar o elemento da posição y e armazena-o na posição x
-    array->stc[y]=temp;
+    
+    nth_element(array, &temp, array->sp - 1 - x);
+    nth_element(array, &array->stc[x], array->sp - 1 - y);
+
+    array->stc[y] = temp;
 }

@@ -56,10 +56,10 @@ void concatenate_two_strings_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result,
         free(y.data.s);
     }
     else {
-        char *temp = malloc(sizeof(char) * 10081);
-        char *new = malloc(sizeof(char) * 10081 + strlen(y.data.s) + 1);
+        char *temp = malloc(sizeof(char) * MAX_BUFFER_SIZE);
+        char *new = malloc(sizeof(char) * MAX_BUFFER_SIZE + strlen(y.data.s) + 1);
         
-        snprintf(temp, 10081, "%g", get_double_arg(x));
+        snprintf(temp, MAX_BUFFER_SIZE, "%g", get_double_arg(x));
         
         if (order) {
             strcpy(new, y.data.s);
@@ -96,20 +96,25 @@ void replicate_string(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
 
 void split_string_by_substring(STACK_ELEM *main, STACK_ELEM *sub, STACK *new) {
     char *init = main->data.s, *current;
+    
     STACK_ELEM temp;
     temp.t = STRING;
     
-    int len = strlen(sub->data.s);
-    int length = strlen(main->data.s);
+    int sub_len = strlen(sub->data.s);
+    int main_len = strlen(main->data.s);
     
-    if(sub->data.s[0] =='\0'){
-        for(int i=0;i<length;i++){
+    if (sub->data.s[0] =='\0'){
+        for (int i = 0 ;i < main_len; i++) {
             char *character = malloc(sizeof(char) * 2);
-            character[0]=main->data.s[i];
-            character[1]='\0';
-            temp.data.s =character;
+            
+            character[0] = main->data.s[i];
+            character[1] = '\0';
+            
+            temp.data.s = character;
+            
             assert(push(new, temp) == 0);
         }
+
         return;
     }
     
@@ -118,11 +123,12 @@ void split_string_by_substring(STACK_ELEM *main, STACK_ELEM *sub, STACK *new) {
         
         strncpy(section, init, current - init);
         section[current - init] = '\0';
+        
         temp.data.s = section;
         
         assert(push(new, temp) == 0);
         
-        init = current + len;
+        init = current + sub_len;
     }
 
     if (strlen(init) >= 2 || (strlen(init) == 1 && init[0] != '\n')) {
