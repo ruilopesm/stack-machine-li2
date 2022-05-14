@@ -132,14 +132,13 @@ void fold(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {
     STACK_ELEM acc = x.data.a->stc[0];
     push(array_fold, acc);
 
-    for (int i = 1; i < x.data.a->sp; i++) {
+    for (int i = 1; i < x.data.a->sp ; i++) {
         push(array_fold, x.data.a->stc[i]);
         parse_line(array_fold, y.data.b, g);
     }
 
-    assert(pop(array_fold, &acc) == 0);
-
-    *result = acc;
+    result->t = ARRAY;
+    result->data.a = array_fold;
 }
 
 void filter(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {

@@ -86,7 +86,9 @@ void get_element_at_index(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *resu
 
 void take_from_array(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     long len = x.data.a->sp, extract = get_long_arg(y);
-        
+    
+
+
     if (extract > len) {
         extract = len; // Se for pedido para extrair mais elementos do que aqueles que existem no array, será apenas extraído o array todo (é impossivel estrair mais elementos do que aqueles que existem)
     }
@@ -97,17 +99,21 @@ void take_from_array(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     }
 }
 
-void drop_from_array(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
-     long len = x.data.a->sp,extract = get_long_arg(y);
+void drop_from_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
+    long len = x.data.a->sp,extract = get_long_arg(y);
+
+    STACK *new_array = create_stack();
         
     if (extract > len) {
         extract = len; // Se for pedido para extrair mais elementos do que aqueles que existem no array, será apenas extraído o array todo (é impossivel estrair mais elementos do que aqueles que existem)
     }
         
-    for (int i = extract - 1; i >= 0 ; i--) {
-        assert(nth_element(x.data.a, result, i) == 0);
-        assert(push(s, *result) == 0);
+    for (int i = len - extract; i < len ; i++) {
+        assert(push(new_array, x.data.a->stc[i]) == 0);
     }
+
+    result->t = ARRAY;
+    result->data.a = new_array;
 }
 
 void create_array_in_range(STACK_ELEM x, STACK_ELEM *result) {
