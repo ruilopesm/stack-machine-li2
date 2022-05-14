@@ -28,10 +28,12 @@ void map_string(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {
 
     STACK *string_map = create_stack();
     STACK_ELEM aux;
-    aux.t = CHAR;
+    aux.t = STRING;
 
     for (char c = *str; c != '\0'; c = *++str) {
-        aux.data.c = c;
+        aux.data.s = malloc(sizeof (char) * 2);
+        aux.data.s[0] = c;
+        aux.data.s[1] = '\0';
         push(string_map, aux);
         parse_line(string_map, y.data.b, g);
     }
