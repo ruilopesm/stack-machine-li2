@@ -145,6 +145,15 @@ void hashtag_operator(STACK *s, GLOBALS *g) {
     if (x.t == STRING && y.t == STRING){
         find_substring_index(x, y, &result);
     }
+    else if (x.t == STRING && y.t == CHAR){
+        STACK_ELEM temp;
+        temp.t = STRING;
+        char *character = malloc(sizeof(char) * 2);
+        character[0] = y.data.c;
+        character[1] = '\0';
+        temp.data.s = character;
+        find_substring_index(x,temp,&result);
+    }
     else {
         power_two_numbers(x, y, &result);
     }
