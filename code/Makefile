@@ -26,3 +26,6 @@ submit:
 
 doc: $(DOC_FILE)
 	doxygen Doxyfile
+
+log: 
+	chmod +x repl; ./repl
