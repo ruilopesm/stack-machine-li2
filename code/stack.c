@@ -33,24 +33,13 @@ GLOBALS *init_globals() {
     return g;
 }
 
-int increase_stack(STACK *s) {
-    STACK_ELEM temp;
-    STACK_ELEM *new = malloc(sizeof(STACK_ELEM) * s->size * 2);
+int increase_stack(STACK *s){
+    s->stc = realloc(s->stc,sizeof(STACK_ELEM) * s->size * 2);
     // Se a realocação da stack falhar: retorna 1 (ERRO)
-    if (new == NULL) {
+    if (s->stc == NULL) {
         return 1;
     }
-    STACK temp_stack;
-    temp_stack.stc = new;
-    temp_stack.size = s->size * 2;
-    temp_stack.sp = 0;
-    for(int i = s->sp-1;i>=0;i--){
-        nth_element(s,&temp,i);
-        push(&temp_stack,temp);
-    }
     s->size *= 2;
-    free(s->stc);
-    s->stc = new;
 
     return 0;
 }
