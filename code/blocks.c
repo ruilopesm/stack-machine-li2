@@ -214,15 +214,18 @@ void while_operation(STACK *s, STACK_ELEM x, GLOBALS *g) {
 }
 
 int truthy_value(STACK_ELEM x) {
-
-    if (x.t == ARRAY && x.data.a->sp)
+    if (x.t == ARRAY && x.data.a->sp) {
         return 1;
-    else if (x.t == BLOCK && x.data.b)
+    }
+    else if (x.t == BLOCK && x.data.b) {
         return 1;
-    else if (x.t == STRING && x.data.s)
+    }
+    else if (x.t == STRING && x.data.s) {
         return 1;
-    else if (get_double_arg(x))
+    }
+    else if (get_double_arg(x)) {
         return 1;
+    }
 
     return 0;
 }
