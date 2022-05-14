@@ -19,6 +19,7 @@ int main() {
     print_stack(s);
     
     free_stack(s);
+    free(g);
 
     return 0;
 }

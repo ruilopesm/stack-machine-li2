@@ -19,12 +19,10 @@
 #define UNUSED(x) (void) (x)
 
 void plus_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x, y;
+    STACK_ELEM x, y, result;
 
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
-
-    STACK_ELEM result;
 
     if (y.t == ARRAY) {
         concatenate_two_arrays(y, x, &result, 1);
@@ -45,12 +43,10 @@ void plus_operator(STACK *s, GLOBALS *g) {
 }
 
 void minus_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x, y;
+    STACK_ELEM x, y, result;
 
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
-
-    STACK_ELEM result;
 
     subtract_two_numbers(x, y, &result);
 
@@ -60,12 +56,10 @@ void minus_operator(STACK *s, GLOBALS *g) {
 }
 
 void asterisk_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x, y;
+    STACK_ELEM x, y, result;
 
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
-
-    STACK_ELEM result;
 
     if (y.t == STRING) {
         replicate_string(x, y, &result);
@@ -86,12 +80,10 @@ void asterisk_operator(STACK *s, GLOBALS *g) {
 }
 
 void slash_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x, y;
+    STACK_ELEM x, y, result;
 
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
-
-    STACK_ELEM result;
 
     if (x.t == STRING && y.t == STRING) {
         result.t = ARRAY;
@@ -114,19 +106,14 @@ void slash_operator(STACK *s, GLOBALS *g) {
 }
 
 void percentage_operator(STACK *s, GLOBALS *g) { 
-    STACK_ELEM x, y; 
+    STACK_ELEM x, y, result;
     
     assert(pop(s, &y) == 0); 
     assert(pop(s, &x) == 0); 
     
-    STACK_ELEM result; 
-    
-    if (y.t == BLOCK && x.t == ARRAY) { 
-        map_array(x, y, &result, g); 
-    } 
-    else if (y.t == BLOCK && x.t == STRING) { 
-        map_string(x, y, &result, g); 
-    } 
+    if (y.t == BLOCK && (x.t == ARRAY || x.t == STRING)) { 
+        map(x, y, &result, g); 
+    }
     else { 
         remainder_two_numbers(x, y, &result); 
     } 
@@ -135,12 +122,10 @@ void percentage_operator(STACK *s, GLOBALS *g) {
 }
 
 void hashtag_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x, y;
+    STACK_ELEM x, y, result;
 
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
-
-    STACK_ELEM result;
 
     if (x.t == STRING && y.t == STRING){
         find_substring_index(x, y, &result);
@@ -148,11 +133,14 @@ void hashtag_operator(STACK *s, GLOBALS *g) {
     else if (x.t == STRING && y.t == CHAR){
         STACK_ELEM temp;
         temp.t = STRING;
+        
         char *character = malloc(sizeof(char) * 2);
         character[0] = y.data.c;
         character[1] = '\0';
+        
         temp.data.s = character;
-        find_substring_index(x,temp,&result);
+        
+        find_substring_index(x, temp, &result);
     }
     else {
         power_two_numbers(x, y, &result);
@@ -164,12 +152,10 @@ void hashtag_operator(STACK *s, GLOBALS *g) {
 }
 
 void circumflex_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x, y;
+    STACK_ELEM x, y, result;
 
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
-
-    STACK_ELEM result;
 
     bitwise_xor_two_numbers(x, y, &result);
 
@@ -179,12 +165,10 @@ void circumflex_operator(STACK *s, GLOBALS *g) {
 }
 
 void and_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x, y;
+    STACK_ELEM x, y, result;
 
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
-
-    STACK_ELEM result;
 
     bitwise_and_two_numbers(x, y, &result);
 
@@ -194,12 +178,10 @@ void and_operator(STACK *s, GLOBALS *g) {
 }
 
 void or_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x, y;
+    STACK_ELEM x, y, result;
 
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
-
-    STACK_ELEM result;
 
     bitwise_or_two_numbers(x, y, &result);
 
@@ -209,11 +191,9 @@ void or_operator(STACK *s, GLOBALS *g) {
 }
 
 void left_parenthesis_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x;
+    STACK_ELEM x, result;
 
     assert(pop(s, &x) == 0);
-
-    STACK_ELEM result;
 
     if (x.t == STRING) {
         result.t = STRING;
@@ -235,11 +215,9 @@ void left_parenthesis_operator(STACK *s, GLOBALS *g) {
 }   
 
 void right_parenthesis_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x;
+    STACK_ELEM x, result;
 
     assert(pop(s, &x) == 0);
-
-    STACK_ELEM result;
 
     if (x.t == STRING) {
         result.t = STRING;
@@ -273,16 +251,15 @@ void tilde_operator(STACK *s, GLOBALS *g) {
     }
     else {
         STACK_ELEM result;
+        
         bitwise_not_one_number(s, x, &result);
     }
 }
 
 void lowercase_i_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x;
+    STACK_ELEM x, result;
     
     assert(pop(s, &x) == 0);
-    
-    STACK_ELEM result;
 
     convert_to_int(s, x, &result);
 
@@ -290,11 +267,9 @@ void lowercase_i_operator(STACK *s, GLOBALS *g) {
 }
 
 void lowercase_f_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x;
+    STACK_ELEM x, result;
     
     assert(pop(s, &x) == 0);
-    
-    STACK_ELEM result;
 
     convert_to_double(s, x, &result);
 
@@ -302,11 +277,9 @@ void lowercase_f_operator(STACK *s, GLOBALS *g) {
 }
 
 void lowercase_c_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x;
+    STACK_ELEM x, result;
     
     assert(pop(s, &x) == 0);
-    
-    STACK_ELEM result;
 
     convert_to_char(s, x, &result);
 
@@ -314,12 +287,11 @@ void lowercase_c_operator(STACK *s, GLOBALS *g) {
 }
 
 void lowercase_s_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x;
+    STACK_ELEM x, result;
     
     assert(pop(s, &x) == 0);
-    
-    STACK_ELEM result;
-    result.data.s = malloc(sizeof(char) * 10081);
+
+    result.data.s = malloc(sizeof(char) * MAX_BUFFER_SIZE);
 
     convert_to_string(s, x, &result);
 
@@ -372,27 +344,32 @@ void arroba_operator(STACK *s, GLOBALS *g) {
 }
 
 void dollar_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x,y;
-    STACK_ELEM result;
+    STACK_ELEM x, y, result;
+    
     assert(pop(s, &x) == 0);
-    if(x.t == BLOCK){
+    
+    if (x.t == BLOCK) {
         assert(pop(s, &y) == 0);
-        sortOn(x,&y,g);
+        
+        sort_on(x, &y, g);
+        
         result = y;
+        
         free(x.data.b);
     }
-    else{
+    else {
         assert(nth_element(s, &result, x.data.l) == 0);
     }
+
     assert(push(s, result) == 0);
 
     UNUSED(g);
 }
 
 void lowercase_l_operator(STACK *s, GLOBALS *g) {
-    char *line = malloc(sizeof(char) * 10081);
+    char *line = malloc(sizeof(char) * MAX_BUFFER_SIZE);
 
-    if (fgets(line, 10081, stdin) != NULL) {
+    if (fgets(line, MAX_BUFFER_SIZE, stdin) != NULL) {
         line[strlen(line) - 1] = '\0';
 
         STACK_ELEM result = {
@@ -458,10 +435,8 @@ STACK_ELEM get_global(char value, GLOBALS *g) {
 }
 
 void equal_sign_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x, y;
+    STACK_ELEM x, y, result;
     long to_push = 0;
-
-    STACK_ELEM result;
 
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
@@ -483,10 +458,8 @@ void equal_sign_operator(STACK *s, GLOBALS *g) {
 }
 
 void less_signal_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x, y;
+    STACK_ELEM x, y, result;
     long to_push = 0;
-
-    STACK_ELEM result;
 
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
@@ -508,10 +481,8 @@ void less_signal_operator(STACK *s, GLOBALS *g) {
 }
 
 void more_sign_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x, y;
+    STACK_ELEM x, y, result;
     long to_push = 0;
-
-    STACK_ELEM result;
 
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);   
@@ -534,10 +505,9 @@ void more_sign_operator(STACK *s, GLOBALS *g) {
 }
 
 void exclamation_mark_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x;
+    STACK_ELEM x, result;
     long to_push = 0;
 
-    STACK_ELEM result;
     result.t = LONG;
 
     assert(pop(s, &x) == 0);
@@ -553,6 +523,7 @@ void exclamation_mark_operator(STACK *s, GLOBALS *g) {
     }
     
     result.data.l = to_push;
+    
     push(s, result);
 
     UNUSED(g);
@@ -645,18 +616,9 @@ void question_mark_operator(STACK *s, GLOBALS *g) {
 
     STACK_ELEM result = z;
 
-    if (x.t == LONG && x.data.l != 0) {
+    if (truthy_value(x)) {
         result = y;
-    }
-    else if (x.t == DOUBLE && x.data.d != 0.0) {
-        result = y;
-    }
-    else if (x.t == ARRAY && x.data.a->sp != 0) {
-        result = y;
-    }
-    else if (x.t == STRING && strlen(x.data.s) != 0) {
-        result = y;
-    }
+    }    
 
     push(s, result);
 
@@ -664,11 +626,9 @@ void question_mark_operator(STACK *s, GLOBALS *g) {
 }
 
 void comma_operator(STACK *s, GLOBALS *g) {
-    STACK_ELEM x;
+    STACK_ELEM x, result;
 
     assert(pop(s, &x) == 0);
-
-    STACK_ELEM result;
 
     if (x.t == STRING) {
         result.t = LONG;
@@ -680,11 +640,14 @@ void comma_operator(STACK *s, GLOBALS *g) {
     }
     else if (x.t == LONG || x.t == CHAR) {
         result.t = ARRAY;
+        
         create_array_in_range(x, &result);
     }
     else {
         STACK_ELEM y;
+        
         assert(pop(s, &y) == 0);
+        
         filter(y, x, &result, g);
     }
 
@@ -754,10 +717,10 @@ void uppercase_n_and_slash_operator(STACK *s, GLOBALS *g) {
 }
 
 void lowercase_t_operator(STACK *s, GLOBALS *g) {
-    char *line = malloc(sizeof(char) * 10081), *total = line;
+    char *line = malloc(sizeof(char) * MAX_BUFFER_SIZE), *total = line;
     int len = 0;
 
-    while (fgets(line, 10081, stdin) != NULL) {
+    while (fgets(line, MAX_BUFFER_SIZE, stdin) != NULL) {
         len = strlen(line);
         line += len;
     }
