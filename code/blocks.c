@@ -203,11 +203,14 @@ void filter_string(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {
 
 void while_operation(STACK *s, STACK_ELEM x, GLOBALS *g) {
     STACK_ELEM aux;
-    
-    do {
+    int flag = 1;
+
+    while (flag) {
         parse_line(s, x.data.b, g);
         assert(pop(s, &aux) == 0);
-    } while (truthy_value(aux));
+        if (!truthy_value(aux))
+            flag = 0;
+    }
 }
 
 int truthy_value(STACK_ELEM x) {
