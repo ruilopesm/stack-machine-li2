@@ -25,4 +25,6 @@ void while_operation(STACK *s, STACK_ELEM x, GLOBALS *g);
 
 int truthy_value(STACK_ELEM x);
 
+int is_arg(STACK_ELEM x);
+
 #endif

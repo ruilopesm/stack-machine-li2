@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
 
 void convert_to_int(STACK *s, STACK_ELEM x, STACK_ELEM *result) {
     if (x.t == DOUBLE) {
@@ -20,7 +21,15 @@ void convert_to_int(STACK *s, STACK_ELEM x, STACK_ELEM *result) {
     }
     else if (x.t == STRING) {
         result->t = LONG;
-        sscanf(x.data.s, "%ld", &result->data.l);
+        
+        char *end_ptr;
+        errno = 0;
+
+        long value = strtol(x.data.s, &end_ptr, 0);
+        
+        if (errno == 0 && *end_ptr == '\0') {
+            result->data.l = value;
+        }
         
         push(s, *result);
     }
@@ -45,7 +54,15 @@ void convert_to_double(STACK *s, STACK_ELEM x, STACK_ELEM *result) {
     } 
     else if (x.t == STRING) {
         result->t = DOUBLE;
-        sscanf(x.data.s, "%lg", &result->data.d);
+        
+        char *end_ptr;
+        errno = 0;
+
+        double value = strtod(x.data.s, &end_ptr);
+        
+        if (errno == 0 && *end_ptr == '\0') {
+            result->data.d = value;
+        }
         
         push(s, *result);
     }
