@@ -1,3 +1,9 @@
+#include "stack.h"
+
+#include "parser.h"
+
+#include "conversions.h"
+#include "operations.h"
 #include "blocks.h"
 
 #include <assert.h>
@@ -6,15 +12,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "conversions.h"
-#include "operations.h"
-#include "parser.h"
-#include "stack.h"
-
 void map(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {
     if (x.t == ARRAY) {
         map_array(x, y, result, g);
-    } else {
+    } 
+    else {
         map_string(x, y, result, g);
     }
 }
@@ -79,7 +81,8 @@ void fold(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {
 void filter(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {
     if (x.t == ARRAY) {
         filter_array(x, y, result, g);
-    } else {
+    } 
+    else {
         filter_string(x, y, result, g);
     }
 }
@@ -160,9 +163,11 @@ int compare_on(STACK_ELEM x, STACK_ELEM y, STACK *temp, char *block,
         if (strcmp(xp.data.s, yp.data.s) <= 0) {
             result = 0;
         }
-    } else if (xp.t == ARRAY && yp.t == ARRAY) {
+    } 
+    else if (xp.t == ARRAY && yp.t == ARRAY) {
         return compare_arrays(xp.data.a, yp.data.a);
-    } else {
+    } 
+    else {
         double xc = get_double_arg(xp), yc = get_double_arg(yp);
 
         if (xc <= yc) {
@@ -170,9 +175,7 @@ int compare_on(STACK_ELEM x, STACK_ELEM y, STACK *temp, char *block,
         }
     }
 
-    temp->sp = 0;  // Esvaziar a stack temporária, caso tenha elementos
-                   // anteriores de modo a não causar erros (provavelmente não
-                   // necessário, mas existe como segurança extra)
+    temp->sp = 0;  // Esvaziar a stack temporária, caso tenha elementos anteriores de modo a não causar erros (provavelmente não necessário, mas existe como segurança extra)
 
     return result;
 }
@@ -183,11 +186,12 @@ int compare_arrays(STACK *x, STACK *y) {
     for (int i = 0; i >= 0; i++) {
         if (x->stc[i].t == STRING && y->stc[i].t == STRING) {
             result = (strcmp(x->stc[i].data.s, y->stc[i].data.s));
-        } else if (x->stc[i].t == ARRAY && y->stc[i].t == ARRAY) {
+        } 
+        else if (x->stc[i].t == ARRAY && y->stc[i].t == ARRAY) {
             result = compare_arrays(x->stc[i].data.a, y->stc[i].data.a);
-        } else {
-            double xc = get_double_arg(x->stc[i]),
-                   yc = get_double_arg(y->stc[i]);
+        } 
+        else {
+            double xc = get_double_arg(x->stc[i]), yc = get_double_arg(y->stc[i]);
             result = xc - yc;
         }
 
@@ -216,11 +220,7 @@ void sort_on(STACK_ELEM block, STACK_ELEM *array, GLOBALS *g) {
     int i, j;
 
     for (i = 1; i < array->data.a->sp; i++) {
-        for (j = 0;
-             j < i && compare_on(array->data.a->stc[i], array->data.a->stc[j],
-                                 temp, block.data.s, g);
-             j++)
-            ;
+        for (j = 0; j < i && compare_on(array->data.a->stc[i], array->data.a->stc[j], temp, block.data.s, g); j++);
 
         for (; j < i; j++) {
             swap(array->data.a, j, i);
@@ -244,17 +244,24 @@ void while_operation(STACK *s, STACK_ELEM x, GLOBALS *g) {
 }
 
 int truthy_value(STACK_ELEM x) {
-    if (x.t == LONG && x.data.l != 0) {
+    if (x.t == ARRAY && x.data.a->sp != 0) {
         return 1;
-    } else if (x.t == DOUBLE && x.data.d != 0.0) {
+    } 
+    else if (x.t == STRING && strlen(x.data.s) != 0) {
         return 1;
-    } else if (x.t == ARRAY && x.data.a->sp != 0) {
+    } 
+    else if (x.t == BLOCK && strlen(x.data.b) != 0) {
         return 1;
-    } else if (x.t == STRING && strlen(x.data.s) != 0) {
-        return 1;
-    } else if (x.t == BLOCK && strlen(x.data.b) != 0) {
-        return 1;
+    }
+    else if (is_arg(x)) {
+        if (get_double_arg(x)) {
+            return 1;
+        }
     }
 
     return 0;
+}
+
+int is_arg(STACK_ELEM x) {
+    return x.t == LONG || x.t == DOUBLE || x.t == CHAR;
 }

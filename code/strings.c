@@ -208,16 +208,17 @@ void get_char_at_index(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result)
     push(s, *result);
 }
 
-void check_strings_equality(STACK *s, STACK_ELEM x, STACK_ELEM y, long to_push, STACK_ELEM *result) {
+void check_strings_equality(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     result->t = LONG;
-    result->data.l = strcmp(x.data.s, y.data.s) == 0 ? 1 : to_push;
+    result->data.l = strcmp(x.data.s, y.data.s) == 0 ? 1 : 0;
     
     push(s, *result);
 }
 
-void check_strings_less(STACK *s, STACK_ELEM x, STACK_ELEM y, long to_push, STACK_ELEM *result) {
+void check_strings_less(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     result->t = LONG;
-    result->data.l = strcmp(x.data.s, y.data.s) < 0 ? 1 : to_push;
+    result->data.l = strcmp(x.data.s, y.data.s) < 0 ? 1 : 0;
+    
     push(s, *result);
 }
 
@@ -241,9 +242,10 @@ void take_from_string(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) 
     free(x.data.s);
 }
 
-void check_strings_more(STACK *s, STACK_ELEM x, STACK_ELEM y, long to_push, STACK_ELEM *result) {
+void check_strings_more(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     result->t = LONG;
-    result->data.l = strcmp(x.data.s, y.data.s) > 0 ? 1 : to_push;
+    result->data.l = strcmp(x.data.s, y.data.s) > 0 ? 1 : 0;
+    
     push(s, *result);
 }
 

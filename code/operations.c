@@ -127,10 +127,10 @@ void hashtag_operator(STACK *s, GLOBALS *g) {
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
 
-    if (x.t == STRING && y.t == STRING){
+    if (x.t == STRING && y.t == STRING) {
         find_substring_index(x, y, &result);
     }
-    else if (x.t == STRING && y.t == CHAR){
+    else if (x.t == STRING && y.t == CHAR) {
         STACK_ELEM temp;
         temp.t = STRING;
         
@@ -436,7 +436,6 @@ STACK_ELEM get_global(char value, GLOBALS *g) {
 
 void equal_sign_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y, result;
-    long to_push = 0;
 
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
@@ -448,10 +447,10 @@ void equal_sign_operator(STACK *s, GLOBALS *g) {
         get_char_at_index(s, x, y, &result);
     }
     else if (x.t == STRING && y.t == STRING) {
-        check_strings_equality(s, x, y, to_push, &result);
+        check_strings_equality(s, x, y, &result);
     }
     else {
-        compare_two_numbers_equality(s, x, y, to_push, &result);
+        compare_two_numbers_equality(s, x, y, &result);
     }
 
     UNUSED(g);
@@ -459,7 +458,6 @@ void equal_sign_operator(STACK *s, GLOBALS *g) {
 
 void less_signal_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y, result;
-    long to_push = 0;
 
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);
@@ -468,13 +466,13 @@ void less_signal_operator(STACK *s, GLOBALS *g) {
         take_from_array(s, x, y, &result);
     }
     else if (x.t == STRING && y.t == STRING) {
-        check_strings_less(s, x, y, to_push, &result);
+        check_strings_less(s, x, y, &result);
     }
     else if (x.t == STRING) {
         take_from_string(s, x, y, &result);
     }
     else {
-        compare_two_numbers_less(s, x, y, to_push, &result);
+        compare_two_numbers_less(s, x, y, &result);
     }
 
     UNUSED(g);
@@ -482,7 +480,6 @@ void less_signal_operator(STACK *s, GLOBALS *g) {
 
 void more_sign_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y, result;
-    long to_push = 0;
 
     assert(pop(s, &y) == 0);
     assert(pop(s, &x) == 0);   
@@ -492,13 +489,13 @@ void more_sign_operator(STACK *s, GLOBALS *g) {
         push(s, result);
     }
     else if (x.t == STRING && y.t == STRING) {
-        check_strings_more(s, x, y, to_push, &result);
+        check_strings_more(s, x, y, &result);
     }
     else if (x.t == STRING) {
         drop_from_string(s, x, y, &result);
     }
     else {
-        compare_two_numbers_more(s, x, y, to_push, &result);
+        compare_two_numbers_more(s, x, y, &result);
     }
 
     UNUSED(g);

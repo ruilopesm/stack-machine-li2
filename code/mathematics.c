@@ -168,52 +168,46 @@ void bitwise_not_one_number(STACK *s, STACK_ELEM x, STACK_ELEM *result) {
     push(s, *result);
 }
 
-void compare_two_numbers_equality(STACK *s, STACK_ELEM x, STACK_ELEM y, long to_push, STACK_ELEM *result) {
+void compare_two_numbers_equality(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     if (get_double_arg(x) == get_double_arg(y)) {
         result->t = LONG;
-        
-        to_push = 1;
-        result->data.l = to_push;
+        result->data.l = 1;
         
         push(s, *result);
     }
     else {
         result->t = LONG;
-        result->data.l = to_push;
+        result->data.l = 0;
         
         push(s, *result);
     }
 }
 
-void compare_two_numbers_less(STACK *s, STACK_ELEM x, STACK_ELEM y, long to_push, STACK_ELEM *result) {
+void compare_two_numbers_less(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     if (get_double_arg(x) < get_double_arg(y)) {
         result->t = LONG;
-        
-        to_push = 1;
-        result->data.l = to_push;
+        result->data.l = 1;
         
         push(s, *result);
     }
     else {
         result->t = LONG;
-        result->data.l = to_push;
+        result->data.l = 0;
         
         push(s, *result);
     }
 }
 
-void compare_two_numbers_more(STACK *s, STACK_ELEM x, STACK_ELEM y, long to_push, STACK_ELEM *result) {
+void compare_two_numbers_more(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     if (get_double_arg(x) > get_double_arg(y)) {
         result->t = LONG;
-        
-        to_push = 1;
-        result->data.l = to_push;
+        result->data.l = 1;
         
         push(s, *result);
     }
     else {
         result->t = LONG;
-        result->data.l = to_push;
+        result->data.l = 0;
         
         push(s, *result);
     }

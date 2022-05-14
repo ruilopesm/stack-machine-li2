@@ -114,7 +114,7 @@ void bitwise_not_one_number(STACK *s, STACK_ELEM x, STACK_ELEM *result);
  * @param y 2 º número
  * @param result STACK_ELEMENT onde irá ser guardado o resultado
  */
-void compare_two_numbers_equality(STACK *s, STACK_ELEM x, STACK_ELEM y, long to_push, STACK_ELEM *result);
+void compare_two_numbers_equality(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
  * @brief Função que verifica se o segundo número é maior que o primeiro
@@ -123,7 +123,7 @@ void compare_two_numbers_equality(STACK *s, STACK_ELEM x, STACK_ELEM y, long to_
  * @param y 2 º número
  * @param result STACK_ELEMENT onde irá ser guardado o resultado
  */
-void compare_two_numbers_less(STACK *s, STACK_ELEM x, STACK_ELEM y, long to_push, STACK_ELEM *result);
+void compare_two_numbers_less(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
  * @brief Função que verifica se o segundo número é menor que o primeiro
@@ -132,6 +132,6 @@ void compare_two_numbers_less(STACK *s, STACK_ELEM x, STACK_ELEM y, long to_push
  * @param y 2 º número
  * @param result STACK_ELEMENT onde irá ser guardado o resultado
  */
-void compare_two_numbers_more(STACK *s, STACK_ELEM x, STACK_ELEM y, long to_push, STACK_ELEM *result);
+void compare_two_numbers_more(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 #endif
