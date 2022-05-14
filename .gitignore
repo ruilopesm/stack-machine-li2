@@ -2,3 +2,4 @@ code/main
 code/*.o 
 .vscode
 test
+doc
