@@ -70,11 +70,11 @@ void asterisk_operator(STACK *s, GLOBALS *g) {
     if (y.t == STRING) {
         replicate_string(x, y, &result);
     }
+    else if (x.t == BLOCK && y.t == ARRAY) {
+        fold(y, x, &result, g);
+    }
     else if (y.t == ARRAY) {
-        if (x.t == BLOCK)
-            fold(y, x, &result, g);
-        else
-            replicate_array(x, y, &result);
+        replicate_array(x, y, &result);
     }
     else {
         multiply_two_numbers(x, y, &result);
@@ -509,7 +509,8 @@ void more_sign_operator(STACK *s, GLOBALS *g) {
     assert(pop(s, &x) == 0);   
 
     if (x.t == ARRAY) {
-        drop_from_array(s, x, y, &result);
+        drop_from_array(x, y, &result);
+        push(s, result);
     }
     else if (x.t == STRING && y.t == STRING) {
         check_strings_more(s, x, y, to_push, &result);

@@ -12,6 +12,6 @@ void get_element_at_index(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *resu
 
 void take_from_array(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
-void drop_from_array(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
+void drop_from_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 void create_array_in_range(STACK_ELEM x, STACK_ELEM *result);
