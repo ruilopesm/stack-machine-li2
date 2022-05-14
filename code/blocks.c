@@ -175,12 +175,15 @@ void filter_string(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {
     aux.t = CHAR;
 
     for (char c = *str; c != '\0'; c = *++str) {
+        STACK_ELEM copy;
+        copy.t = CHAR;
         aux.data.c = c;
+        copy.data.c = c;
         push(string_filter, aux);
         parse_line(string_filter, y.data.b, g);
         assert(pop(string_filter, &aux) == 0);
-        if (aux.data.c) {
-            push(string_filter, aux);
+        if (get_long_arg(aux)) {
+            push(string_filter, copy);
         }
     }
 
