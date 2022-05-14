@@ -67,11 +67,11 @@ void remove_last_element_from_array(STACK *s, STACK_ELEM x, STACK_ELEM *result) 
 
 void transfer_array_elements_to_stack(STACK *s, STACK_ELEM x) {
     for (int i = x.data.a->sp - 1; i >= 0; i--) {
-            STACK_ELEM new;
-            
-            assert(nth_element(x.data.a, &new, i) == 0);
-            assert(push(s, new) == 0);
-        }
+        STACK_ELEM new;
+        
+        assert(nth_element(x.data.a, &new, i) == 0);
+        assert(push(s, new) == 0);
+    }
 
     free(x.data.a);
 }
@@ -86,9 +86,9 @@ void get_element_at_index(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *resu
 
 void take_from_array(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     long len = x.data.a->sp, extract = get_long_arg(y);
+
+    STACK *new_array = create_stack();
     
-
-
     if (extract > len) {
         extract = len; // Se for pedido para extrair mais elementos do que aqueles que existem no array, será apenas extraído o array todo (é impossivel estrair mais elementos do que aqueles que existem)
     }
@@ -97,6 +97,9 @@ void take_from_array(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
         assert(nth_element(x.data.a, result, (x.data.a->sp) - i - 1) == 0);
         assert(push(s, *result) == 0);
     }
+
+    result->t = ARRAY;
+    result->data.a = new_array;
 }
 
 void drop_from_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
