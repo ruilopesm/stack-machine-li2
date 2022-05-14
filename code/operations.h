@@ -1,3 +1,6 @@
+#ifndef OPERATIONS_H
+#define OPERATIONS_H
+
 /**
  * @brief Macro que define o número de operadores implementados na stack
  *
@@ -309,3 +312,5 @@ void lowercase_t_operator(STACK *s, GLOBALS *g);
 void lowercase_w_operator(STACK *s, GLOBALS *g);
 
 void lowercase_p_operator(STACK *s, GLOBALS *g);
+
+#endif

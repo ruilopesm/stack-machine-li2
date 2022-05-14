@@ -1,3 +1,6 @@
+#ifndef PARSER_H
+#define PARSER_H
+
 #include <stddef.h>
 
 int get_line(STACK *s, GLOBALS *g);
@@ -111,3 +114,5 @@ void copy(char *token, char *line, int len, int parsed);
  * @param p 
  */
 void remove_char(char *s, int p);
+
+#endif

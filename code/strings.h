@@ -1,3 +1,6 @@
+#ifndef STRINGS_H
+#define STRINGS_H
+
 void concatenate_two_strings(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
 
 void concatenate_two_strings_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result, int order);
@@ -23,3 +26,5 @@ void take_from_string(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 void check_strings_more(STACK *s, STACK_ELEM x, STACK_ELEM y, long to_push, STACK_ELEM *result);
 
 void drop_from_string(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
+
+#endif
