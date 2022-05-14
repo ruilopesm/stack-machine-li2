@@ -320,7 +320,7 @@ void lowercase_s_operator(STACK *s, GLOBALS *g) {
     assert(pop(s, &x) == 0);
     
     STACK_ELEM result;
-    result.data.s = malloc(sizeof(char) * BUFSIZ);
+    result.data.s = malloc(sizeof(char) * 10081);
 
     convert_to_string(s, x, &result);
 
@@ -391,9 +391,9 @@ void dollar_operator(STACK *s, GLOBALS *g) {
 }
 
 void lowercase_l_operator(STACK *s, GLOBALS *g) {
-    char *line = malloc(sizeof(char) * BUFSIZ);
+    char *line = malloc(sizeof(char) * 10081);
 
-    if (fgets(line, BUFSIZ, stdin) != NULL) {
+    if (fgets(line, 10081, stdin) != NULL) {
         line[strlen(line) - 1] = '\0';
 
         STACK_ELEM result = {
@@ -670,15 +670,17 @@ void comma_operator(STACK *s, GLOBALS *g) {
     assert(pop(s, &x) == 0);
 
     STACK_ELEM result;
-    result.t = LONG;
 
     if (x.t == STRING) {
+        result.t = LONG;
         result.data.l = strlen(x.data.s);
     }
     else if (x.t == ARRAY) {
+        result.t = LONG;
         result.data.l = x.data.a->sp;
     }
     else if (x.t == LONG || x.t == CHAR) {
+        result.t = ARRAY;
         create_array_in_range(x, &result);
     }
     else {
@@ -753,10 +755,10 @@ void uppercase_n_and_slash_operator(STACK *s, GLOBALS *g) {
 }
 
 void lowercase_t_operator(STACK *s, GLOBALS *g) {
-    char *line = malloc(sizeof(char) * BUFSIZ), *total = line;
+    char *line = malloc(sizeof(char) * 10081), *total = line;
     int len = 0;
 
-    while (fgets(line, BUFSIZ, stdin) != NULL) {
+    while (fgets(line, 10081, stdin) != NULL) {
         len = strlen(line);
         line += len;
     }
