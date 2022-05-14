@@ -790,22 +790,22 @@ void lowercase_p_operator(STACK *s, GLOBALS *g) {
     assert(peek(s, &x) == 0);
 
     if (x.t == LONG) {
-        printf("%ld", x.data.l);
+        printf("%ld\n", x.data.l);
     }
     else if (x.t == CHAR) {
-        printf("%c", x.data.c);
+        printf("%c\n", x.data.c);
     }
     else if (x.t == DOUBLE) {
-        printf("%lg", x.data.d);
+        printf("%lg\n", x.data.d);
     }
     else if (x.t == STRING) {
-        printf("%s", x.data.s);
+        printf("%s\n", x.data.s);
     }
     else if (x.t == ARRAY) {
         print_elems(x.data.a);
     }
     else if (x.t == BLOCK) {
-        printf("{ %s }", x.data.b);
+        printf("{ %s }\n", x.data.b);
     }
 
     UNUSED(g);
