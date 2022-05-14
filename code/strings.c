@@ -33,7 +33,6 @@ void concatenate_two_strings_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result,
         result->data.s = new;
         
         free(y.data.s);
-        free(x.data.s);
     }
     else if (x.t == CHAR) {
         int len = strlen(y.data.s);
