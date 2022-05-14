@@ -11,9 +11,9 @@
 #include <errno.h>
 
 int get_line(STACK *s, GLOBALS *g) {
-    char *line = malloc(sizeof(char) * BUFSIZ);
+    char *line = malloc(sizeof(char) * 10081);
     
-    if (fgets(line, BUFSIZ, stdin) != NULL) {
+    if (fgets(line, 10081, stdin) != NULL) {
         line[strlen(line) - 1] = '\0';
 
         parse_line(s, line, g);
@@ -24,7 +24,7 @@ int get_line(STACK *s, GLOBALS *g) {
 }
     
 void parse_line(STACK *s, char *line, GLOBALS *g) {
-    char *token = malloc(sizeof(char) * BUFSIZ);
+    char *token = malloc(sizeof(char) * 10081);
     int parsed = 0;
     
     while ((int) strlen(line) != parsed) {
@@ -123,7 +123,7 @@ void handle_long(STACK *s, char *token) {
         
     STACK_ELEM new = {
         .t = LONG, 
-        .data = { .l = value }
+        .data.l = value
     };
 
     assert(push(s, new) == 0);
@@ -135,7 +135,7 @@ void handle_double(STACK *s, char *token) {
 
     STACK_ELEM new = {
         .t = DOUBLE, 
-        .data = { .d = value }
+        .data.d = value
     };
 
     assert(push(s, new) == 0);
@@ -151,7 +151,7 @@ void handle_string(STACK *s, char *token) {
 
     STACK_ELEM new = {
         .t = STRING, 
-        .data = { .s = heap_token }
+        .data.s = heap_token
     };
 
     assert(push(s, new) == 0);
@@ -171,7 +171,7 @@ void handle_array(STACK *s, char *token, GLOBALS *g) {
     
     STACK_ELEM new = {
         .t = ARRAY,
-        .data = { .a = array }
+        .data.a = array
     };
     
     assert(push(s, new) == 0);
@@ -189,7 +189,7 @@ void handle_block(STACK *s, char *token) {
 
     STACK_ELEM new = {
         .t = BLOCK,
-        .data = { .b = heap_token }
+        .data.b = heap_token
     };
 
     assert(push(s, new) == 0);
