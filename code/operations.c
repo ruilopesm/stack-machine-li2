@@ -319,7 +319,7 @@ void lowercase_s_operator(STACK *s, GLOBALS *g) {
     assert(pop(s, &x) == 0);
     
     STACK_ELEM result;
-    result.data.s = malloc(sizeof(char) * BUFSIZ);
+    result.data.s = malloc(sizeof(char) * 10081);
 
     convert_to_string(s, x, &result);
 
@@ -390,9 +390,9 @@ void dollar_operator(STACK *s, GLOBALS *g) {
 }
 
 void lowercase_l_operator(STACK *s, GLOBALS *g) {
-    char *line = malloc(sizeof(char) * BUFSIZ);
+    char *line = malloc(sizeof(char) * 10081);
 
-    if (fgets(line, BUFSIZ, stdin) != NULL) {
+    if (fgets(line, 10081, stdin) != NULL) {
         line[strlen(line) - 1] = '\0';
 
         STACK_ELEM result = {
@@ -669,15 +669,17 @@ void comma_operator(STACK *s, GLOBALS *g) {
     assert(pop(s, &x) == 0);
 
     STACK_ELEM result;
-    result.t = LONG;
 
     if (x.t == STRING) {
+        result.t = LONG;
         result.data.l = strlen(x.data.s);
     }
     else if (x.t == ARRAY) {
+        result.t = LONG;
         result.data.l = x.data.a->sp;
     }
     else if (x.t == LONG || x.t == CHAR) {
+        result.t = ARRAY;
         create_array_in_range(x, &result);
     }
     else {
@@ -752,10 +754,10 @@ void uppercase_n_and_slash_operator(STACK *s, GLOBALS *g) {
 }
 
 void lowercase_t_operator(STACK *s, GLOBALS *g) {
-    char *line = malloc(sizeof(char) * BUFSIZ), *total = line;
+    char *line = malloc(sizeof(char) * 10081), *total = line;
     int len = 0;
 
-    while (fgets(line, BUFSIZ, stdin) != NULL) {
+    while (fgets(line, 10081, stdin) != NULL) {
         len = strlen(line);
         line += len;
     }
@@ -780,7 +782,33 @@ void lowercase_w_operator(STACK *s, GLOBALS *g) {
     if (x.t == BLOCK) {
         while_operation(s, x, g);
     }
+}
 
+void lowercase_p_operator(STACK *s, GLOBALS *g) {
+    STACK_ELEM x;
+
+    assert(peek(s, &x) == 0);
+
+    if (x.t == LONG) {
+        printf("%ld", x.data.l);
+    }
+    else if (x.t == CHAR) {
+        printf("%c", x.data.c);
+    }
+    else if (x.t == DOUBLE) {
+        printf("%lg", x.data.d);
+    }
+    else if (x.t == STRING) {
+        printf("%s", x.data.s);
+    }
+    else if (x.t == ARRAY) {
+        print_elems(x.data.a);
+    }
+    else if (x.t == BLOCK) {
+        printf("{ %s }", x.data.b);
+    }
+
+    UNUSED(g);
 }
 
 double get_double_arg(STACK_ELEM x) {
@@ -841,7 +869,8 @@ char *get_operator(int i) {
         "S/",
         "N/",
         "t",
-        "w"
+        "w",
+        "p"
     };
 
     return operators[i];
@@ -905,7 +934,8 @@ void dispatch_table(STACK *s, char *operator, GLOBALS *g) {
         uppercase_s_and_slash_operator,
         uppercase_n_and_slash_operator,
         lowercase_t_operator,
-        lowercase_w_operator
+        lowercase_w_operator,
+        lowercase_p_operator
     }; // As funções até agora implementadas são colocadas em posições análogas às referenciadas na função 'get_operator'.
 
     int index = get_index(operator);

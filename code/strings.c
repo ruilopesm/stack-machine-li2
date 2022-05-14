@@ -33,7 +33,6 @@ void concatenate_two_strings_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result,
         result->data.s = new;
         
         free(y.data.s);
-        free(x.data.s);
     }
     else if (x.t == CHAR) {
         int len = strlen(y.data.s);
@@ -57,10 +56,10 @@ void concatenate_two_strings_aux(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result,
         free(y.data.s);
     }
     else {
-        char *temp = malloc(sizeof(char) * BUFSIZ);
-        char *new = malloc(sizeof(char) * BUFSIZ + strlen(y.data.s) + 1);
+        char *temp = malloc(sizeof(char) * 10081);
+        char *new = malloc(sizeof(char) * 10081 + strlen(y.data.s) + 1);
         
-        snprintf(temp, BUFSIZ, "%g", get_double_arg(x));
+        snprintf(temp, 10081, "%g", get_double_arg(x));
         
         if (order) {
             strcpy(new, y.data.s);
