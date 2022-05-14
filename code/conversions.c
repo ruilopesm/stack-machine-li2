@@ -68,12 +68,12 @@ void convert_to_char(STACK *s, STACK_ELEM x, STACK_ELEM *result) {
 void convert_to_string(STACK *s, STACK_ELEM x, STACK_ELEM *result) {
      if (x.t == LONG) {
         result->t = STRING;
-        snprintf(result->data.s, BUFSIZ, "%ld", x.data.l);
+        snprintf(result->data.s, 10081, "%ld", x.data.l);
         push(s, *result);
     } 
     else if (x.t == DOUBLE) {
         result->t = STRING;
-        snprintf(result->data.s, BUFSIZ, "%lg", x.data.d);
+        snprintf(result->data.s, 10081, "%lg", x.data.d);
         push(s, *result);
     } 
     else if (x.t == CHAR) {
