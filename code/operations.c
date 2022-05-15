@@ -762,7 +762,7 @@ void lowercase_p_operator(STACK *s, GLOBALS *g) {
         printf("%s\n", x.data.s);
     }
     else if (x.t == ARRAY) {
-        print_elems(x.data.a);
+        print_stack(x.data.a);
     }
     else if (x.t == BLOCK) {
         printf("{ %s }\n", x.data.b);
