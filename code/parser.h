@@ -3,6 +3,13 @@
 
 #include <stddef.h>
 
+/**
+ * @brief Função que obtem o objeto da linha
+ * 
+ * @param s 
+ * @param g 
+ * @return int 
+ */
 int get_line(STACK *s, GLOBALS *g);
 
 /**
@@ -45,8 +52,20 @@ int is_double(char *token);
  */
 int is_string(char *token);
 
+/**
+ * @brief Verifica se o token é um array
+ * 
+ * @param token 
+ * @return int 
+ */
 int is_array(char *token);
 
+/**
+ * @brief Verifica se o token é um bloco
+ * 
+ * @param token 
+ * @return int 
+ */
 int is_block(char *token);
 
 /**
@@ -64,18 +83,63 @@ int is_global(char *token);
  */
 int is_readress_global(char *token);
 
+/**
+ * @brief Função resposável pelo token caso este seja do tipo long
+ * 
+ * @param s 
+ * @param token 
+ */
 void handle_long(STACK *s, char *token);
 
+/**
+ * @brief Função resposável pelo token caso este seja do tipo double
+ * 
+ * @param s 
+ * @param token 
+ */
 void handle_double(STACK *s, char *token);
 
+/**
+ * @brief Função resposável pelo token caso este seja do tipo string
+ * 
+ * @param s 
+ * @param token 
+ */
 void handle_string(STACK *s, char *token);
 
+/**
+ * @brief Função resposável pelo token caso este seja do tipo array
+ * 
+ * @param s 
+ * @param token 
+ * @param g 
+ */
 void handle_array(STACK *s, char *token, GLOBALS *g);
 
+/**
+ * @brief Função resposável pelo token caso este seja do tipo bloco
+ * 
+ * @param s 
+ * @param token 
+ */
 void handle_block(STACK *s, char *token);
 
+/**
+ * @brief Função resposável pelo token caso este seja uma variavel global
+ * 
+ * @param s 
+ * @param token 
+ * @param g 
+ */
 void handle_global(STACK *s, char *token, GLOBALS *g);
 
+/**
+ * @brief Função resposável pelo token caso este seja uma variavel global, e tenha falhado as outras verificações
+ * 
+ * @param s 
+ * @param token 
+ * @param g 
+ */
 void handle_readress_global(STACK *s, char *token, GLOBALS *g);
 
 /**
@@ -95,6 +159,13 @@ int find_char(char *line, char c, int parsed);
  */
 int get_array_length(char *line, int parsed);
 
+/**
+ * @brief Funçao que encontra o tamanho total do bloco
+ * 
+ * @param line 
+ * @param parsed 
+ * @return int 
+ */
 int get_block_length(char *line, int parsed);
 
 /**

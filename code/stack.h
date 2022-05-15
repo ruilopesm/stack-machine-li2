@@ -1,7 +1,7 @@
 #ifndef STACK_H
 #define STACK_H
 
-#define MAX_BUFFER_SIZE 10081
+#define MAX_BUFFER_SIZE 10081/**< tamanho do buffer */
 
 typedef struct STACK STACK;
 
@@ -9,7 +9,7 @@ typedef struct STACK STACK;
  * @brief Enum que guarda os tipos implementados na stack
  * 
  */
-typedef enum {
+typedef enum {/**< tipos dos elementos */
     LONG,
     CHAR,
     DOUBLE,
@@ -25,12 +25,12 @@ typedef enum {
 typedef struct {
     TYPE t; /**< Tipo do elemento (vindo do enum 'TYPE') */
     union {
-        long l;
-        char c;
-        double d;
-        char *s;
-        STACK *a;
-        char *b;
+        long l;/**< long */
+        char c;/**< char */
+        double d;/**< double */
+        char *s;/**< string */
+        STACK *a;/**< array */
+        char *b;/**< bloco */
     } data; /**< Conteúdo do elemento */
 } STACK_ELEM;
 
@@ -132,6 +132,13 @@ int peek(STACK *s, STACK_ELEM *elem);
  */
 int nth_element(STACK *s, STACK_ELEM *elem, int n);
 
+/**
+ * @brief Função que troca a posição de dois elementos numa stack (onde a posição 0 é o fundo da stack e sp - 1 o topo)
+ * 
+ * @param array 
+ * @param x 
+ * @param y 
+ */
 void swap(STACK *array, int x, int y);
 
 #endif
