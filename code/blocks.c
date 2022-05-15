@@ -214,7 +214,6 @@ int compare_arrays(STACK *x, STACK *y) {
     return 0;
 }
 
-// Ordena um array segundo a condição dada por um bloco
 void sort_on(STACK_ELEM block, STACK_ELEM *array, GLOBALS *g) {
     STACK *temp = create_stack();
     int i, j;
