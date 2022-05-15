@@ -1,7 +1,11 @@
 #ifndef STACK_H
 #define STACK_H
 
-#define MAX_BUFFER_SIZE 10081/**< tamanho do buffer */
+/**
+ * @brief Tamanho máximo do buffer
+ * 
+ */
+#define MAX_BUFFER_SIZE 10081
 
 typedef struct STACK STACK;
 
@@ -9,13 +13,13 @@ typedef struct STACK STACK;
  * @brief Enum que guarda os tipos implementados na stack
  * 
  */
-typedef enum {/**< tipos dos elementos */
-    LONG,
-    CHAR,
-    DOUBLE,
-    STRING,
-    ARRAY,
-    BLOCK
+typedef enum { 
+    LONG, /**< Identificação do tipo long */
+    CHAR, /**< Identificação do tipo char */
+    DOUBLE, /**< Identificação do tipo double */
+    STRING, /**< Identificação do tipo 'string' */
+    ARRAY, /**< Identificação do tipo 'array' */
+    BLOCK /**< Identificação do tipo 'bloco' */
 } TYPE;
 
 /**
@@ -25,12 +29,12 @@ typedef enum {/**< tipos dos elementos */
 typedef struct {
     TYPE t; /**< Tipo do elemento (vindo do enum 'TYPE') */
     union {
-        long l;/**< long */
-        char c;/**< char */
-        double d;/**< double */
-        char *s;/**< string */
-        STACK *a;/**< array */
-        char *b;/**< bloco */
+        long l; /**< Espaço de memória reservado para um long */
+        char c; /**< Espaço de memória reservado para um char */
+        double d; /**< Espaço de memória reservado para um double */
+        char *s; /**< Espaço de memória reservado para uma 'string' */
+        STACK *a; /**< Espaço de memória reservado para um 'array' */
+        char *b; /**< Espaço de memória reservado para um 'bloco' */
     } data; /**< Conteúdo do elemento */
 } STACK_ELEM;
 

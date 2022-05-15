@@ -16,6 +16,10 @@
 #include <math.h>
 #include <float.h>
 
+/**
+ * @brief Macro utilizada para definir argumentos como nulos (uma vez que usamos uma dispatch table)
+ * 
+ */
 #define UNUSED(x) (void) (x)
 
 void plus_operator(STACK *s, GLOBALS *g) {
@@ -456,7 +460,7 @@ void equal_sign_operator(STACK *s, GLOBALS *g) {
     UNUSED(g);
 }
 
-void less_signal_operator(STACK *s, GLOBALS *g) {
+void less_sign_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y, result;
 
     assert(pop(s, &y) == 0);
@@ -882,7 +886,7 @@ void dispatch_table(STACK *s, char *operator, GLOBALS *g) {
         dollar_operator,
         lowercase_l_operator,
         equal_sign_operator,
-        less_signal_operator,
+        less_sign_operator,
         more_sign_operator,
         exclamation_mark_operator,
         and_with_and_operator,
