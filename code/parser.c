@@ -14,7 +14,6 @@ int get_line(STACK *s, GLOBALS *g) {
     char *line = malloc(sizeof(char) * MAX_BUFFER_SIZE);
     
     if (fgets(line, MAX_BUFFER_SIZE, stdin) != NULL) {
-
         parse_line(s, line, g);
     }
     
