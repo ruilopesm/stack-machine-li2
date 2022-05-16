@@ -61,7 +61,7 @@ void get_element_at_index(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *resu
  * @param y 
  * @param result STACK_ELEMENT onde irá ser guardado o resultado 
  */
-void take_from_array(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
+void take_from_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
  * @brief Função que remove um elemento de um array
