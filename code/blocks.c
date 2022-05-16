@@ -145,8 +145,7 @@ void filter_string(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {
 }
 
 // Retorna 0 se x for menor ou igual a y, 1 se o contrário se verificar
-int compare_on(STACK_ELEM x, STACK_ELEM y, STACK *temp, char *block,
-               GLOBALS *g) {
+int compare_on(STACK_ELEM x, STACK_ELEM y, STACK *temp, char *block,GLOBALS *g) {
     int result = 1;
     STACK_ELEM xp, yp;
 
@@ -160,19 +159,24 @@ int compare_on(STACK_ELEM x, STACK_ELEM y, STACK *temp, char *block,
     assert(pop(temp, &xp) == 0);
 
     if (xp.t == STRING && yp.t == STRING) {
-        if (strcmp(xp.data.s, yp.data.s) <= 0) {
+        if (strcmp(xp.data.s, yp.data.s) < 0) {
             result = 0;
         }
     } 
     else if (xp.t == ARRAY && yp.t == ARRAY) {
         return compare_arrays(xp.data.a, yp.data.a);
     } 
-    else {
+    else if(xp.t == DOUBLE && yp.t == DOUBLE){
         double xc = get_double_arg(xp), yc = get_double_arg(yp);
-
-        if (xc <= yc) {
+        if (xc < yc) {
             return 0;
         }
+    }
+    else {
+        long xc = get_long_arg(xp), yc = get_long_arg(yp);
+        if (xc < yc) {
+            return 0;
+    }
     }
 
     temp->sp = 0;  // Esvaziar a stack temporária, caso tenha elementos anteriores de modo a não causar erros (provavelmente não necessário, mas existe como segurança extra)
