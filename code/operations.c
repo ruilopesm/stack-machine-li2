@@ -478,7 +478,8 @@ void less_signal_operator(STACK *s, GLOBALS *g) {
     assert(pop(s, &x) == 0);
 
     if (x.t == ARRAY) {
-        take_from_array(s, x, y, &result);
+        take_from_array(x, y, &result);
+        push(s, result);
     }
     else if (x.t == STRING && y.t == STRING) {
         check_strings_less(s, x, y, &result);
