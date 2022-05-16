@@ -71,7 +71,12 @@ void print_elems(STACK *s) {
             print_elems(current.data.a);
         }
         else if (current.t == BLOCK) {
-            printf("{ %s }", current.data.b);
+            if(*(current.data.b) == '\0'){
+                printf("{ }");
+            }
+            else {
+                printf("{ %s }", current.data.b);
+            }
         }
     }
 }

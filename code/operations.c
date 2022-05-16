@@ -96,6 +96,21 @@ void slash_operator(STACK *s, GLOBALS *g) {
         free(x.data.s);
         free(y.data.s);
     }
+    else if(x.t == STRING && y.t == CHAR){
+        result.t = ARRAY;
+        STACK *new = create_stack();
+        STACK_ELEM temp;
+        temp.t = STRING;
+        temp.data.s = malloc(sizeof(char) * 2);
+        temp.data.s[0] = y.data.c;
+        temp.data.s[1] = '\0';
+        split_string_by_substring(&x, &temp, new);
+        
+        result.data.a = new;
+        
+        free(x.data.s);
+        free(temp.data.s);
+    }
     else {
         divide_two_numbers(x, y, &result);
     }
@@ -503,20 +518,14 @@ void more_sign_operator(STACK *s, GLOBALS *g) {
 
 void exclamation_mark_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, result;
-    long to_push = 0;
+    long to_push = 1;
 
     result.t = LONG;
 
     assert(pop(s, &x) == 0);
 
-    if (x.t == LONG && x.data.l == 0) {
-        to_push = 1;
-    }
-    else if (x.t == DOUBLE && x.data.d == 0.0) {
-        to_push = 1;
-    }
-    else if (x.t == CHAR && x.data.c == '\0') {
-        to_push = 1;
+    if (truthy_value(x)) {
+        to_push = 0;
     }
     
     result.data.l = to_push;
@@ -534,7 +543,7 @@ void and_with_and_operator(STACK *s, GLOBALS *g) {
 
     STACK_ELEM result = x;
 
-    if (x.t == LONG && x.data.l) {
+    if (truthy_value(x)) {
         result = y;
     }
 
@@ -551,7 +560,7 @@ void and_with_or_operator(STACK *s, GLOBALS *g) {
 
     STACK_ELEM result = y;
 
-    if (get_double_arg(x)) {
+    if (truthy_value(x)) {
         result = x;
     }
 
@@ -727,7 +736,7 @@ void lowercase_t_operator(STACK *s, GLOBALS *g) {
         .data.s = strdup(total)
     };
 
-    line[strlen(line) - 1] = '\0';
+    //line[strlen(line) - 1] = '\0';
 
     assert(push(s, result) == 0);
 

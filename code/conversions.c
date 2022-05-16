@@ -5,12 +5,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <limits.h>
 
 void convert_to_int(STACK *s, STACK_ELEM x, STACK_ELEM *result) {
     if (x.t == DOUBLE) {
         result->t = LONG;
         result->data.l = x.data.d;
-        
+
+        /*if(x.data.d != result->data.l){
+            result->data.l=LONG_MAX;
+        }*/
+
         push(s, *result);
     }
     else if (x.t == CHAR) {
