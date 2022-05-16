@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <limits.h>
+#include <math.h>
 
 void convert_to_int(STACK *s, STACK_ELEM x, STACK_ELEM *result) {
     if (x.t == DOUBLE) {
@@ -78,7 +79,12 @@ void convert_to_double(STACK *s, STACK_ELEM x, STACK_ELEM *result) {
 }
 
 void convert_to_char(STACK *s, STACK_ELEM x, STACK_ELEM *result) {
-    if (x.t == LONG) {
+    if (x.t == DOUBLE){
+        result->t=CHAR;
+        result->data.c= (long)(x.data.d) % 256;
+        push(s, *result);
+    }
+    else if (x.t == LONG) {
         result->t = CHAR;
         result->data.c = x.data.l % 256;
         
