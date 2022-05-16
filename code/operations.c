@@ -96,14 +96,18 @@ void slash_operator(STACK *s, GLOBALS *g) {
         free(x.data.s);
         free(y.data.s);
     }
-    else if(x.t == STRING && y.t == CHAR){
+    else if(x.t == STRING && y.t == CHAR) {
         result.t = ARRAY;
         STACK *new = create_stack();
-        STACK_ELEM temp;
-        temp.t = STRING;
-        temp.data.s = malloc(sizeof(char) * 2);
+        
+        STACK_ELEM temp = {
+            .t = STRING,
+            .data.s = malloc(sizeof(char) * 2)
+        };
+
         temp.data.s[0] = y.data.c;
         temp.data.s[1] = '\0';
+        
         split_string_by_substring(&x, &temp, new);
         
         result.data.a = new;
@@ -146,14 +150,13 @@ void hashtag_operator(STACK *s, GLOBALS *g) {
         find_substring_index(x, y, &result);
     }
     else if (x.t == STRING && y.t == CHAR) {
-        STACK_ELEM temp;
-        temp.t = STRING;
+        STACK_ELEM temp = {
+            .t = STRING,
+            .data.s = malloc(sizeof(char) * 2)
+        };
         
-        char *character = malloc(sizeof(char) * 2);
-        character[0] = y.data.c;
-        character[1] = '\0';
-        
-        temp.data.s = character;
+        temp.data.s[0] = y.data.c;
+        temp.data.s[1] = '\0';
         
         find_substring_index(x, temp, &result);
     }
@@ -471,7 +474,7 @@ void equal_sign_operator(STACK *s, GLOBALS *g) {
     UNUSED(g);
 }
 
-void less_signal_operator(STACK *s, GLOBALS *g) {
+void less_sign_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, y, result;
 
     assert(pop(s, &y) == 0);
@@ -479,6 +482,7 @@ void less_signal_operator(STACK *s, GLOBALS *g) {
 
     if (x.t == ARRAY) {
         take_from_array(x, y, &result);
+        
         push(s, result);
     }
     else if (x.t == STRING && y.t == STRING) {
@@ -502,6 +506,7 @@ void more_sign_operator(STACK *s, GLOBALS *g) {
 
     if (x.t == ARRAY) {
         drop_from_array(x, y, &result);
+        
         push(s, result);
     }
     else if (x.t == STRING && y.t == STRING) {
@@ -737,7 +742,7 @@ void lowercase_t_operator(STACK *s, GLOBALS *g) {
         .data.s = strdup(total)
     };
 
-    //line[strlen(line) - 1] = '\0';
+    // line[strlen(line) - 1] = '\0';
 
     assert(push(s, result) == 0);
 
@@ -892,7 +897,7 @@ void dispatch_table(STACK *s, char *operator, GLOBALS *g) {
         dollar_operator,
         lowercase_l_operator,
         equal_sign_operator,
-        less_signal_operator,
+        less_sign_operator,
         more_sign_operator,
         exclamation_mark_operator,
         and_with_and_operator,

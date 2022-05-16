@@ -94,7 +94,7 @@ void take_from_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     }
     
     for (int i = 0; i < extract; i++) {
-        assert(nth_element(x.data.a, result, (x.data.a->sp) - i - 1) == 0);
+        assert(nth_element(x.data.a, result, x.data.a->sp - i - 1) == 0);
         assert(push(new_array, *result) == 0);
     }
 

@@ -13,10 +13,6 @@ void convert_to_int(STACK *s, STACK_ELEM x, STACK_ELEM *result) {
         result->t = LONG;
         result->data.l = x.data.d;
 
-        /*if(x.data.d != result->data.l){
-            result->data.l=LONG_MAX;
-        }*/
-
         push(s, *result);
     }
     else if (x.t == CHAR) {
@@ -79,9 +75,10 @@ void convert_to_double(STACK *s, STACK_ELEM x, STACK_ELEM *result) {
 }
 
 void convert_to_char(STACK *s, STACK_ELEM x, STACK_ELEM *result) {
-    if (x.t == DOUBLE){
-        result->t=CHAR;
-        result->data.c= (long)(x.data.d) % 256;
+    if (x.t == DOUBLE) {
+        result->t = CHAR;
+        result->data.c = (long) (x.data.d) % 256;
+        
         push(s, *result);
     }
     else if (x.t == LONG) {
@@ -103,7 +100,7 @@ void convert_to_char(STACK *s, STACK_ELEM x, STACK_ELEM *result) {
 }
 
 void convert_to_string(STACK *s, STACK_ELEM x, STACK_ELEM *result) {
-     if (x.t == LONG) {
+    if (x.t == LONG) {
         result->t = STRING;
         snprintf(result->data.s, MAX_BUFFER_SIZE, "%ld", x.data.l);
         
@@ -122,6 +119,7 @@ void convert_to_string(STACK *s, STACK_ELEM x, STACK_ELEM *result) {
         
         push(s, *result);
     } 
+    // Conversão redundante
     else {
         push(s, x);
     }
