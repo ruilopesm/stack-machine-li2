@@ -168,15 +168,17 @@ int compare_on(STACK_ELEM x, STACK_ELEM y, STACK *temp, char *block,GLOBALS *g) 
     } 
     else if(xp.t == DOUBLE && yp.t == DOUBLE){
         double xc = get_double_arg(xp), yc = get_double_arg(yp);
+        
         if (xc < yc) {
             return 0;
         }
     }
     else {
         long xc = get_long_arg(xp), yc = get_long_arg(yp);
+        
         if (xc < yc) {
             return 0;
-    }
+        }
     }
 
     temp->sp = 0;  // Esvaziar a stack temporária, caso tenha elementos anteriores de modo a não causar erros (provavelmente não necessário, mas existe como segurança extra)
@@ -201,7 +203,8 @@ int compare_arrays(STACK *x, STACK *y) {
 
         if (result < 0) {
             return 0;
-        } else if (result > 0) {
+        } 
+        else if (result > 0) {
             return 1;
         }
 
