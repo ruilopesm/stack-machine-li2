@@ -126,4 +126,6 @@ int truthy_value(STACK_ELEM x);
  */
 int is_arg(STACK_ELEM x);
 
+int all_char(STACK_ELEM x);
+
 #endif

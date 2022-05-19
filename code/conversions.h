@@ -37,4 +37,8 @@ void convert_to_char(STACK *s, STACK_ELEM x, STACK_ELEM *result);
  */
 void convert_to_string(STACK *s, STACK_ELEM x, STACK_ELEM *result);
 
+void convert_to_array(STACK_ELEM x, STACK_ELEM *result);
+
+void convert_array_to_string(STACK_ELEM x, STACK_ELEM *result);
+
 #endif
