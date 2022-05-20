@@ -6,7 +6,7 @@
  * 
  * @param x array ou string
  * @param y bloco
- * @param result STACK_ELEMEN onde irá ser guardado o resultado  
+ * @param result STACK_ELEM onde irá ser guardado o resultado  
  * @param g Variáveis Globais 
  */
 void map(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
@@ -16,40 +16,20 @@ void map(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
  * 
  * @param x bloco
  * @param y array
- * @param result STACK_ELEMEN onde irá ser guardado o resultado  
+ * @param result STACK_ELEM onde irá ser guardado o resultado  
  * @param g Variáveis Globais 
  */
 void fold(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
 
 /**
- * @brief Função que filtra um array ou string usando um bloco
+ * @brief Função que filtra um array conforme um bloco
  * 
  * @param x array ou string
  * @param y bloco
- * @param result STACK_ELEMEN onde irá ser guardado o resultado  
+ * @param result STACK_ELEM onde irá ser guardado o resultado  
  * @param g Variáveis Globais 
  */
 void filter(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
-
-/**
- * @brief Função que filtra um array conforme um bloco
- * 
- * @param x array 
- * @param y bloco
- * @param result STACK_ELEMEN onde irá ser guardado o resultado  
- * @param g Variáveis Globais 
- */
-void filter_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
-
-/**
- * @brief Função que filtra uma string conforme um bloco
- * 
- * @param x string
- * @param y bloco
- * @param result STACK_ELEMEN onde irá ser guardado o resultado  
- * @param g Variáveis Globais 
- */
-void filter_string(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
 
 /**
  * @brief Função que compara dois arrays e retorna 0 se x for menor ou igual a y, 1 se o contrário se verificar

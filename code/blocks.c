@@ -34,84 +34,47 @@ void map(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {
 }
 
 void fold(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {
-    STACK *array_fold = create_stack();
+    STACK *folded = create_stack();
 
     STACK_ELEM acc = x.data.a->stc[0];
-    push(array_fold, acc);
+    push(folded, acc);
 
     for (int i = 1; i < x.data.a->sp; i++) {
-        push(array_fold, x.data.a->stc[i]);
-        parse_line(array_fold, y.data.b, g);
+        push(folded, x.data.a->stc[i]);
+        parse_line(folded, y.data.b, g);
     }
 
     result->t = ARRAY;
-    result->data.a = array_fold;
+    result->data.a = folded;
 }
 
 void filter(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {
-    if (x.t == ARRAY) {
-        filter_array(x, y, result, g);
-    } 
+    STACK *filtered = create_stack();
+    STACK_ELEM array, aux;
+
+    convert_to_array(x, &array);
+
+    for (int i = 0; i < array.data.a->sp; i++) {
+        push(filtered, array.data.a->stc[i]);
+        parse_line(filtered, y.data.b, g);
+
+        assert(pop(filtered, &aux) == 0);
+
+        if (truthy_value(aux)) {
+            push(filtered, array.data.a->stc[i]);
+        }
+    }
+
+    free_stack(array.data.a);
+    array.data.a = filtered;
+
+    if (all_char(array)) {
+        result->t = STRING;
+        convert_array_to_string(array, result);
+    }
     else {
-        filter_string(x, y, result, g);
+        *result = array;
     }
-}
-
-void filter_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {
-    STACK *array_filter = create_stack();
-    STACK_ELEM aux;
-
-    for (int i = 0; i < x.data.a->sp; i++) {
-        push(array_filter, x.data.a->stc[i]);
-        parse_line(array_filter, y.data.b, g);
-
-        assert(pop(array_filter, &aux) == 0);
-
-        if (truthy_value(aux)) {
-            push(array_filter, x.data.a->stc[i]);
-        }
-    }
-
-    result->t = ARRAY;
-    result->data.a = array_filter;
-}
-
-void filter_string(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g) {
-    char *str = malloc((strlen(x.data.s) + 1) * sizeof(char)), *start = str;
-    strcpy(str, x.data.s);
-
-    STACK *string_filter = create_stack();
-    STACK_ELEM aux;
-    aux.t = CHAR;
-
-    for (char c = *str; c != '\0'; c = *++str) {
-        STACK_ELEM copy = {.t = CHAR, .data.c = c};
-
-        aux.data.c = c;
-
-        push(string_filter, aux);
-        parse_line(string_filter, y.data.b, g);
-
-        assert(pop(string_filter, &aux) == 0);
-
-        if (truthy_value(aux)) {
-            push(string_filter, copy);
-        }
-    }
-
-    str = start;
-
-    for (int i = 0; i < string_filter->sp; i++) {
-        aux = string_filter->stc[i];
-        *str++ = aux.data.c;
-    }
-
-    *str = '\0';
-
-    result->t = STRING;
-    result->data.s = start;
-
-    free_stack(string_filter);
 }
 
 // Retorna 0 se x for menor ou igual a y, 1 se o contrário se verificar
