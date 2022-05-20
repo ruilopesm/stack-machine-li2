@@ -2,111 +2,91 @@
 #define BLOCKS_H
 
 /**
- * @brief Função que determina o tipo do argumento, e dependedendo deste aplica as funções de map
+ * @brief Função que aplica um bloco a todos os elementos de um array
  * 
- * @param x 
- * @param y 
- * @param result 
- * @param g 
+ * @param x array ou string
+ * @param y bloco
+ * @param result STACK_ELEMEN onde irá ser guardado o resultado  
+ * @param g Variáveis Globais 
  */
 void map(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
 
 /**
- * @brief Função que aplica um bloco a todos os elementos de um array
- * 
- * @param x 
- * @param y 
- * @param result 
- * @param g 
- */
-void map_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
-
-/**
- * @brief Função que aplica um bloco a todos os elementos de uma string 
- * 
- * @param x 
- * @param y 
- * @param result 
- * @param g 
- */
-void map_string(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
-
-/**
  * @brief Função que aplica um fold sobre um array usando um bloco
  * 
- * @param x 
- * @param y 
- * @param result 
- * @param g 
+ * @param x bloco
+ * @param y array
+ * @param result STACK_ELEMEN onde irá ser guardado o resultado  
+ * @param g Variáveis Globais 
  */
 void fold(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
 
 /**
- * @brief Função que determina o tipo do argumento, e dependedendo deste aplica as funções de filtro 
+ * @brief Função que filtra um array ou string usando um bloco
  * 
- * @param x 
- * @param y 
- * @param result 
- * @param g 
+ * @param x array ou string
+ * @param y bloco
+ * @param result STACK_ELEMEN onde irá ser guardado o resultado  
+ * @param g Variáveis Globais 
  */
 void filter(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
 
 /**
- * @brief Função que filtra um array conforme uma condição
+ * @brief Função que filtra um array conforme um bloco
  * 
- * @param x 
- * @param y 
- * @param result 
- * @param g 
+ * @param x array 
+ * @param y bloco
+ * @param result STACK_ELEMEN onde irá ser guardado o resultado  
+ * @param g Variáveis Globais 
  */
 void filter_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
 
 /**
- * @brief Função que filtra uma string conforme uma condição
+ * @brief Função que filtra uma string conforme um bloco
  * 
- * @param x 
- * @param y 
- * @param result 
- * @param g 
+ * @param x string
+ * @param y bloco
+ * @param result STACK_ELEMEN onde irá ser guardado o resultado  
+ * @param g Variáveis Globais 
  */
 void filter_string(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
 
 /**
  * @brief Função que compara dois arrays e retorna 0 se x for menor ou igual a y, 1 se o contrário se verificar
  * 
- * @param x 
- * @param y 
- * @param temp 
- * @param block 
- * @param g 
- * @return int 
+ * @param x array
+ * @param y array
+ * @param temp uma stack
+ * @param block bloco
+ * @param g Variáveis Globais 
+ * @return int 0 ou 1
  */
 int compare_on(STACK_ELEM x,STACK_ELEM y,STACK *temp, char *block,GLOBALS *g);
 
 /**
  * @brief Função que compara dois arrays
  * 
- * @param x 
- * @param y 
- * @return int 
+ * @param x array
+ * @param y array
+ * @return int 0 ou 1
  */
 int compare_arrays(STACK *x, STACK *y);
 
 /**
  * @brief Função que ordena um array segundo a condição dada por um bloco
  * 
- * @param block 
- * @param array 
- * @param g 
+ * @param block bloco
+ * @param array array
+ * @param g Variáveis Globais 
  */
 void sort_on(STACK_ELEM block,STACK_ELEM *array,GLOBALS *g);
 
 /**
  * @brief Função que realiza um loop while para percorrer um bloco
  * 
- * @param s 
- * @param x 
- * @param g 
+ * @param s Apontador para a STACK 
+ * @param x bloco
+ * @param g Variáveis Globais 
  */
 void while_operation(STACK *s, STACK_ELEM x, GLOBALS *g);
 
@@ -126,6 +106,12 @@ int truthy_value(STACK_ELEM x);
  */
 int is_arg(STACK_ELEM x);
 
+/**
+ * @brief Funçâo que verifica se todos elementos de um array são chars
+ * 
+ * @param x 
+ * @return int 
+ */
 int all_char(STACK_ELEM x);
 
 #endif
