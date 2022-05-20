@@ -100,6 +100,25 @@ void slash_operator(STACK *s, GLOBALS *g) {
         free(x.data.s);
         free(y.data.s);
     }
+    else if(x.t == STRING && y.t == CHAR) {
+        result.t = ARRAY;
+        STACK *new = create_stack();
+        
+        STACK_ELEM temp = {
+            .t = STRING,
+            .data.s = malloc(sizeof(char) * 2)
+        };
+
+        temp.data.s[0] = y.data.c;
+        temp.data.s[1] = '\0';
+        
+        split_string_by_substring(&x, &temp, new);
+        
+        result.data.a = new;
+        
+        free(x.data.s);
+        free(temp.data.s);
+    }
     else {
         divide_two_numbers(x, y, &result);
     }
@@ -135,14 +154,13 @@ void hashtag_operator(STACK *s, GLOBALS *g) {
         find_substring_index(x, y, &result);
     }
     else if (x.t == STRING && y.t == CHAR) {
-        STACK_ELEM temp;
-        temp.t = STRING;
+        STACK_ELEM temp = {
+            .t = STRING,
+            .data.s = malloc(sizeof(char) * 2)
+        };
         
-        char *character = malloc(sizeof(char) * 2);
-        character[0] = y.data.c;
-        character[1] = '\0';
-        
-        temp.data.s = character;
+        temp.data.s[0] = y.data.c;
+        temp.data.s[1] = '\0';
         
         find_substring_index(x, temp, &result);
     }
@@ -467,7 +485,9 @@ void less_sign_operator(STACK *s, GLOBALS *g) {
     assert(pop(s, &x) == 0);
 
     if (x.t == ARRAY) {
-        take_from_array(s, x, y, &result);
+        take_from_array(x, y, &result);
+        
+        push(s, result);
     }
     else if (x.t == STRING && y.t == STRING) {
         check_strings_less(s, x, y, &result);
@@ -490,6 +510,7 @@ void more_sign_operator(STACK *s, GLOBALS *g) {
 
     if (x.t == ARRAY) {
         drop_from_array(x, y, &result);
+        
         push(s, result);
     }
     else if (x.t == STRING && y.t == STRING) {
@@ -507,20 +528,14 @@ void more_sign_operator(STACK *s, GLOBALS *g) {
 
 void exclamation_mark_operator(STACK *s, GLOBALS *g) {
     STACK_ELEM x, result;
-    long to_push = 0;
+    long to_push = 1;
 
     result.t = LONG;
 
     assert(pop(s, &x) == 0);
 
-    if (x.t == LONG && x.data.l == 0) {
-        to_push = 1;
-    }
-    else if (x.t == DOUBLE && x.data.d == 0.0) {
-        to_push = 1;
-    }
-    else if (x.t == CHAR && x.data.c == '\0') {
-        to_push = 1;
+    if (truthy_value(x)) {
+        to_push = 0;
     }
     
     result.data.l = to_push;
@@ -538,7 +553,7 @@ void and_with_and_operator(STACK *s, GLOBALS *g) {
 
     STACK_ELEM result = x;
 
-    if (x.t == LONG && x.data.l) {
+    if (truthy_value(x)) {
         result = y;
     }
 
@@ -555,7 +570,7 @@ void and_with_or_operator(STACK *s, GLOBALS *g) {
 
     STACK_ELEM result = y;
 
-    if (get_double_arg(x)) {
+    if (truthy_value(x)) {
         result = x;
     }
 
@@ -731,7 +746,7 @@ void lowercase_t_operator(STACK *s, GLOBALS *g) {
         .data.s = strdup(total)
     };
 
-    line[strlen(line) - 1] = '\0';
+    // line[strlen(line) - 1] = '\0';
 
     assert(push(s, result) == 0);
 

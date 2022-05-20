@@ -84,7 +84,7 @@ void get_element_at_index(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *resu
     push(s, *result);
 }
 
-void take_from_array(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
+void take_from_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     long len = x.data.a->sp, extract = get_long_arg(y);
 
     STACK *new_array = create_stack();
@@ -94,8 +94,8 @@ void take_from_array(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
     }
     
     for (int i = 0; i < extract; i++) {
-        assert(nth_element(x.data.a, result, (x.data.a->sp) - i - 1) == 0);
-        assert(push(s, *result) == 0);
+        assert(nth_element(x.data.a, result, x.data.a->sp - i - 1) == 0);
+        assert(push(new_array, *result) == 0);
     }
 
     result->t = ARRAY;
