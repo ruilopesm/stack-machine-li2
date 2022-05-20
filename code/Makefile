@@ -33,7 +33,7 @@ doc: $(DOC_FILE)
 	doxygen Doxygen.config
 
 coverage: doc
-	$(value coverage_script); clear; cat $(COVERAGE_FILE)
+	$(value coverage_script); clear; cat $(COVERAGE_FILE); rm $(COVERAGE_FILE)
 
 log: 
 	chmod +x repl; ./repl
