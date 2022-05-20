@@ -7,7 +7,7 @@
  * @brief Função que obtem o objeto da linha
  * 
  * @param s 
- * @param g 
+ * @param g Variáveis Globais 
  * @return int 
  */
 int get_line(STACK *s, GLOBALS *g);
@@ -112,7 +112,7 @@ void handle_string(STACK *s, char *token);
  * 
  * @param s 
  * @param token 
- * @param g 
+ * @param g Variáveis Globais 
  */
 void handle_array(STACK *s, char *token, GLOBALS *g);
 
@@ -129,7 +129,7 @@ void handle_block(STACK *s, char *token);
  * 
  * @param s 
  * @param token 
- * @param g 
+ * @param g Variáveis Globais 
  */
 void handle_global(STACK *s, char *token, GLOBALS *g);
 
@@ -138,7 +138,7 @@ void handle_global(STACK *s, char *token, GLOBALS *g);
  * 
  * @param s 
  * @param token 
- * @param g 
+ * @param g Variáveis Globais 
  */
 void handle_readress_global(STACK *s, char *token, GLOBALS *g);
 
