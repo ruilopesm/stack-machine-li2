@@ -76,7 +76,7 @@ void remove_last_element_from_string(STACK *s, STACK_ELEM x, STACK_ELEM *result)
 void get_char_at_index(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
- * @brief Função que verifica se a igualdade de duas strings
+ * @brief Função que verifica a igualdade entre duas strings
  * 
  * @param s 
  * @param x 

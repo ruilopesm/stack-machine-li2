@@ -462,8 +462,11 @@ void equal_sign_operator(STACK *s, GLOBALS *g) {
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
 
-    if (y.t == ARRAY) {
+    if (x.t != ARRAY && y.t == ARRAY) {
         get_element_at_index(s, x, y, &result);
+    }
+    else if (x.t == ARRAY && y.t == ARRAY) {
+        check_array_equality(s, x, y, &result);
     }
     else if (x.t != STRING && y.t == STRING) {
         get_char_at_index(s, x, y, &result);
