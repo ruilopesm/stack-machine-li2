@@ -32,17 +32,17 @@ int is_operator(char *token);
 int get_index(char *operator);
 
 /**
- * @brief Funçao que obtem um argumento e converte para o tipo "double"
+ * @brief Funçao que obtem um argumento double
  * 
- * @param x 
+ * @param x argumento
  * @return double 
  */
 double get_double_arg(STACK_ELEM x);
 
 /**
- * @brief Funçao que obtem um argumento e converte para o tipo "long"
+ * @brief Funçao que obtem um argumento long
  * 
- * @param x 
+ * @param x argumento
  * @return long 
  */
 long get_long_arg(STACK_ELEM x);
@@ -51,176 +51,215 @@ long get_long_arg(STACK_ELEM x);
  *
  * @param s Apontador para a STACK
  * @param operator O operador
+ * @param g Variáveis globais 
+ * 
  */
 void dispatch_table(STACK *s, char *operator, GLOBALS *g);
 
 /**
  * @brief Definição do tipo de cada elemento da tabela de despacho
  *
+ * @param s Apontadoe para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 typedef void (*function_pointer)(STACK *s, GLOBALS *g);
 
 /**
- * @brief Retira os dois elementos do topo da STACK e coloca no topo a soma dos mesmos
+ * @brief Função que gere as operações associadas ao símbolo '+'
  *
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void plus_operator(STACK *s,GLOBALS *g);
 
 /**
- * @brief Retira os dois elementos do topo da STACK e coloca no topo a subtração do penúltimo pelo último
+ * @brief Função que gere as operações associadas ao símbolo '-'
  *
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void minus_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Retira os dois elementos do topo da STACK e coloca no topo a multiplicação dos mesmos
+ * @brief Função que gere as operações associadas ao símbolo '*'
  *
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void asterisk_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Funçao que concatena multiplas vezes um array ou uma string
- * 
- * @param x número de vezes que se concatena a string ou o array
- * @param y array ou string
- * @param result 
- */
-void mult_structure(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
-
-/**
- * @brief Retira os dois elementos do topo da STACK e coloca no topo a divisão do penúltimo pelo último
+ * @brief Função que gere as operações associadas ao símbolo '/'
  *
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void slash_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Retira os dois elementos do topo da STACK e coloca no topo o resto da divisão do penúltimo pelo último
+ * @brief Função que gere as operações associadas ao símbolo '%'
  *
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void percentage_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Função que calcula a exponenciação de dois elementos da STACK
+ * @brief Função que gere as operações associadas ao símbolo '#'
  *
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void hashtag_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Retira os dois elementos do topo da STACK e retorna o resultado da operação XOR ("ou exclusivo" ao nível dos bits)
+ * @brief Função que gere as operações associadas ao símbolo '^'
  *
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void circumflex_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Retira os dois elementos do topo da STACK e retorna o resultado da operação AND ("e" ao nível dos bits)
+ * @brief Função que gere as operações associadas ao símbolo '&'
  *
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void and_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Retira os dois elementos do topo da STACK e retorna o resultado da operação OR ("ou" ao nível dos bits)
+ * @brief Função que gere as operações associadas ao símbolo '|'
  *
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void or_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Retira um elemento da STACK, incrementa o seu valor, e de seguida coloca-o de volta na STACK
+ * @brief Função que gere as operações associadas ao símbolo ')'
  *
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void left_parenthesis_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Retira um elemento da STACK, decrementa o seu valor, e de seguida coloca-o de volta na STACK
+ * @brief Função que gere as operações associadas ao símbolo '('
  *
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void right_parenthesis_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Retira os um elementos do topo da STACK e retorna o resultado da operação NOT ("negação" ao nível dos bits)
+ * @brief Função que gere as operações associadas ao símbolo '~'
  *
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void tilde_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Converte o elemento no topo da STACK para o tipo "int"
+ * @brief Função que gere as operações associadas ao símbolo 'i'
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void lowercase_i_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Converte o elemento no topo da STACK para o tipo "double"
+ * @brief Função que gere as operações associadas ao símbolo 'f'
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void lowercase_f_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Converte o elemento no topo da STACK para o tipo "char"
- * 
+ * @brief Função que gere as operações associadas ao símbolo 'c'
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */        
 void lowercase_c_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Converte o elemento no topo da STACK para o tipo "string"
+ * @brief Função que gere as operações associadas ao símbolo 's'
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void lowercase_s_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Duplica o elemento no topo da STACK
+ * @brief Função que gere as operações associadas ao símbolo '_'
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void underscore_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Dá pop do elemento no topo da STACK
+ * @brief Função que gere as operações associadas ao símbolo ';'
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void semicolon_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Troca a ordem dos dois elementos no topo da STACK
+ * @brief Função que gere as operações associadas ao símbolo '\'
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void inverted_slash_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Coloca o terceiro elemento no topo da STACK
+ * @brief Função que gere as operações associadas ao símbolo '@'
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void arroba_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Copia o n-ésimo elemento para o topo da STACK
+ * @brief Função que gere as operações associadas ao símbolo '$'
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void dollar_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Lê a linha seguinte e adiciona-a à STACK
+ * @brief Função que gere as operações associadas ao símbolo 'l'
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void lowercase_l_operator(STACK *s, GLOBALS *g);
 
@@ -229,82 +268,94 @@ void lowercase_l_operator(STACK *s, GLOBALS *g);
  * 
  * @param s Apontador para a STACK
  * @param value letra que se encontra na variável global
+ * @param g Variáveis globais 
+ * 
  * @return STACK_ELEM 
  */
 STACK_ELEM get_global(char value, GLOBALS *g);
 
 /**
- * @brief Função que compara se os dois elementos do topo da STACK são iguais
+ * @brief Função que gere as operações associadas ao símbolo '='
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void equal_sign_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Função que compara se o elemento do topo da STACK é menor do que o segundo elemento da STACK
+ * @brief Função que gere as operações associadas ao símbolo '<'
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
+ * 
  */
 void less_sign_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Função que compara se o elemento do topo da STACK é maoir do que o segundo elemento da STACK
+ * @brief Função que gere as operações associadas ao símbolo '>'
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
  */
 void more_sign_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Função que devolve a negação de um argumento
+ * @brief Função que gere as operações associadas ao símbolo '!'
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
  */
 void exclamation_mark_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief operador lógico "e". Recebe dois argumentos, se ambos forem verdadeiros devolve verdadeiro
+ * @brief Função que gere as operações associadas ao símbolo 'e&'
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
  */
 void and_with_and_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief operador lógico "ou". Recebe dois argumentos, caso um deles seja verdadeiro devolve verdadeiro
+ * @brief Função que gere as operações associadas ao símbolo 'e|'
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
  */
 void and_with_or_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Funçao que coloca o menor de dois números no topo da STACK
+ * @brief Função que gere as operações associadas ao símbolo 'e<'
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
  */
 void and_with_less_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Funçao que coloca o maior de dois números no topo da STACK
- * 
+ * @brief Função que gere as operações associadas ao símbolo 'e>'
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
  */
 void and_with_more_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Função que recebe tres argumentos. Caso o primeiro seja verdadeiro devolve o segundo elemento, caso contrario devolve o terceiro
- * 
+ * @brief Função que gere as operações associadas ao símbolo '?'
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
  */
 void question_mark_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Funçao que calcula o comprimento/range de um argumento.
+ * @brief Função que gere as operações associadas ao símbolo ','
  * 
  * @param s Apontador para a STACK
+ * @param g Variáveis globais 
  */
 void comma_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Função que aplica as operações associadas ao símbolo ',', dependendo do tipo dos argumentos
+ * @brief Função que gere as operações associadas ao símbolo 'S/'
  * 
  * @param s Apontador para a STACK
  * @param g Variáveis globais 
@@ -312,7 +363,7 @@ void comma_operator(STACK *s, GLOBALS *g);
 void uppercase_s_and_slash_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Função que aplica as operações associadas aos símbolos 'N' e '/', dependendo do tipo dos argumentos
+ * @brief Função que gere as operações associadas ao símbolo 'N/'
  * 
  * @param s Apontador para a STACK
  * @param g Variáveis globais 
@@ -320,7 +371,7 @@ void uppercase_s_and_slash_operator(STACK *s, GLOBALS *g);
 void uppercase_n_and_slash_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Função que lê todo o input/lê todas as linhas (as operações associadas a 't')
+ * @brief Função que gere as operações associadas ao símbolo 't'
  * 
  * @param s Apontador para a STACK
  * @param g Variáveis globais 
@@ -328,7 +379,7 @@ void uppercase_n_and_slash_operator(STACK *s, GLOBALS *g);
 void lowercase_t_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Função que executa o bloco enquanto ele deixar um truthy no topo da stack. (as operações associadas a 'w')
+ * @brief Função que gere as operações associadas ao símbolo 'w'
  * 
  * @param s Apontador para a STACK
  * @param g Variáveis globais 
@@ -336,7 +387,7 @@ void lowercase_t_operator(STACK *s, GLOBALS *g);
 void lowercase_w_operator(STACK *s, GLOBALS *g);
 
 /**
- * @brief Função que imprime o topo da STACK
+ * @brief Função que gere as operações associadas ao símbolo 'p'
  * 
  * @param s Apontador para a STACK
  * @param g Variáveis globais 

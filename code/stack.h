@@ -10,7 +10,7 @@
 typedef struct STACK STACK;
 
 /**
- * @brief Enum que guarda os tipos implementados na stack
+ * @brief Enum que guarda os tipos implementados na STACK
  * 
  */
 typedef enum { 
@@ -23,7 +23,7 @@ typedef enum {
 } TYPE;
 
 /**
- * @brief Estrutura que guarda o tipo e o conteúdo de um elemento da stack
+ * @brief Estrutura que guarda o tipo e o conteúdo de um elemento da STACK
  * 
  */
 typedef struct {
@@ -39,13 +39,13 @@ typedef struct {
 } STACK_ELEM;
 
 /**
- * @brief A estrutura onde constam os parâmetros da stack
+ * @brief A estrutura onde constam os parâmetros da STACK
  * 
  */
 typedef struct STACK {
-    int sp; /**< O stack pointer */
-    int size; /**< O tamanho total da stack */
-    STACK_ELEM *stc; /**< O conteúdo da stack */
+    int sp; /**< O STACK pointer */
+    int size; /**< O tamanho total da STACK */
+    STACK_ELEM *stc; /**< O conteúdo da STACK */
 } STACK;
 
 /**
@@ -57,7 +57,7 @@ typedef struct {
 } GLOBALS;
 
 /**
- * @brief Inicializa uma stack com 100 posições
+ * @brief Inicializa uma STACK com 100 posições
  * 
  * @return STACK* 
  */
@@ -71,57 +71,57 @@ STACK *create_stack();
 GLOBALS *init_globals();
 
 /**
- * @brief Aumenta o tamanho da stack (para o dobro), se possível
+ * @brief Aumenta o tamanho da STACK (para o dobro), se possível
  * 
- * @param s Apontador para a stack
+ * @param s Apontador para a STACK
  * @return int 
  */
 int increase_stack(STACK *s);
 
 /**
- * @brief Imprime todos os elementos da stack, começando pelo elemento do fundo e acabando no do topo
+ * @brief Imprime todos os elementos da STACK, começando pelo elemento do fundo e acabando no do topo
  * 
- * @param s Apontador para a stack
+ * @param s Apontador para a STACK
  */
 void print_stack(STACK *s);
 
 /**
- * @brief Funçao que imprime os elementos na STACK
+ * @brief Função que imprime os elementos na STACK
  * 
- * @param s Apontador para a stack
+ * @param s Apontador para a STACK
  */
 void print_elems (STACK *s);
 
 /**
- * @brief Liberta a memória alocada, na heap, pela stack
+ * @brief Liberta a memória alocada, na heap, pela STACK
  * 
- * @param s Apontador para a stack
+ * @param s Apontador para a STACK
  */
 void free_stack(STACK *s);
 
 /**
- * @brief Adiciona um elemento à stack, se possível
+ * @brief Adiciona um elemento à STACK, se possível
  * 
- * @param s Apontador para a stack
- * @param elem Elemento a ser adicionado à stack
+ * @param s Apontador para a STACK
+ * @param elem Elemento a ser adicionado à STACK
  * @return int 
  */
 int push(STACK *s, STACK_ELEM elem);
 
 /**
- * @brief Retira o elemento que está no topo da stack
+ * @brief Retira o elemento que está no topo da STACK
  * 
- * @param s Apontador para a stack
+ * @param s Apontador para a STACK
  * @param elem Apontador para o elemento que será retirado
  * @return int 
  */
 int pop(STACK *s, STACK_ELEM *elem);
 
 /**
- * @brief Encontra o elemento no topo da stack, mas não o retiro (ao contrário da 'pop')
+ * @brief Encontra o elemento no topo da STACK, mas não o retiro (ao contrário da 'pop')
  * 
- * @param s Apontador para a stack
- * @param elem Apontador para o elemento que receberá o conteúdo do topo da stack
+ * @param s Apontador para a STACK
+ * @param elem Apontador para o elemento que receberá o conteúdo do topo da STACK
  * @return int 
  */
 int peek(STACK *s, STACK_ELEM *elem);
@@ -129,19 +129,19 @@ int peek(STACK *s, STACK_ELEM *elem);
 /**
  * @brief Verifica o conteudo do n-ésimo elemento
  * 
- * @param s 
- * @param elem 
- * @param n 
+ * @param s Apontador para a STACK
+ * @param elem Apontador para o elemento que receberá o conteúdo do topo da STACK
+ * @param n indice
  * @return int 
  */
 int nth_element(STACK *s, STACK_ELEM *elem, int n);
 
 /**
- * @brief Função que troca a posição de dois elementos numa stack (onde a posição 0 é o fundo da stack e sp - 1 o topo)
+ * @brief Função que troca a posição de dois elementos numa STACK (onde a posição 0 é o fundo da STACK e sp - 1 o topo)
  * 
- * @param array 
- * @param x 
- * @param y 
+ * @param array array
+ * @param x elemento
+ * @param y elemento
  */
 void swap(STACK *array, int x, int y);
 

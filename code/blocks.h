@@ -89,7 +89,7 @@ int is_arg(STACK_ELEM x);
 /**
  * @brief Funçâo que verifica se todos elementos de um array são chars
  * 
- * @param x 
+ * @param x array
  * @return int 
  */
 int all_char(STACK_ELEM x);
