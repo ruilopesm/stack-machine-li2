@@ -6,7 +6,7 @@
  * 
  * @param x 1º numero a ser somado
  * @param y 2º numero  ser somado
- * @param result STACK_ELEMEN onde irá ser guardado o resultado
+ * @param result STACK_ELEM onde irá ser guardado o resultado
  */
 void sum_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
@@ -15,7 +15,7 @@ void sum_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
  * 
  * @param x diminuendo
  * @param y diminuidor
- * @param result STACK_ELEMEN onde irá ser guardado o resultado
+ * @param result STACK_ELEM onde irá ser guardado o resultado
  */
 void subtract_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
@@ -25,7 +25,7 @@ void subtract_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
  * 
  * @param x 1º numero a ser multiplicado
  * @param y 2º numero  ser multiplicado
- * @param result STACK_ELEMEN onde irá ser guardado o resultado
+ * @param result STACK_ELEM onde irá ser guardado o resultado
  */
 void multiply_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
@@ -34,7 +34,7 @@ void multiply_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
  * 
  * @param x dividendo
  * @param y divisor
- * @param result STACK_ELEMEN onde irá ser guardado o resultado
+ * @param result STACK_ELEM onde irá ser guardado o resultado
  */
 void divide_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
@@ -43,7 +43,7 @@ void divide_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
  * 
  * @param x dividendo
  * @param y divisor
- * @param result STACK_ELEMEN onde irá ser guardado o resultado
+ * @param result STACK_ELEM onde irá ser guardado o resultado
  */
 void remainder_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
@@ -52,7 +52,7 @@ void remainder_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
  * 
  * @param x base
  * @param y expoente
- * @param result STACK_ELEMEN onde irá ser guardado o resultado
+ * @param result STACK_ELEM onde irá ser guardado o resultado
  */
 void power_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
@@ -61,7 +61,7 @@ void power_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
  * 
  * @param x 1º número
  * @param y 2 º número
- * @param result STACK_ELEMEN onde irá ser guardado o resultado
+ * @param result STACK_ELEM onde irá ser guardado o resultado
  */
 void bitwise_xor_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
@@ -70,7 +70,7 @@ void bitwise_xor_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
  * 
  * @param x 1º número
  * @param y 2 º número
- * @param result STACK_ELEMEN onde irá ser guardado o resultado
+ * @param result STACK_ELEM onde irá ser guardado o resultado
  */
 void bitwise_or_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
@@ -79,7 +79,7 @@ void bitwise_or_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
  * 
  * @param x 1º número
  * @param y 2 º número
- * @param result STACK_ELEMEN onde irá ser guardado o resultado
+ * @param result STACK_ELEM onde irá ser guardado o resultado
  */
 void bitwise_and_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
@@ -87,7 +87,7 @@ void bitwise_and_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
  * @brief Função que aumenta em uma unidade um número 
  * 
  * @param x número a ser aumentado
- * @param result STACK_ELEMEN onde irá ser guardado o resultado
+ * @param result STACK_ELEM onde irá ser guardado o resultado
  */
 void increment_number(STACK_ELEM x, STACK_ELEM *result);
 
@@ -95,7 +95,7 @@ void increment_number(STACK_ELEM x, STACK_ELEM *result);
  * @brief Função que diminui em uma unidade um número 
  * 
  * @param x número a ser diminuido
- * @param result STACK_ELEMEN onde irá ser guardado o resultado
+ * @param result STACK_ELEM onde irá ser guardado o resultado
  */
 void decrement_number(STACK_ELEM x, STACK_ELEM *result);
 
@@ -103,7 +103,7 @@ void decrement_number(STACK_ELEM x, STACK_ELEM *result);
  * @brief Função aplica o "NOT/negaçao" a um número
  * 
  * @param x número
- * @param result STACK_ELEMEN onde irá ser guardado o resultado
+ * @param result STACK_ELEM onde irá ser guardado o resultado
  */
 void bitwise_not_one_number(STACK *s, STACK_ELEM x, STACK_ELEM *result);
 
@@ -112,7 +112,7 @@ void bitwise_not_one_number(STACK *s, STACK_ELEM x, STACK_ELEM *result);
  * 
  * @param x 1º número
  * @param y 2 º número
- * @param result STACK_ELEMEN onde irá ser guardado o resultado
+ * @param result STACK_ELEM onde irá ser guardado o resultado
  */
 void compare_two_numbers_equality(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
@@ -121,7 +121,7 @@ void compare_two_numbers_equality(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_EL
  * 
  * @param x 1º número
  * @param y 2 º número
- * @param result STACK_ELEMEN onde irá ser guardado o resultado
+ * @param result STACK_ELEM onde irá ser guardado o resultado
  */
 void compare_two_numbers_less(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
@@ -130,7 +130,7 @@ void compare_two_numbers_less(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *
  * 
  * @param x 1º número
  * @param y 2 º número
- * @param result STACK_ELEMEN onde irá ser guardado o resultado
+ * @param result STACK_ELEM onde irá ser guardado o resultado
  */
 void compare_two_numbers_more(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
