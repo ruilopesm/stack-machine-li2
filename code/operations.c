@@ -373,10 +373,17 @@ void dollar_operator(STACK *s, GLOBALS *g) {
     if (x.t == BLOCK) {
         assert(pop(s, &y) == 0);
         
-        sort_on(x, &y, g);
-        
-        result = y;
-        
+        if (y.t == STRING) {
+            STACK_ELEM aux;
+            convert_to_array(y, &aux);
+            sort_on(x, &aux, g);
+            convert_array_to_string(aux, &result);
+        }
+        else {
+            sort_on(x, &y, g);
+            result = y; 
+        }
+
         free(x.data.b);
     }
     else {
