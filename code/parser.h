@@ -6,7 +6,7 @@
 /**
  * @brief Função que obtem o objeto da linha
  * 
- * @param s Apontador patra a STACK 
+ * @param s Apontador para a STACK 
  * @param g Variáveis Globais 
  * @return int 
  */
@@ -15,7 +15,7 @@ int get_line(STACK *s, GLOBALS *g);
 /**
  * @brief Lê o input do utilizador e realiza as operações pretendidas pelo mesmo
  * 
- * @param s Apontador patra a STACK 
+ * @param s Apontador para a STACK 
  * @return int 
  */
 void parse_line(STACK *s, char *line, GLOBALS *g);
@@ -23,7 +23,7 @@ void parse_line(STACK *s, char *line, GLOBALS *g);
 /**
  * @brief Realiza a operação pretendida pelo utilizador conforme o símbolo lido
  * 
- * @param s Apontador patra a STACK
+ * @param s Apontador para a STACK
  * @param token Símbolo lido
  */
 void handle_token(STACK *s, char *token, GLOBALS *g);
@@ -86,7 +86,7 @@ int is_readress_global(char *token);
 /**
  * @brief Função resposável pelo token caso este seja do tipo long
  * 
- * @param s Apontador patra a STACK 
+ * @param s Apontador para a STACK 
  * @param token 
  */
 void handle_long(STACK *s, char *token);
@@ -94,7 +94,7 @@ void handle_long(STACK *s, char *token);
 /**
  * @brief Função resposável pelo token caso este seja do tipo double
  * 
- * @param s Apontador patra a STACK 
+ * @param s Apontador para a STACK 
  * @param token 
  */
 void handle_double(STACK *s, char *token);
@@ -102,7 +102,7 @@ void handle_double(STACK *s, char *token);
 /**
  * @brief Função resposável pelo token caso este seja do tipo string
  * 
- * @param s Apontador patra a STACK 
+ * @param s Apontador para a STACK 
  * @param token 
  */
 void handle_string(STACK *s, char *token);
@@ -110,7 +110,7 @@ void handle_string(STACK *s, char *token);
 /**
  * @brief Função resposável pelo token caso este seja do tipo array
  * 
- * @param s Apontador patra a STACK 
+ * @param s Apontador para a STACK 
  * @param token 
  * @param g Variáveis Globais 
  */
@@ -119,7 +119,7 @@ void handle_array(STACK *s, char *token, GLOBALS *g);
 /**
  * @brief Função resposável pelo token caso este seja do tipo bloco
  * 
- * @param s Apontador patra a STACK 
+ * @param s Apontador para a STACK 
  * @param token 
  */
 void handle_block(STACK *s, char *token);
@@ -127,7 +127,7 @@ void handle_block(STACK *s, char *token);
 /**
  * @brief Função resposável pelo token caso este seja uma variavel global
  * 
- * @param s Apontador patra a STACK 
+ * @param s Apontador para a STACK 
  * @param token 
  * @param g Variáveis Globais 
  */
@@ -136,7 +136,7 @@ void handle_global(STACK *s, char *token, GLOBALS *g);
 /**
  * @brief Função resposável pelo token caso este seja uma variavel global, e tenha falhado as outras verificações
  * 
- * @param s Apontador patra a STACK 
+ * @param s Apontador para a STACK 
  * @param token 
  * @param g Variáveis Globais 
  */
@@ -181,7 +181,7 @@ void copy(char *token, char *line, int len, int parsed);
 /**
  * @brief Remove o caracter na posição 'p'
  * 
- * @param s Apontador patra a STACK 
+ * @param s Apontador para a STACK 
  * @param p indice
  */
 void remove_char(char *s, int p);
