@@ -109,7 +109,7 @@ void take_from_string(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
  * @brief Função que verifica se uma string é maoir que outra
  * 
  * @param s Apontador para a STACK 
- * @param x atring
+ * @param x string
  * @param y string
  * @param result STACK_ELEM onde irá ser guardado o resultado
  */
