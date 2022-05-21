@@ -11,7 +11,7 @@
 void concatenate_two_strings(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result);
 
 /**
- * @brief Função que concatena as duas substrings dependendo da ordem pretendida
+ * @brief Função que concatena as duas substrings dependendo da ordem ('order') pretendida
  * 
  * @param y string
  * @param x string
@@ -39,7 +39,7 @@ void replicate_string(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 void split_string_by_substring(STACK_ELEM *main, STACK_ELEM *sub, STACK *new);
 
 /**
- * @brief Função que obtém o indix de uma substring
+ * @brief Função que obtém o index de uma substring
  * 
  * @param x string
  * @param y substring
@@ -48,7 +48,7 @@ void split_string_by_substring(STACK_ELEM *main, STACK_ELEM *sub, STACK *new);
 void find_substring_index(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
- * @brief Função que remove o char que se encontra no inicio de uma string
+ * @brief Função que remove o char que se encontra no início de uma string
  * 
  * @param s Apontador para a STACK 
  * @param x string
@@ -66,7 +66,7 @@ void remove_first_element_from_string(STACK *s, STACK_ELEM x, STACK_ELEM *result
 void remove_last_element_from_string(STACK *s, STACK_ELEM x, STACK_ELEM *result);
 
 /**
- * @brief Função que obtem o char que se encontra no index dado
+ * @brief Função que obtém o char que se encontra no index dado (o indíce é dado pelo elemento no topo da stack)
  * 
  * @param s Apontador para a STACK 
  * @param x STACK_ELEM de onde se obtem o indice
@@ -76,7 +76,7 @@ void remove_last_element_from_string(STACK *s, STACK_ELEM x, STACK_ELEM *result)
 void get_char_at_index(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
- * @brief Função que verifica se a igualdade de duas strings
+ * @brief Função que verifica a igualdade de duas strings
  * 
  * @param s Apontador para a STACK 
  * @param x string
@@ -96,7 +96,7 @@ void check_strings_equality(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *re
 void check_strings_less(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
- * @brief Função que obtem os elemento de uma string
+ * @brief Função que remove os 'x' últimos elementos de um array
  * 
  * @param s Apontador para a STACK 
  * @param x string
@@ -116,7 +116,7 @@ void take_from_string(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 void check_strings_more(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
- * @brief Função que remove um elemento de uma string
+ * @brief Função que remove os 'x' primeiros elementos de um array
  * 
  * @param s Apontador para a STACK 
  * @param x string
