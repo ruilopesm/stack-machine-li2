@@ -29,3 +29,14 @@ $ make doc
 ```sh
 $ make coverage
 ```
+
+### Generate the stack machine logs using a repl
+```sh
+$ make log
+```
+**Note**: This only works in some distributions, such as: Arch Linux.
+
+### Create zip file in order to submit it
+```sh
+$ make submit
+```
