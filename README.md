@@ -20,12 +20,12 @@ $ make clean
 $ make test
 ```
 
-### Zip project in order to submit it
-```sh
-$ make submit
-```
-
 ### Generate documentation
 ```sh
 $ make doc
+```
+
+### Check documentation coverage
+```sh
+$ make coverage
 ```
