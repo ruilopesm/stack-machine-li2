@@ -90,7 +90,7 @@ void print_stack(STACK *s);
  * 
  * @param s Apontador para a STACK
  */
-void print_elems (STACK *s);
+void print_elems(STACK *s);
 
 /**
  * @brief Liberta a memória alocada, na heap, pela STACK
@@ -131,7 +131,7 @@ int peek(STACK *s, STACK_ELEM *elem);
  * 
  * @param s Apontador para a STACK
  * @param elem Apontador para o elemento que receberá o conteúdo do topo da STACK
- * @param n indice
+ * @param n índice
  * @return int 
  */
 int nth_element(STACK *s, STACK_ELEM *elem, int n);

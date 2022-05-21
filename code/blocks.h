@@ -2,7 +2,7 @@
 #define BLOCKS_H
 
 /**
- * @brief Função que aplica um bloco a todos os elementos de um array
+ * @brief Função que aplica um bloco a todos os elementos de um array ou string
  * 
  * @param x array ou string
  * @param y bloco
@@ -32,7 +32,7 @@ void fold(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
 void filter(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
 
 /**
- * @brief Função que compara dois arrays e retorna 0 se x for menor ou igual a y, 1 se o contrário se verificar
+ * @brief Função que compara dois elementos da stack: retorna 0 se x for menor ou igual a y, 1 se o contrário se verificar
  * 
  * @param x array
  * @param y array
@@ -41,7 +41,7 @@ void filter(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result, GLOBALS *g);
  * @param g Variáveis Globais 
  * @return int 0 ou 1
  */
-int compare_on(STACK_ELEM x,STACK_ELEM y,STACK *temp, char *block,GLOBALS *g);
+int compare_on(STACK_ELEM x, STACK_ELEM y, STACK *temp, char *block, GLOBALS *g);
 
 /**
  * @brief Função que compara dois arrays
@@ -62,7 +62,7 @@ int compare_arrays(STACK *x, STACK *y);
 void sort_on(STACK_ELEM block,STACK_ELEM *array,GLOBALS *g);
 
 /**
- * @brief Função que realiza um loop while para percorrer um bloco
+ * @brief Função que realiza um loop do while na stack segundo um bloco
  * 
  * @param s Apontador para a STACK 
  * @param x bloco
@@ -71,18 +71,18 @@ void sort_on(STACK_ELEM block,STACK_ELEM *array,GLOBALS *g);
 void while_operation(STACK *s, STACK_ELEM x, GLOBALS *g);
 
 /**
- * @brief Função que verifica se o elemento é verdadeiro
+ * @brief Função que verifica se o elemento é considerado um valor 'truthy'
  * 
  * @param x Elemento a verificar
- * @return int 
+ * @return int 0 ou 1
  */
 int truthy_value(STACK_ELEM x);
 
 /**
- * @brief Função que verifica se um elemento é argumento, se o elemento é um char/long/double
+ * @brief Função que verifica se um elemento é argumento das funções 'get_long_arg' e 'get_double_arg', ou seja, se o elemento é um char/long/double
  * 
  * @param x Elemento a verificar
- * @return int 
+ * @return int 0 ou 1
  */
 int is_arg(STACK_ELEM x);
 
@@ -90,7 +90,7 @@ int is_arg(STACK_ELEM x);
  * @brief Funçâo que verifica se todos elementos de um array são chars
  * 
  * @param x array
- * @return int 
+ * @return int 0 ou 1
  */
 int all_char(STACK_ELEM x);
 
