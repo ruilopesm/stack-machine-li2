@@ -18,7 +18,7 @@ void concatenate_two_arrays(STACK_ELEM y, STACK_ELEM x, STACK_ELEM *result, int 
 void replicate_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
- * @brief Função que remove o elemento que se encontra no final de um array 
+ * @brief Função que remove o elemento que se encontra no início de um array 
  * 
  * @param s Apontador para a STACK
  * @param x array
@@ -44,7 +44,7 @@ void remove_last_element_from_array(STACK *s, STACK_ELEM x, STACK_ELEM *result);
 void transfer_array_elements_to_stack(STACK *s, STACK_ELEM x);
 
 /**
- * @brief Função que obtem o elemento que se encontra no index dado
+ * @brief Função que obtém o elemento que se encontra no index dado
  * 
  * @param s Apontador para a STACK
  * @param x index
@@ -54,7 +54,7 @@ void transfer_array_elements_to_stack(STACK *s, STACK_ELEM x);
 void get_element_at_index(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
- * @brief Função que obtem os elemento de um array
+ * @brief Função que remove os 'x' últimos elementos de um array
  * 
  * @param s Apontador para a STACK
  * @param x tamanho
@@ -64,7 +64,7 @@ void get_element_at_index(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *resu
 void take_from_array(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
- * @brief Função que remove um elemento de um array
+ * @brief Função que remove os 'x' primeiros elementos de um array
  * 
  * @param x array
  * @param y tamanho

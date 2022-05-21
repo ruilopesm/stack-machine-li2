@@ -19,7 +19,6 @@ void sum_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
  */
 void subtract_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
-
 /**
  * @brief Função que executa a multiplicação de dois números
  * 
@@ -48,7 +47,7 @@ void divide_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 void remainder_two_numbers(STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result);
 
 /**
- * @brief Função que calcula a potência de dois numeros 
+ * @brief Função que calcula a potência de dois números 
  * 
  * @param x base
  * @param y expoente
@@ -100,7 +99,7 @@ void increment_number(STACK_ELEM x, STACK_ELEM *result);
 void decrement_number(STACK_ELEM x, STACK_ELEM *result);
 
 /**
- * @brief Função aplica o "NOT/negaçao" a um número
+ * @brief Função aplica o "NOT/Negação" a um número
  * 
  * @param x número
  * @param result STACK_ELEM onde irá ser guardado o resultado

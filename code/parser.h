@@ -4,7 +4,7 @@
 #include <stddef.h>
 
 /**
- * @brief Função que obtem o objeto da linha
+ * @brief Função que lê uma linha do stdin
  * 
  * @param s Apontador para a STACK 
  * @param g Variáveis Globais 
@@ -13,7 +13,7 @@
 int get_line(STACK *s, GLOBALS *g);
 
 /**
- * @brief Lê o input do utilizador e realiza as operações pretendidas pelo mesmo
+ * @brief Função que dá parse a uma linha, tokenizando e verificando do que se trata cada símbolo, etc
  * 
  * @param s Apontador para a STACK 
  * @return int 
@@ -21,7 +21,7 @@ int get_line(STACK *s, GLOBALS *g);
 void parse_line(STACK *s, char *line, GLOBALS *g);
 
 /**
- * @brief Realiza a operação pretendida pelo utilizador conforme o símbolo lido
+ * @brief Função que recebe um token/símbolo e realiza a operação pretendida
  * 
  * @param s Apontador para a STACK
  * @param token Símbolo lido
@@ -29,7 +29,7 @@ void parse_line(STACK *s, char *line, GLOBALS *g);
 void handle_token(STACK *s, char *token, GLOBALS *g);
 
 /**
- * @brief Verifica se a string contém apenas algarismos
+ * @brief Função que verifica se a string contém apenas algarismos (^[0-9]+$)
  * 
  * @param token 
  * @return int 
@@ -37,7 +37,7 @@ void handle_token(STACK *s, char *token, GLOBALS *g);
 int is_long(char *token);
 
 /**
- * @brief Verifica se a string contém apenas algarismos e um ponto (.)
+ * @brief Função que verifica se a string contém apenas algarismos e um ponto (^[0-9]+\.[0-9]+$)
  * 
  * @param token 
  * @return int 
@@ -45,7 +45,7 @@ int is_long(char *token);
 int is_double(char *token);
 
 /**
- * @brief Verifica se o token é uma string
+ * @brief Função que verifica se o token é uma string (^\"+.*\"+$)
  * 
  * @param token 
  * @return int 
@@ -53,7 +53,7 @@ int is_double(char *token);
 int is_string(char *token);
 
 /**
- * @brief Verifica se o token é um array
+ * @brief Função que verifica se o token é um array
  * 
  * @param token 
  * @return int 
@@ -61,7 +61,7 @@ int is_string(char *token);
 int is_array(char *token);
 
 /**
- * @brief Verifica se o token é um bloco
+ * @brief Função que verifica se o token é um bloco
  * 
  * @param token 
  * @return int 
@@ -69,14 +69,14 @@ int is_array(char *token);
 int is_block(char *token);
 
 /**
- * @brief Verifica se o token é uma "vaiável global"
+ * @brief Função que verifica se o token é uma "variável global"
  * 
  * @param token 
  */
 int is_global(char *token);
 
 /**
- * @brief Funçao que altera o valor da variável global
+ * @brief Função que verifica se o token é um readress da "variável global"
  * 
  * @param token 
  * @return int 
@@ -84,7 +84,7 @@ int is_global(char *token);
 int is_readress_global(char *token);
 
 /**
- * @brief Função resposável pelo token caso este seja do tipo long
+ * @brief Função responsável pelo token caso este seja do tipo long
  * 
  * @param s Apontador para a STACK 
  * @param token 
@@ -92,7 +92,7 @@ int is_readress_global(char *token);
 void handle_long(STACK *s, char *token);
 
 /**
- * @brief Função resposável pelo token caso este seja do tipo double
+ * @brief Função responsável pelo token caso este seja do tipo double
  * 
  * @param s Apontador para a STACK 
  * @param token 
@@ -100,7 +100,7 @@ void handle_long(STACK *s, char *token);
 void handle_double(STACK *s, char *token);
 
 /**
- * @brief Função resposável pelo token caso este seja do tipo string
+ * @brief Função responsável pelo token caso este seja do tipo string
  * 
  * @param s Apontador para a STACK 
  * @param token 
@@ -108,7 +108,7 @@ void handle_double(STACK *s, char *token);
 void handle_string(STACK *s, char *token);
 
 /**
- * @brief Função resposável pelo token caso este seja do tipo array
+ * @brief Função responsável pelo token caso este seja do tipo array
  * 
  * @param s Apontador para a STACK 
  * @param token 
@@ -117,7 +117,7 @@ void handle_string(STACK *s, char *token);
 void handle_array(STACK *s, char *token, GLOBALS *g);
 
 /**
- * @brief Função resposável pelo token caso este seja do tipo bloco
+ * @brief Função responsável pelo token caso este seja do tipo bloco
  * 
  * @param s Apontador para a STACK 
  * @param token 
@@ -125,7 +125,7 @@ void handle_array(STACK *s, char *token, GLOBALS *g);
 void handle_block(STACK *s, char *token);
 
 /**
- * @brief Função resposável pelo token caso este seja uma variavel global
+ * @brief Função responsável pelo token caso este seja uma "variável global"
  * 
  * @param s Apontador para a STACK 
  * @param token 
@@ -143,38 +143,38 @@ void handle_global(STACK *s, char *token, GLOBALS *g);
 void handle_readress_global(STACK *s, char *token, GLOBALS *g);
 
 /**
- * @brief Funçao que encontra o indice do char c
+ * @brief Função que devolve o index do char 'c'
  * 
  * @param line array
  * @param c char que se quer encontar
- * @param parsed indice onde se começa a procura
+ * @param parsed índice onde se começa a procura
  */
 int find_char(char *line, char c, int parsed);
 
 /**
- * @brief Funçao que encontra o tamanho total do aray
+ * @brief Função que devolve o tamanho total do array
  * 
  * @param line array
- * @param parsed indice do incio do array
+ * @param parsed índice do início do array
  */
 int get_array_length(char *line, int parsed);
 
 /**
- * @brief Funçao que encontra o tamanho total do bloco
+ * @brief Função que devolve o tamanho total do bloco
  * 
  * @param line bloco
- * @param parsed indice do incio do bloco
+ * @param parsed índice do início do bloco
  * @return int 
  */
 int get_block_length(char *line, int parsed);
 
 /**
- * @brief Funçao que copia o line para o token a partir da posição parsed até que tenha um tamanho de len
+ * @brief Função que copia a line para o token a partir da posição 'parsed' até que tenha um tamanho de 'len'
  * 
  * @param token 
  * @param line
  * @param len tamanho do token
- * @param parsed posição de inicío do token
+ * @param parsed índice de início do token
  */
 void copy(char *token, char *line, int len, int parsed);
 

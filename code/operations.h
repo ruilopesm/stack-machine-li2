@@ -32,7 +32,7 @@ int is_operator(char *token);
 int get_index(char *operator);
 
 /**
- * @brief Funçao que obtem um argumento double
+ * @brief Funçao que obtém um argumento do tipo double
  * 
  * @param x argumento
  * @return double 
@@ -40,7 +40,7 @@ int get_index(char *operator);
 double get_double_arg(STACK_ELEM x);
 
 /**
- * @brief Funçao que obtem um argumento long
+ * @brief Funçao que obtém um argumento do tipo long
  * 
  * @param x argumento
  * @return long 
@@ -57,9 +57,9 @@ long get_long_arg(STACK_ELEM x);
 void dispatch_table(STACK *s, char *operator, GLOBALS *g);
 
 /**
- * @brief Definição do tipo de cada elemento da tabela de despacho
+ * @brief Definição do tipo de cada elemento da tabela de despacho (um apontador para uma função)
  *
- * @param s Apontadoe para a STACK
+ * @param s Apontador para a STACK
  * @param g Variáveis globais 
  * 
  */
