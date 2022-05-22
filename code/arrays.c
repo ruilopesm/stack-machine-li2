@@ -134,3 +134,21 @@ void create_array_in_range(STACK_ELEM x, STACK_ELEM *result) {
     result->t = ARRAY;
     result->data.a = new;
 }
+
+void check_array_equality(STACK *s, STACK_ELEM x, STACK_ELEM y, STACK_ELEM *result) {
+    long len1 = x.data.a->sp, len2 = y.data.a->sp;
+    int flag = 1;
+
+    if (len1 != len2)
+        flag = 0;
+
+    for(int i = 0; i < len1 && flag == 1; i++) {
+        if(get_double_arg(x.data.a->stc[i]) != get_double_arg(y.data.a->stc[i]))
+            flag = 0;
+    }
+
+    result->t = LONG;
+    result->data.l = flag;
+
+    push(s, *result);
+}
