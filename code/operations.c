@@ -373,9 +373,16 @@ void dollar_operator(STACK *s, GLOBALS *g) {
     if (x.t == BLOCK) {
         assert(pop(s, &y) == 0);
         
-        sort_on(x, &y, g);
-        
-        result = y;
+        if (y.t == STRING) {
+            STACK_ELEM aux;
+            convert_to_array(y, &aux);
+            sort_on(x, &aux, g);
+            convert_array_to_string(aux, &result);
+        }
+        else {
+            sort_on(x, &y, g);
+            result = y; 
+        }
         
         free(x.data.b);
     }
@@ -462,8 +469,11 @@ void equal_sign_operator(STACK *s, GLOBALS *g) {
     assert(pop(s, &x) == 0);
     assert(pop(s, &y) == 0);
 
-    if (y.t == ARRAY) {
+    if (x.t != ARRAY && y.t == ARRAY) {
         get_element_at_index(s, x, y, &result);
+    }
+    else if (x.t == ARRAY && y.t == ARRAY) {
+        check_array_equality(s, x, y, &result);
     }
     else if (x.t != STRING && y.t == STRING) {
         get_char_at_index(s, x, y, &result);
