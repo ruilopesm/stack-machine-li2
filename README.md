@@ -20,7 +20,7 @@ Note: More examples can be seen at the [assignment](Assignment.pdf).
 #### Clone the repository
 
 ```bash
-$ git clone git@github.com:RuiL1904/Stack-Machine-LI2.git
+$ git clone git@github.com:ruilopesm/Stack-Machine-LI2.git
 ```
 
 #### Compiling
@@ -37,7 +37,7 @@ $ make run
 Note: There are a couple more `make` commands, useful in some situations, available. Check them out at the [Makefile](Makefile).
 
 # Developed by:
-- [Rui Lopes](https://github.com/RuiL1904)
+- [Rui Lopes](https://github.com/ruilopesm)
 - [Duarte Ribeiro](https://github.com/DuduWater12)
 - [Filipe Pereira](https://github.com/Filipe2817)
 - [Miguel Gramoso](https://github.com/gramosomi)
