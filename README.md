@@ -1,7 +1,6 @@
 # Stack-Machine
 
-## Software Labs II | Laboratórios de Informática II
-## Grade: 20/20 :star:
+> 20/20 :star:
 
 This project was developed during the second semester of the 1st year of the Software Engineering degree @ University of Minho.
 
